@@ -8,8 +8,6 @@ class Siswa extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->helper(array('url'));
-		$this->load->library(array('template1', 'session'));
 		$this->load->model('model_siswa');
 	}
 

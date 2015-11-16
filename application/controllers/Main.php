@@ -9,8 +9,6 @@ class Main extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->helper(array('url'));
-		$this->load->library(array('template1', 'session'));
 		
 		$status = $this->session->userdata('Jenis_User');
 
