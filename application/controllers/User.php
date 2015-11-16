@@ -6,8 +6,6 @@ class User extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		$this->load->library(array('session', 'template1', 'form_validation'));
-		$this->load->helper(array('url', 'form'));
 		$this->load->model('model_user');
 	}
 
@@ -79,9 +77,7 @@ class User extends CI_Controller {
 			$this->form_validation->set_rules('username', 'Username', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required');
 
-			if($this->form_validation->run() === FALSE){
-
-			} else {
+			if($this->form_validation->run() === TRUE){
 				$userdata = $this->model_user->get_user_info($this->input->post());
 
 				if ( $userdata ) {
@@ -98,6 +94,7 @@ class User extends CI_Controller {
 				}
 			}
 		}
+
 		$this->template1->create_view1('user/user_login');
 	}
 

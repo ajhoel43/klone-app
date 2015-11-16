@@ -5,7 +5,7 @@
 </style>
 <div class="col-xs-4"></div>
 <div class="col-xs-4 login-form">
-	<?php echo validation_errors(); ?>
+	<?php //echo validation_errors('<div class="alert alert-warning"><strong>','</strong></div>'); ?>
 	<!--<form method="post" action="<?php echo base_url('user/login') ?>">-->
 	
 	<?php echo form_open('user/login') ?>
@@ -19,6 +19,7 @@
 				  	</span>
 					<input size="30" class="form-control" type="text" name="username" value="<?php echo set_value('username'); ?>" placeholder="Username">
 				</div>
+				<?php echo form_error('username','<div class="alert alert-warning">','</div>') ?>
 			</td>
 		</tr>
 		<tr>
@@ -28,7 +29,8 @@
 				    	<span class="glyphicon glyphicon-lock"></span>
 				  	</span>
 				  	<input size="30" class="form-control" type="password" name="password" placeholder="Password">
-				</div> 		
+				</div>
+				<?php echo form_error('password','<div class="alert alert-warning">','</div>') ?>
 			</td>
 		</tr>
 		<tr>
