@@ -1,7 +1,7 @@
 <?php 
 //Judul
-$lang['window_title'] = 'E-Learning Web';
-$lang['main_title'] = "E-Learning Web Admin";
+$lang['window_title'] = 'K-Lone Web';
+$lang['main_title'] = "K-Lone Web Admin";
 $lang['copyright'] = "Copyright &copy 2015";
 
 $lang['label_no'] = 'No.';
