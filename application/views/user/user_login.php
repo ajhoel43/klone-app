@@ -3,8 +3,8 @@
     	margin: 4em auto;
     }
 </style>
-<div class="col-xs-4"></div>
-<div class="col-xs-4 login-form">
+<div class="col-lg-4"></div>
+<div class="col-lg-4 login-form">
 	<?php //echo validation_errors('<div class="alert alert-warning"><strong>','</strong></div>'); ?>
 	<!--<form method="post" action="<?php echo base_url('user/login') ?>">-->
 	
@@ -45,7 +45,7 @@
 	</table>
 	</form>
 </div>	
-<div class="col-xs-4"></div>
+<div class="col-lg-4"></div>
 
 <script type="text/javascript">
 // $.ajaxSetup({cache:false, async:false});
