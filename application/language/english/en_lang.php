@@ -23,16 +23,20 @@ $lang['label_kuis'] = "Kuis";
 $lang['label_tugas'] = "Tugas";
 
 //Label button
-$lang['new_input'] = "New Input";
+$lang['button_add'] = 'Add';
+$lang['button_close'] = 'Close';
+$lang['button_delete'] = 'Delete';
+$lang['button_new'] = "New Input";
+$lang['button_update'] = 'Update';
 $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
 $lang['label_forgot'] = 'Forgot Password?';
-$lang['label_add'] = 'Add';
-$lang['label_update'] = 'Update';
-$lang['label_delete'] = 'Delete';
 
 //Message
-$lang['message_error_update'] = 'Error update';
-$lang['message_error_insert'] = 'Error insert';
+$lang['message_error_update'] = 'Data can not be updated';
+$lang['message_error_insert'] = 'Data can not be inserted';
+$lang['message_error_delete'] = 'Data can not be deleted';
+
+//Title
 
 ?>

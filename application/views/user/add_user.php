@@ -28,7 +28,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><button style="width:100%;" type="submit" name="submit" value="1" class="btn btn-primary" ><?php echo lang('label_add') ?></button></td>
+				<td><button style="width:100%;" type="submit" name="submit" value="1" class="btn btn-primary" ><?php echo lang('button_add') ?></button></td>
 			</tr>
 		</table>
 		</form>
