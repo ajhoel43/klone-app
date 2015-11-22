@@ -139,7 +139,13 @@ class User extends CI_Controller {
 			redirect('user/list_user');
     	}
 
+    	// $this->load->view('user/add_user');
     	$this->_add_user_form();
+    }
+
+    function add_user1()
+    {
+    	$this->load->view('user/add_user1');
     }
 }
 ?>
