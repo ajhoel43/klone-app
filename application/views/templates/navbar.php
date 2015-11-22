@@ -12,9 +12,7 @@
 	</div>
 
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<!--<ul class="nav navbar-nav">
-		</ul>
-		<form class="navbar-form navbar-left" role="search">
+		<!--<form class="navbar-form navbar-left" role="search">
 			<div class="form-group">
 				<input class="form-control" type="text">
 			</div> 
@@ -28,24 +26,6 @@
 				<ul class="dropdown-menu alg">
 					<li>
 						<a href="<?php echo base_url('user/list_user') ?>" class="btn btn-link btn-md"><?php echo lang('label_user') ?></a>
-					</li>
-					<li>
-						<a href="<?php echo base_url('siswa/list_siswa') ?>" class="btn btn-link btn-md"><?php echo lang('label_siswa') ?></a>
-					</li>
-					<li>
-						<a href="<?php echo base_url('guru/list_guru') ?>" class="btn btn-link btn-md"><?php echo lang('label_guru') ?></a>
-					</li>
-					<li>
-						<a href="<?php echo base_url('matpel/list_matpel') ?>" class="btn btn-link btn-md"><?php echo lang('label_matpel') ?></a>
-					</li>
-					<li>
-						<a href="<?php echo base_url('kelas/list_kelas') ?>" class="btn btn-link btn-md"><?php echo lang('label_kelas') ?></a>
-					</li>
-					<li>
-						<a href="#" class="btn btn-link btn-md"><?php echo lang('label_kuis') ?></a>
-					</li>
-					<li>
-						<a href="#" class="btn btn-link btn-md"><?php echo lang('label_tugas') ?></a>
 					</li>
 				</ul>
 			</li>

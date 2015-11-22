@@ -11,16 +11,38 @@
         <meta name="description" content="Source code generated using layoutit.com">
         <meta name="ajhoel" content="K-Lone">
 
-        <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css') ?>">
+        <!-- JQUERY -->
+        <!--
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        -->
+ 
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/js/jquery-ui.min.css') ?>">
         <script src="<?php echo base_url('assets/js/jquery.js') ?>"></script>
+        <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>"></script>
+        <script src="<?php echo base_url('assets/js/klone.js') ?>"></script>
+
+        <!-- BOOTSTRAP -->
+        <!-- 
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        -->
+
+        <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css') ?>">
         <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
 
         <style type="text/css">
         .body {
-        	margin-top: 5em;
+            margin : 4em 1em 2em 1em;
+        	margin-top: 4em;
+            /*border: 3px;
+            border-style: solid;*/
         }
         </style>
     </head>
     <body class="body">
-      	<div class="container">
-      		<div class="row">
+      	<div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
