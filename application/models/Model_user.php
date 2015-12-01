@@ -11,32 +11,27 @@ class Model_user extends CI_Model
 		$this->load->database();
 	}
 
-	// function _process_randomstr( $length, $params ) {
-	// 	//menghilangkan space dan hanya mengambil karakter A-Z,a-z,0-9
-	// 	$karakter = preg_replace("/[^A-Za-z0-9]/",'', $params['username'].$params['id']);
-	// 	//set string = null
-	// 	$string = '';
-	// 	for ($i = 0; $i < $length; $i++) {
-	// 		$pos = rand(0, strlen($karakter)-1);
-	// 		$string .= $karakter{$pos};
-	// 	}
+	function _create_hash( $params = array(), $salt = null, $create = TRUE) {
 		
-	// 	$salt = $this->_create_salt($string);
-	// 	$hash = $this->_create_hash($salt, $string);
+		if($create === FALSE)
+		{
+			$option = array(
+				'cost' => 10,
+				'salt' => $salt
+				);
+		}
+		else
+		{
+			$option = array(
+				'cost' => 10,
+				'salt' => password_hash(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM), PASSWORD_BCRYPT),
+				);
+		}
 
-	// 	return array($string, $salt, $hash);
-	// }
+		$pass = password_hash($params['password'], PASSWORD_BCRYPT, $option);
+		$hash = password_hash($params['password'].$params['username'], PASSWORD_BCRYPT, $option);
 
-	function _create_salt( $string ){
-		$salt = substr($string, 0, 3);
-		
-		return $salt;		
-	}
-
-	function _create_hash( $salt, $string ) {
-		$hash = hash('sha256', $salt . hash('sha256', $string));
-
-		return $hash;
+		return array($hash, $option['salt'], $pass);
 	}
 
 	function _get_max_id( $params ){
@@ -50,39 +45,32 @@ class Model_user extends CI_Model
 
 		$this->db->select_max('Jenis_User');
 		//$this->db->select('')
-		$query = $this->db->get('M_User');
+		$query = $this->db->get('M_user');
 
 		return $query;
 	}
 
-	function get_user_info($params = null)
+	function get_user_info( $params = array() )
 	{
 		$this->db->select('*');
 
 		if ($params) {
-			unset($params['login']);
-			$this->db->where('Username', $params['username']);
-			$query = $this->db->get('M_User')->row_array();//die(var_dump($query));
+			$this->db->where('username', $params['username']);
+			$query = $this->db->get('M_user')->row_array();
 		} else {
-			$query = $this->db->get('M_User')->result();
+			$query = $this->db->get('M_user')->result();
 		}
 		
 		return $query;
 	}
 
 	function get_user_data( $params = null ) {
+		if(isset($params['id']))
+			$this->db->where('ID_user', $params['id']);
+
 		$this->db->select('*');
-		if ($params) {
-			unset($params['login']);
-			// $this->db->select('
-			// 	Username, Jenis_User
-			// 	');
-			$this->db->where('ID_User', $params['ID_User']);
-			$query = $this->db->get('M_User')->row();//die(var_dump($query));
-		} else {
-			//$this->db->select('*');
-			$query = $this->db->get('M_User')->result();
-		}
+		
+		$query = $this->db->get('M_user')->row();
 		
 		return $query;
 	}
@@ -90,21 +78,21 @@ class Model_user extends CI_Model
 	function add_user( $params, $id = null ) {
 		$msg = '';
 		if($id) {
-			$this->db->where('ID_User', $id);
+			$this->db->where('ID_user', $id);
 			
-			unset($params['ID_User']);
-			$query = $this->db->update('M_User', $params);
+			unset($params['ID_user']);
+			$query = $this->db->update('M_user', $params);
 
 			if(!$query)
-				$msg = lang('message_error_update').' M_User';
+				$msg = lang('message_error_update').' M_user';
 		} else {
-			$query = $this->db->insert('M_User', $params);
+			$query = $this->db->insert('M_user', $params);
 
 			if(!$query)
-				$msg = lang('message_error_insert').' M_User';
+				$msg = lang('message_error_insert').' M_user';
 		}
 
-		return array($query, $msg);
+		return array($query, $id = $this->db->insert_id(), $msg);
 	}
 }
 
