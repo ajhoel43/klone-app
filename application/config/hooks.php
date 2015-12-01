@@ -39,3 +39,127 @@ function genderInt( $gender ){
 			break;
 	}
 }
+
+function return_flag( $bool )
+{
+	if( $bool )
+		return 1;
+	else
+		return 0;
+}
+
+function insert_flag( $bool )
+{
+	if( $bool )
+		return lang('message_success_insert');
+	else
+		return lang('message_error_insert');
+}
+
+function update_flag( $bool )
+{
+	if( $bool )
+		return lang('message_success_update');
+	else
+		return lang('message_error_update');
+}
+
+function delete_flag( $bool )
+{
+	if( $bool )
+		return lang('message_success_delete');
+	else
+		return lang('message_error_delete');
+}
+
+function to_db_date($string)
+{
+	if($string)
+	{
+		$string = reverseDate($string);
+		$string = date('Y-m-d', strtotime($string));
+	}
+
+	return $string;
+}
+
+function datePrint($string)
+{
+	if($string)
+	{
+		$string = date('d-M-Y', strtotime($string));
+	}
+
+	return $string;
+}
+
+function reverseDate($strDate)
+{
+    if ( $strDate )
+    {
+        $buffer = explode( '-' , $strDate );
+        $first = $buffer[2];
+        $mid = $buffer[1];
+        $last = $buffer[0];
+
+        return $first.'-'.$mid.'-'.$last;
+    }
+    else
+    {
+        return $strDate;
+    }
+}
+
+function year_list()
+{
+	$year = array();
+	$now = date('Y');
+	for($i=$now-30;$i<=$now;$i++)
+	{
+		$year[$i] = $i;
+	}
+	return $year;
+}
+
+function month_list()
+{
+	$month = array(
+		1 => lang('januari'),
+		2 => lang('februari'),
+		3 => lang('maret'),
+		4 => lang('april'),
+		5 => lang('mei'),
+		6 => lang('juni'),
+		7 => lang('juli'),
+		8 => lang('agustus'),
+		9 => lang('september'),
+		10 => lang('oktober'),
+		11 => lang('november'),
+		12 => lang('desember')
+		);
+	
+	return $month;	
+}
+
+function date_list()
+{
+	$date = array();
+	for($i=1;$i<=31;$i++){
+		$date[$i] = $i;
+	}
+
+	return $date;
+}
+
+function userStatus($int)
+{
+	switch ($int) {
+		case 1:
+			return 'Active';
+			break;
+		
+		default:
+			return 'Inactive';
+			break;
+	}
+}
