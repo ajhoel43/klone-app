@@ -12,14 +12,6 @@
 	</div>
 
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		<!--<form class="navbar-form navbar-left" role="search">
-			<div class="form-group">
-				<input class="form-control" type="text">
-			</div> 
-			<button type="submit" class="btn btn-default">
-				Submit
-			</button>
-		</form>-->
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">
 				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-hdd"></span> <?php echo lang('label_master') ?><strong class="caret"></strong></a>
@@ -30,7 +22,7 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> Preferences<strong class="caret"></strong></a>
+				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $userdata['nama_user'] ?><strong class="caret"></strong></a>
 				<ul class="dropdown-menu">
 					<li>
 						<a href="#">Action</a>

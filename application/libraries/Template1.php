@@ -14,6 +14,7 @@ class Template1
 	}
 
 	public function create_view($page, $data = null){
+		$data['userdata'] = $this->CI->session->userdata();
 		$this->CI->load->view('templates/header', $data);
 		$this->CI->load->view('templates/navbar', $data);
 		$this->CI->load->view( $page, $data );
