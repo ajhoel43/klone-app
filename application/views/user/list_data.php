@@ -8,64 +8,42 @@
 </style>
 <div class="col-md-12">
 	<div class="row">
-		<h2><?php echo strtoupper(lang('label_user')) ?></h2>
+		<div class="page-header">
+			<h2><?php echo strtoupper(lang('label_user')) ?></h2>		
+		</div>
 		<a href="<?php echo base_url('user/add_user') ?>" class="btn btn-md btn-primary glyphicon-plus"> <?php echo lang('button_new')." 2" ?></a>
-		<a href="#" class="btn btn-md btn-primary glyphicon-plus add-data" > <?php echo lang('button_new') ?></a>
-		<a href="#" class="btn btn-md btn-primary glyphicon-plus add-form" > <?php echo lang('button_new')." 1" ?></a>
+		<!--<a href="#" class="btn btn-md btn-primary glyphicon-plus add-data" > <?php echo lang('button_new') ?></a> -->
+		<a href="#" class="btn btn-md btn-primary glyphicon-plus add-form" > <?php echo lang('button_new') ?></a>
 		<div class="table-responsive">
 			<table class="table table-bordered thead">
 				<tr class="active">
 					<th style="width:5px;"><?php echo lang('label_no') ?></th>
 					<th style="width:3.5em; ">Action</th>
 					<th><?php echo lang('label_username') ?></th>
-					<th><?php echo lang('label_password') ?></th>
-					<th><?php echo lang('label_salt') ?></th>
-					<th><?php echo lang('label_hash') ?></th>
-					<th style="width:10em;"><?php echo lang('label_jenis_user') ?></th>
+					<th><?php echo lang('label_email') ?></th>
+					<th><?php echo lang('label_phone') ?></th>
+					<th><?php echo lang('label_birth') ?></th>
+					<th><?php echo lang('label_status') ?></th>
+					<th style="width:10em;"><?php echo lang('label_user_prev') ?></th>
 				</tr>
 				<?php $no = 1; ?>
 				<?php foreach ($records as $record) : ?>
 					<tr>
 						<td style="text-align:center;"><?php echo $no ?>.</td>
 						<td style="text-align:center;">
-							<a style="color:green;" href="<?php echo base_url('user/edit_user/'.$record->ID_User) ?>" class="glyphicon glyphicon-pencil"></a>
-							<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->ID_User) ?>" class="glyphicon glyphicon-remove"></a>
+							<a style="color:green;" href="<?php echo base_url('user/edit_user/'.$record->ID_user) ?>" class="glyphicon glyphicon-pencil"></a>
+							<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->ID_user) ?>" class="glyphicon glyphicon-remove"></a>
 						</td>
-						<td><?php echo $record->Username ?></td>	
-						<td><?php echo $record->Password ?></td>
-						<td><?php echo $record->Salt ?></td>
-						<td><?php echo $record->Hash ?></td>
-						<td><?php echo $record->Jenis_User ?></td>
+						<td><?php echo $record->username ?></td>
+						<td><?php echo $record->email ?></td>
+						<td><?php echo $record->phone_num ?></td>
+						<td><?php echo datePrint($record->birth_date) ?></td>
+						<td><?php echo userStatus($record->status) ?></td>
+						<td><?php echo $record->user_previleges ?></td>
 					</tr>
 				<?php $no++; endforeach; ?>
 			</table>	
 		</div>
-		<table class="table table-bordered thead">
-			<tr class="active">
-				<th style="width:5px;"><?php echo lang('label_no') ?></th>
-				<th style="width:3.5em; ">Action</th>
-				<th><?php echo lang('label_username') ?></th>
-				<th><?php echo lang('label_password') ?></th>
-				<th><?php echo lang('label_salt') ?></th>
-				<th><?php echo lang('label_hash') ?></th>
-				<th style="width:10em;"><?php echo lang('label_jenis_user') ?></th>
-			</tr>
-			<?php $no = 1; ?>
-			<?php foreach ($records as $record) : ?>
-				<tr>
-					<td style="text-align:center;"><?php echo $no ?>.</td>
-					<td style="text-align:center;">
-						<a style="color:green;" href="<?php echo base_url('user/edit_user/'.$record->ID_User) ?>" class="glyphicon glyphicon-pencil"></a>
-						<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->ID_User) ?>" class="glyphicon glyphicon-remove"></a>
-					</td>
-					<td><?php echo $record->Username ?></td>	
-					<td><?php echo $record->Password ?></td>
-					<td><?php echo $record->Salt ?></td>
-					<td><?php echo $record->Hash ?></td>
-					<td><?php echo $record->Jenis_User ?></td>
-				</tr>
-			<?php $no++; endforeach; ?>
-		</table>
 		<!--<h3>Testing Hash and Randomize</h3>
 		Password Generate : <?php echo $random ?><br>
 		Salt Generate : <?php echo $salt ?><br>
@@ -73,12 +51,12 @@
 		-->
 	</div>
 </div>
-<div class="modal fade form-modal">
+<div class="modal fade form-modal" role="dialog">
 	<p>Loading ...</p>
 </div>
 
 <div class="modal fade add-modal"> <!-- MODAL -->
-	<div class="modal-dialog"> <!-- DIALOG -->
+	<div class="modal-dialog modal-lg"> <!-- DIALOG -->
 		<div class="modal-content"> <!-- CONTENT -->
 			<div class="modal-header"> <!-- HEADER -->
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
@@ -133,6 +111,10 @@ $(".add-form").click(function(event){
 $("body").on("click", ".loop-modal", function(event){
 	event.preventDefault();
 	$(".errordialog").modal("show");
+});
+
+$("body").on("click", "button[name='submit']", function(event){
+	window.location.reload();
 });
 
 </script>
