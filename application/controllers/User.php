@@ -36,44 +36,54 @@ class User extends CI_Controller {
 		}
 	}
 
-	function _edit_user_form($params) {
-		$data['record'] = $this->model_user->get_user_data(array('ID_User' => $params));
-		$data['Salt'] = $this->model_user->_create_salt($data['record']->Password);
-		$data['Hash'] = $this->model_user->_create_hash($data['Salt'], $data['record']->Password);
+	function _generate_birth_date($params)
+	{
+		if(strlen($params['date']) == 1)
+			$params['date'] = "0".$params['date'];
+		if(strlen($params['month']) == 1)
+			$params['month'] = "0".$params['month'];
+		
+		$params['birth_date'] = $params['date']."-".$params['month']."-".$params['year'];
+		$params['birth_date'] = to_db_date($params['birth_date']);
+		unset($params['date']);
+		unset($params['month']);
+		unset($params['year']);
+
+		return $params;
+
+	}
+
+	function _edit_user_form($id) {
+		$data['record'] = $this->model_user->get_user_data(array('id' => $id));
 		
 		$this->template1->create_view('user/edit_data', $data);
 	}
 
 	function edit_user($id) {		
 		$save = $this->input->post('submit');
-
+		
 		if( $save ) {
 			unset($_POST['submit']);
-			
-			$_POST['salt'] = $this->model_user->_create_salt($_POST['password']);
-			$_POST['hash'] = $this->model_user->_create_hash($_POST['salt'], $_POST['password']);
+			$_POST = $this->_generate_birth_date($this->input->post());
 
-			$this->model_user->add_user($this->input->post(), $id);
-			redirect('user/list_user');
+			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
 
-		//$data['record'] = $this->model_user->get_user_data(array('username' => $id));
-
-		//$data['random'] = $this->model_user->_process_randomstr(10, $data['Username'], $data['Jenis_User']);
-		// $data['salt'] = $this->model_user->_create_salt($data['record']->Password);
-		// $data['hash'] = $this->model_user->_create_hash($data['salt'], $data['record']->Password);
-
-		//$data['message'] = $this->model_user->update_user($data);
-
+			list($flag, $id, $msg) = $this->model_user->add_user($this->input->post(), $id);
+			if($flag)
+				redirect('user/list_user');
+			else
+				echo lang('message_error_update');
 		}
 
 		$this->_edit_user_form($id);
 	}
 
 	function login() {
-		$login = $this->input->post('login');
+		$login = $this->input->post('submit');
+		$data = array();
 
 		if ($login){
-			unset($_POST['login']);
+			unset($_POST['submit']);
 			$this->form_validation->set_rules('username', 'Username', 'required');
 			$this->form_validation->set_rules('password', 'Password', 'required');
 
@@ -81,12 +91,21 @@ class User extends CI_Controller {
 				$userdata = $this->model_user->get_user_info($this->input->post());
 
 				if ( $userdata ) {
-					$hash = $this->model_user->_create_hash($userdata['Salt'], $_POST['password']);
+					list($hash, $salt, $pass) = $this->model_user->_create_hash($this->input->post(), $userdata['salt'], FALSE);
 					
-					if($hash == $userdata['Hash'] && $_POST['password']==$userdata['Password']){
-						$this->session->set_userdata($userdata);
-						redirect('');
-					} else {
+					if(password_verify($_POST['password'], $userdata['password']))
+					{
+						if(hash_equals($hash, $userdata['hash'])){
+							//unset sensitive info
+							unset($userdata['hash']);
+							unset($userdata['password']);
+							unset($userdata['salt']);
+							$this->session->set_userdata($userdata);
+							redirect('main');
+						}
+					}
+					else 
+					{
 						echo "Wrong Password";
 					}
 				} else {
@@ -95,29 +114,17 @@ class User extends CI_Controller {
 			}
 		}
 
-		$this->template1->create_view1('user/user_login');
+		$this->template1->create_view1('user/user_login', $data);
 	}
 
 	function list_user() {
 		$data['records'] = $this->model_user->get_user_info();
-		//getting default password with _process_randomstr
-		//list($data['random'], $data['salt'], $data['hash']) = $this->model_user->_process_randomstr(10, $this->session->userdata('Username'), $this->session->userdata('Jenis_User'));
-		// $data['random'] = $this->model_user->_process_randomstr(10, $this->session->userdata('Username'), $this->session->userdata('Jenis_User'));
-		// $data['salt'] = $this->model_user->_create_salt($data['random']);
-		// $data['hash'] = $this->model_user->_create_hash($data['salt'], $data['random']);
 		$this->template1->create_view('user/list_data', $data);
 	}
 
-    function truepage($msg) {
-    	//$data['title'] = "Success Login";
-
-    	//$data['session'] = $this->session->userdata();
-    	redirect('');
-    }
-
     function logout() {
     	$this->session->sess_destroy();
-    	redirect('');
+    	redirect('main');
     }
 
     function _add_user_form(){
@@ -129,17 +136,14 @@ class User extends CI_Controller {
 
     	if($save) {
 			unset($_POST['submit']);
-			//unset($_POST['ID_User']);
+			$_POST = $this->_generate_birth_date($this->input->post());
 			
+			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
 			
-			$_POST['salt'] = $this->model_user->_create_salt($_POST['password']);
-			$_POST['hash'] = $this->model_user->_create_hash($_POST['salt'], $_POST['password']);
-
-			$this->model_user->add_user($this->input->post());//die(var_dump($q));
-			redirect('user/list_user');
+			list($flag, $id, $msg) = $this->model_user->add_user($this->input->post());
+			die();
     	}
 
-    	// $this->load->view('user/add_user');
     	$this->_add_user_form();
     }
 

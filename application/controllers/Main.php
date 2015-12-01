@@ -9,8 +9,8 @@ class Main extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		
-		$status = $this->session->userdata('Jenis_User');
+
+		$status = $this->session->userdata('user_previleges');
 
 		if ($status == null || $status == '') {
 			redirect('user/login');
@@ -25,7 +25,8 @@ class Main extends CI_Controller
 		$this->load->view('pages/content');
 		$this->load->view('templates/footer');
 		*/
-		$data['title'] = "E-Learning";
+		$data['title'] = "K'Lone";
+		$data['user'] = $this->session->userdata();
 		$this->template1->create_view('pages/content', $data);
 	}
 
