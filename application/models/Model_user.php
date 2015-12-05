@@ -34,6 +34,16 @@ class Model_user extends CI_Model
 		return array($hash, $option['salt'], $pass);
 	}
 
+	function usprev_dropdown()
+	{
+		$query = $this->db->get('M_user_previleges')->result();
+
+		foreach ($query as $q) {
+			$buffer[$q->kode_up] = $q->deskripsi;
+		}
+
+		return $buffer;
+	}
 	function _get_max_id( $params ){
 		if ($params['Jenis_User'] == 'Siswa' ) {
 			$this->db->like('Jenis_User', $params['juser']);
@@ -66,7 +76,7 @@ class Model_user extends CI_Model
 
 	function get_user_data( $params = null ) {
 		if(isset($params['id']))
-			$this->db->where('ID_user', $params['id']);
+			$this->db->where('username', $params['id']);
 
 		$this->db->select('*');
 		
@@ -78,9 +88,9 @@ class Model_user extends CI_Model
 	function add_user( $params, $id = null ) {
 		$msg = '';
 		if($id) {
-			$this->db->where('ID_user', $id);
+			$this->db->where('username', $id);
 			
-			unset($params['ID_user']);
+			unset($params['username']);
 			$query = $this->db->update('M_user', $params);
 
 			if(!$query)
