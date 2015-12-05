@@ -13,7 +13,7 @@ class Main extends CI_Controller
 		$status = $this->session->userdata('user_previleges');
 
 		if ($status == null || $status == '') {
-			redirect('user/login');
+			redirect('front/login');
 		}
 	}
 
