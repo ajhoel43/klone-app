@@ -1,0 +1,47 @@
+
+.navbar-custom1  {
+    background-color: #bb1111;
+    background-image: none;
+}
+
+.navbar-custom1  .nav > li > a {
+    color: white;
+    text-decoration: none;
+    text-shadow: 0 0px 0 #ffffff;
+}
+
+.navbar-custom1  .navbar-brand {
+  color: white;
+}
+
+.navbar-custom1 .nav > li > a:focus,
+.navbar-custom1 .nav > li > a:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #bb1111;
+}
+
+.navbar-custom1 .navbar-text {
+  margin-bottom: 0;
+  line-height: 40px;
+  color: white;
+}
+
+.navbar-custom1 .navbar-link {
+  color: white;
+}
+
+.navbar-custom1 .navbar-link:hover {
+  color: white;
+}
+
+/*-- change navbar dropdown color --*/
+.navbar-custom1 .navbar-nav .open .dropdown-menu>li>a,.navbar-custom1 .navbar-nav .open .dropdown-menu {
+  background-color: #bb1111;
+  color:#ffffff;
+}
+        
+.navbar-custom1 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+  background-color: #eee;
+  border-color: #428bca;
+}

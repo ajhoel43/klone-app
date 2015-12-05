@@ -1,8 +1,9 @@
 <style type="text/css">
-.alg a {
-	text-align: left;
+.nav-margin {
+	margin-right: 1em;
 }
 </style>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/navbar.css') ?>">
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="navbar-header">
 		 
@@ -15,13 +16,13 @@
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">
 				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-hdd"></span> <?php echo lang('label_master') ?><strong class="caret"></strong></a>
-				<ul class="dropdown-menu alg">
+				<ul class="dropdown-menu">
 					<li>
-						<a href="<?php echo base_url('user/list_user') ?>" class="btn btn-link btn-md"><?php echo lang('label_user') ?></a>
+						<a href="<?php echo base_url('user/list_user') ?>"><?php echo lang('label_user') ?></a>
 					</li>
 				</ul>
 			</li>
-			<li class="dropdown">
+			<li class="dropdown nav-margin">
 				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $userdata['nama_user'] ?><strong class="caret"></strong></a>
 				<ul class="dropdown-menu">
 					<li>
