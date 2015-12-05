@@ -76,7 +76,6 @@ function to_db_date($string)
 {
 	if($string)
 	{
-		$string = reverseDate($string);
 		$string = date('Y-m-d', strtotime($string));
 	}
 
@@ -114,7 +113,8 @@ function year_list()
 {
 	$year = array();
 	$now = date('Y');
-	for($i=$now-30;$i<=$now;$i++)
+	$minyear = 1985;
+	for($i=$minyear;$i<=$now;$i++)
 	{
 		$year[$i] = $i;
 	}
@@ -162,4 +162,22 @@ function userStatus($int)
 			return 'Inactive';
 			break;
 	}
+}
+
+function dashDateExplode($string)
+{
+	$check = explode("-", $string);
+	$yfirst = strlen($check[0]);
+
+	if($yfirst >= 4)
+		$stringnew = date('d-m-Y', strtotime($string));
+	else
+		$stringnew = $string;
+
+	$string = explode("-", $stringnew);
+	$date = $string[0];
+	$month = $string[1];
+	$year = $string[2];
+
+	return array($date, $month, $year);
 }
