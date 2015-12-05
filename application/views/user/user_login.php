@@ -6,9 +6,9 @@
 <div class="col-md-4"></div>
 <div class="col-md-4 login-form" style="display:flex; justify-content:center; align-items:center;">
 	<?php //echo validation_errors('<div class="alert alert-warning"><strong>','</strong></div>'); ?>
-	<!--<form method="post" action="<?php echo base_url('user/login') ?>">-->
+	<!--<form method="post" action="<?php echo base_url('front/login') ?>">-->
 	
-	<?php echo form_open('user/login') ?>
+	<?php echo form_open('front/login') ?>
 	<form name="login-form">
 	<h1>Admin Login</h1>
 	<table class="table table-responsive table-striped">
@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<td style="text-align:right" colspan="2">
-				<a href="<?php echo base_url('user/forgot') ?>" class="btn btn-link btn-md"><?php echo lang('label_forgot') ?></a>
+				<a href="<?php echo base_url('front/forgot') ?>" class="btn btn-link btn-md"><?php echo lang('label_forgot') ?></a>
 				<button type="submit" name="submit" value="1" class="btn btn-primary btn-md">
 					<span class="glyphicon glyphicon-log-in"></span>
 					<?php echo lang('label_login') ?>

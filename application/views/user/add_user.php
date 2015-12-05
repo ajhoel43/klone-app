@@ -48,12 +48,6 @@
 					<label class="col-sm-2 control-label"><?php echo lang('label_user_prev') ?></label>
 					<div class="col-sm-10">
 						<?php 
-						$usprev = array(
-							'ADMIN' => 'Administrator',
-							'SUPER' => 'Super Administrator',
-							'OWNER' => 'Owner',
-							'RUSER' => 'Regular User'
-							);
 						echo form_dropdown('user_previleges', $usprev, null, 'class="form-control"')
 						 ?>
 					</div>

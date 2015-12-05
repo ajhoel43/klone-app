@@ -1,41 +1,36 @@
-<style type="text/css">
-/*.formuser input, button {
-	margin-top: 2px;
-	margin-left: 10px;
-}*/
-</style>
 <div class="modal-dialog modal-lg">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
-			<h4 class="modal-title"><?php echo "New User" ?></h4>
+			<h4 class="modal-title"><?php echo "New ".lang('label_user') ?></h4>
 		</div>
 		<div class="modal-body">
 			<?php echo validation_errors(); ?>
-			<h1><?php echo lang('label_user') ?></h1>
 			<?php //echo form_open('user/add_user1', 'class="form-horizontal"') ?>
 			<form class="form-horizontal">
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_username') ?></label>
-					<div class="col-sm-10">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" name="username" value="<?php echo set_value('username') ?>">
 					</div>
+					<div class="col-sm-4"><p class="help-block info-user"></p></div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_password') ?></label>
-					<div class="col-sm-10">				
+					<div class="col-sm-6">				
 						<input type="password" class="form-control" name="password">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_email') ?></label>
-					<div class="col-sm-10">				
+					<div class="col-sm-6">				
 						<input type="email" class="form-control" name="email" value="<?php echo set_value('email') ?>">
 					</div>
+					<div class="col-sm-4"><p class="help-block info-email"></p></div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_phone') ?></label>
-					<div class="col-sm-10">				
+					<div class="col-sm-6">				
 						<input type="text" class="form-control" name="phone_num" size="12" value="<?php echo set_value('phone_num') ?>">
 					</div>
 				</div>
@@ -45,11 +40,11 @@
 						<?php 
 						echo form_dropdown('date', date_list(), set_value('date'), 'class="form-control"') ?>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-2">
 						<?php 
 						echo form_dropdown('month', month_list(), set_value('month'), 'class="form-control"') ?>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-2">
 						<?php 
 						echo form_dropdown('year', year_list(), set_value('year'), 'class="form-control"');
 						?>
@@ -57,20 +52,14 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_user_prev') ?></label>
-					<div class="col-sm-10">
+					<div class="col-sm-6">
 						<?php 
-						$usprev = array(
-							'ADMIN' => 'Administrator',
-							'SUPER' => 'Super Administrator',
-							'OWNER' => 'Owner',
-							'RUSER' => 'Regular User'
-							);
 						echo form_dropdown('user_previleges', $usprev, null, 'class="form-control"')
 						 ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="col-sm-offset-2 col-sm-6">
 						<button type="submit" name="submit" class="btn btn-primary" data-dissmiss="modal" ><?php echo lang('button_add')." ".lang('label_user') ?></button>						
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 <?php 
 //Judul
+$lang['admin_title'] = 'Data Manager';
 $lang['window_title'] = 'K-Lone Web';
 $lang['main_title'] = "K-Lone Web Admin";
 $lang['copyright'] = "Copyright &copy 2015";
@@ -16,6 +17,7 @@ $lang['label_master'] = 'Master Data';
 $lang['label_no'] = 'No.';
 $lang['label_password'] = 'Password';
 $lang['label_phone'] = 'Phone';
+$lang['label_repassword'] = 'Retype Password';
 $lang['label_salt'] = 'Salt';
 $lang['label_status'] = 'Status';
 $lang['label_user'] = "User";

@@ -9,7 +9,7 @@
 <div class="col-md-12">
 	<div class="row">
 		<div class="page-header">
-			<h2><?php echo strtoupper(lang('label_user')) ?></h2>		
+			<h2><?php echo lang('admin_title') ?> <small>@<?php echo strtoupper(lang('label_user')) ?></small></h2>		
 		</div>
 		<a href="<?php echo base_url('user/add_user') ?>" class="btn btn-md btn-primary glyphicon-plus"> <?php echo lang('button_new')." 2" ?></a>
 		<!--<a href="#" class="btn btn-md btn-primary glyphicon-plus add-data" > <?php echo lang('button_new') ?></a> -->
@@ -31,8 +31,8 @@
 					<tr>
 						<td style="text-align:center;"><?php echo $no ?>.</td>
 						<td style="text-align:center;">
-							<a style="color:green;" href="<?php echo base_url('user/edit_user/'.$record->ID_user) ?>" class="glyphicon glyphicon-pencil"></a>
-							<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->ID_user) ?>" class="glyphicon glyphicon-remove"></a>
+							<a style="color:green;" href="<?php echo $record->username ?>" class="glyphicon glyphicon-pencil editdata"></a>
+							<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->username) ?>" class="glyphicon glyphicon-remove deletedata"></a>
 						</td>
 						<td><?php echo $record->username ?></td>
 						<td><?php echo $record->email ?></td>
@@ -89,8 +89,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-<link href="<?php echo base_url('assets/resources/jquery-ui.min.css') ?>" rel="stylesheet"/>
-<script src="<?php echo base_url('assets/resources/jquery-ui.min.js') ?>"></script>
 <script>
 $.ajaxSetup({cache:false, async: false});
 $(document).ready(function(){
@@ -117,4 +115,9 @@ $("body").on("click", "button[name='submit']", function(event){
 	window.location.reload();
 });
 
+$(".editdata").click(function(event){
+	event.preventDefault();
+	$(".form-modal").load("<?php echo base_url('user/edit_user') ?>/"+$(this).attr('href'));
+	$(".form-modal").modal("show");
+});
 </script>
