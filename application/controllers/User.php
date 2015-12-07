@@ -50,7 +50,19 @@ class User extends CI_Controller {
 		unset($params['year']);
 
 		return $params;
+	}
 
+	function check_available()
+	{
+		$username = $this->input->post('term');
+		if($username == 'Pandu')
+		{
+			die(sprintf('%s@@%s@@', 1, "Username Available"));
+		}
+		else
+		{
+			die(sprintf('%s@@%s@@', 1, "Username is not Available"));
+		}
 	}
 
 	function _edit_user_form($id) {

@@ -120,4 +120,37 @@ $(".editdata").click(function(event){
 	$(".form-modal").load("<?php echo base_url('user/edit_user') ?>/"+$(this).attr('href'));
 	$(".form-modal").modal("show");
 });
+
+//Username info Function with Javascript and ajax
+//Set timer variable
+var timer,
+	typingInterval = 3000; //3 Second
+		
+// $("input[name='username']").on("click", function(event){
+$("body").on("keyup", "input[name='username']", function(event){
+	event.preventDefault();
+		clearTimeout(timer);
+		timer = setTimeout(DoneType, typingInterval);
+});
+
+$("body").on("keydown", "input[name='username']", function(event){
+	clearTimeout(timer);
+});
+
+function DoneType()
+{
+	$.ajax({
+		url : "<?php echo base_url('user/check_available') ?>",
+		type : "POST",
+		data : "term=" + $("input[name='username']").val(),
+		success: function(msg){
+			var flag = 0,
+				msg1 = 1;
+			msg = msg.split('@@');
+
+			if(msg[flag] == 1)
+				$(".info-user").html(msg[msg1]);
+		}
+	});
+}
 </script>
