@@ -74,33 +74,6 @@ class User extends CI_Controller {
 		$this->template1->create_view('user/list_data', $data);
 	}
 
-    function _add_user_form(){
-    	$data['usprev'] = $this->model_user->usprev_dropdown();
-    	$this->template1->create_view('user/add_user', $data);
-    }
-
-    function add_user() {
-    	$save = $this->input->post('submit');
-
-    	if($save) {
-			unset($_POST['submit']);
-			$_POST = $this->_generate_birth_date($this->input->post());
-			
-			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
-			
-			list($flag, $id, $msg) = $this->model_user->add_user($this->input->post());
-			die();
-    	}
-
-    	$this->_add_user_form();
-    }
-
-    function add_user1()
-    {
-    	$data['usprev'] = $this->model_user->usprev_dropdown();
-    	$this->load->view('user/add_user1', $data);
-    }
-
     function create_user()
 	{
 		$submit = $this->input->post('submit');
