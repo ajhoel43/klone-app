@@ -1,4 +1,17 @@
 <?php 
+//*********Dd*********//
+$lang['date_date'] = '- Date -';
+$lang['date_month'] = '- Month -';
+$lang['date_year'] = '- Year -';
+
+//*********Ii*********//
+$lang['info_email'] = 'Example: user@example.com';
+$lang['info_first_name'] = 'First Name';
+$lang['info_last_name'] = 'Last Name';
+$lang['info_phone'] = 'Example: +6281234567890';
+$lang['info_user'] = 'Example: userexample, user_example, user.example';
+$lang['info_pass'] = 'Password';
+$lang['info_repass'] = 'Retype Password';
 //Judul
 $lang['admin_title'] = 'Data Manager';
 $lang['window_title'] = 'K-Lone Web';
@@ -14,6 +27,7 @@ $lang['label_id'] = 'ID';
 $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
 $lang['label_master'] = 'Master Data';
+$lang['label_name'] = 'Name';
 $lang['label_no'] = 'No.';
 $lang['label_password'] = 'Password';
 $lang['label_phone'] = 'Phone';
@@ -31,7 +45,19 @@ $lang['button_delete'] = 'Delete';
 $lang['button_new'] = "New Input";
 $lang['button_update'] = 'Update';
 
+//**********Mm***********//
 //Message
+$lang['messageEmailOk'] = 'Email is valid';
+$lang['messageEmailNotOk'] = 'Email has been registered';
+$lang['messageEmailNotValid'] = 'Email is not valid';
+$lang['messageEmailNull'] = 'Email is required';
+$lang['messageLoginFalse'] = 'Wrong Username or Password';
+$lang['messagePasswMatch'] = 'Password is match';
+$lang['messagePasswNotMatch'] = 'Password is not match';
+$lang['messageUserOk'] = 'Username is available';
+$lang['messageUserNotOk'] = 'Username has been reserved';
+$lang['messageUserNotValid'] = 'Username is not valid';
+$lang['messageUserNull'] = 'Username is required';
 $lang['message_error_update'] = 'Data can not be updated';
 $lang['message_error_insert'] = 'Data can not be inserted';
 $lang['message_error_delete'] = 'Data can not be deleted';
@@ -55,4 +81,6 @@ $lang['desember'] = "Desember";
 
 //Title
 
+//**********Uu**********//
+$lang['user_prev'] = 'User Previleges';
 ?>
