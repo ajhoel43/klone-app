@@ -34,9 +34,37 @@ class Model_user extends CI_Model
 		return array($hash, $option['salt'], $pass);
 	}
 
-	function usprev_dropdown()
+	function _generate_birth_date($params)
 	{
+		if(strlen($params['date']) == 1)
+			$params['date'] = "0".$params['date'];
+		if(strlen($params['month']) == 1)
+			$params['month'] = "0".$params['month'];
+		
+		$params['birth_date'] = $params['date']."-".$params['month']."-".$params['year'];
+		$params['birth_date'] = to_db_date($params['birth_date']);
+		unset($params['date']);
+		unset($params['month']);
+		unset($params['year']);
+
+		return $params;
+	}
+
+	function usprev_dropdown($params)
+	{
+		if($params['level'] > 1)
+		{
+			echo "You Have no Permission";
+			die();
+		}
+
+		if(isset($params['level']))
+			$this->db->where('level >=', $params['level']);
+
 		$query = $this->db->get('M_user_previleges')->result();
+
+		$buffer = array();
+		$buffer[''] = "- ".lang('user_prev')." -";
 
 		foreach ($query as $q) {
 			$buffer[$q->kode_up] = $q->deskripsi;
@@ -44,34 +72,81 @@ class Model_user extends CI_Model
 
 		return $buffer;
 	}
-	function _get_max_id( $params ){
-		if ($params['Jenis_User'] == 'Siswa' ) {
-			$this->db->like('Jenis_User', $params['juser']);
-		} else if ($params['Jenis_User'] == 'Guru') {
-			$this->db->like('Jenis_User', $params['juser']);
-		} else if ($params['Jenis_User'] == 'Administrator') {
-			$this->db->like('Jenis_User', $params['juser']);
-		}
 
-		$this->db->select_max('Jenis_User');
-		//$this->db->select('')
-		$query = $this->db->get('M_user');
+	function get_user_info( $params = array() )
+	{
+		$this->db->select('
+			u.*,
+			up.*,
+			up.deskripsi as user_type
+			');
+
+		$this->db->join('M_user_previleges up', 'up.kode_up = u.user_previleges','left');
+		
+		if ($params) {
+			$this->db->where('username', $params['username']);
+			$query = $this->db->get('M_user u')->row_array();
+		} else {
+			$query = $this->db->get('M_user u')->result();
+		}
 
 		return $query;
 	}
 
-	function get_user_info( $params = array() )
+	function get_list_user($params = array())
 	{
-		$this->db->select('*');
+		$this->db->select('
+			u.*,
+			up.deskripsi as user_type
+			');
 
-		if ($params) {
-			$this->db->where('username', $params['username']);
-			$query = $this->db->get('M_user')->row_array();
-		} else {
-			$query = $this->db->get('M_user')->result();
-		}
-		
+		$this->db->join('M_user_previleges up', 'up.kode_up = u.user_previleges', 'left');
+		$this->db->order_by('up.level asc','u.username asc');
+		$query = $this->db->get('M_user u')->result();
+
 		return $query;
+	}
+
+	function auto_checking( $params = array() )
+	{
+		$message = '';
+		$this->db->select('username, email');
+		$type = 0;
+
+		if(isset($params['username']))
+		{
+			$this->db->where('username', $params['username']);
+			$type = 0;
+		}
+
+		if(isset($params['email']))
+		{
+			$this->db->where('email', $params['email']);
+			$type = 1;
+		}
+
+		$query = $this->db->get('M_user')->row();
+		$count = count($query);
+		
+		if($count == 0 && $type == 0)
+		{
+			$message = lang('messageUserOk');
+		}
+		elseif($count > 0 && $type == 0)
+		{
+			$message = lang('messageUserNotOk');
+		}
+
+		if($count == 0 && $type == 1)
+		{
+			$message = lang('messageEmailOk');
+		}
+		elseif($count > 0 && $type == 1)
+		{
+			$message = lang('messageEmailNotOk');
+		}
+
+		return array($query, $message);
 	}
 
 	function get_user_data( $params = null ) {
