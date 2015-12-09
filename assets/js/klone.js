@@ -30,3 +30,25 @@ $( ".dateto" ).datepicker({
 });
 
 });
+
+function autoCheck(params)
+{
+	$.ajax({
+		url : params.link,
+		type : params.type,
+		data : "term=" + params.data,
+		success: function(msg){
+			var flag = 0,
+				status = 1;
+			msg = msg.split('@@');
+			
+			if(msg[flag] == 1)
+				params.info.html(msg[status]);
+
+			// if(msg[formflag] == 1)
+			// 	$("button[name='add_user_btn']").attr('disabled', true);
+			// else if(msg[formflag] == 0)
+			// 	$("button[name='add_user_btn']").removeAttr('disabled');
+		}
+	});
+}
