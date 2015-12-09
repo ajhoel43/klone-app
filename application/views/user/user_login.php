@@ -5,13 +5,21 @@
 </style>
 <div class="col-md-4"></div>
 <div class="col-md-4 login-form" style="display:flex; justify-content:center; align-items:center;">
-	<?php //echo validation_errors('<div class="alert alert-warning"><strong>','</strong></div>'); ?>
-	<!--<form method="post" action="<?php echo base_url('front/login') ?>">-->
-	
 	<?php echo form_open('front/login') ?>
 	<form name="login-form">
 	<h1>Admin Login</h1>
 	<table class="table table-responsive table-striped">
+	<?php 
+		$error = $this->session->flashdata('error');
+		if($error):
+	?>
+		<tr>
+			<div class="alert alert-danger"><?php echo $error ?></div>
+		</tr>
+	<?php endif; ?>
+		<tr>
+			<?php echo validation_errors('<div class="alert alert-warning">','</div>'); ?>
+		</tr>
 		<tr>
 			<td colspan="2">
 				<div class="input-group input-group-lg">
@@ -20,7 +28,6 @@
 				  	</span>
 					<input size="30" class="form-control" type="text" name="username" value="<?php echo set_value('username'); ?>" placeholder="Username">
 				</div>
-				<?php echo form_error('username','<div class="alert alert-warning">','</div>') ?>
 			</td>
 		</tr>
 		<tr>
@@ -31,7 +38,6 @@
 				  	</span>
 				  	<input size="30" class="form-control" type="password" name="password" placeholder="Password">
 				</div>
-				<?php echo form_error('password','<div class="alert alert-warning">','</div>') ?>
 			</td>
 		</tr>
 		<tr>

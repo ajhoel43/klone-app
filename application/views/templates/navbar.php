@@ -23,7 +23,7 @@
 				</ul>
 			</li>
 			<li class="dropdown nav-margin">
-				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $userdata['nama_user'] ?><strong class="caret"></strong></a>
+				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <?php echo $userdata['first_name'] ?><strong class="caret"></strong></a>
 				<ul class="dropdown-menu">
 					<li>
 						<a href="#">Action</a>

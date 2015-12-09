@@ -17,14 +17,15 @@
 		<div class="table-responsive">
 			<table class="table table-bordered thead">
 				<tr class="active">
-					<th style="width:5px;"><?php echo lang('label_no') ?></th>
-					<th style="width:3.5em; ">Action</th>
-					<th><?php echo lang('label_username') ?></th>
+					<th style="width:3%;"><?php echo lang('label_no') ?></th>
+					<th style="width:5%; ">Action</th>
+					<th width="12%"><?php echo lang('label_username') ?></th>
+					<th><?php echo lang('label_name') ?></th>
 					<th><?php echo lang('label_email') ?></th>
-					<th><?php echo lang('label_phone') ?></th>
-					<th><?php echo lang('label_birth') ?></th>
-					<th><?php echo lang('label_status') ?></th>
-					<th style="width:10em;"><?php echo lang('label_user_prev') ?></th>
+					<th style="width:10%;text-align:center;"><?php echo lang('label_phone') ?></th>
+					<th width="8%"><?php echo lang('label_birth') ?></th>
+					<th width="5%"><?php echo lang('label_status') ?></th>
+					<th style="width:12%;"><?php echo lang('label_user_prev') ?></th>
 				</tr>
 				<?php $no = 1; ?>
 				<?php foreach ($records as $record) : ?>
@@ -35,11 +36,12 @@
 							<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->username) ?>" class="glyphicon glyphicon-remove deletedata"></a>
 						</td>
 						<td><?php echo $record->username ?></td>
+						<td><?php echo $record->first_name." ".$record->last_name ?></td>
 						<td><?php echo $record->email ?></td>
 						<td><?php echo $record->phone_num ?></td>
 						<td><?php echo datePrint($record->birth_date) ?></td>
 						<td><?php echo userStatus($record->status) ?></td>
-						<td><?php echo $record->user_previleges ?></td>
+						<td><?php echo $record->user_type ?></td>
 					</tr>
 				<?php $no++; endforeach; ?>
 			</table>	
@@ -102,8 +104,33 @@ $(".add-data").click(function(event){
 
 $(".add-form").click(function(event){
 	event.preventDefault();
-	$(".form-modal").load("<?php echo base_url('user/add_user1') ?>");
+	$(".form-modal").load("<?php echo base_url('user/create_user') ?>");
 	$(".form-modal").modal("show");
+});
+
+$("body").on("click", "button[name='add_user_btn']", function(event){
+	event.preventDefault();
+	$.ajax({
+		url : "<?php echo base_url('front/create_user') ?>",
+		type : "POST",
+		data : $("form[name='form_add_user']").serialize() + "&submit=1",
+		success : function(msg){
+			var flag = 0,
+				string = 1;
+
+			msg = msg.split('@@');
+
+			if(msg[flag] == 0)
+			{
+				$(".errorpan").html(msg[string]);
+				$(".errordialog").modal('show');
+			}
+			else
+			{
+				window.location.reload();
+			}
+		}
+	});
 });
 
 $("body").on("click", ".loop-modal", function(event){
@@ -124,33 +151,108 @@ $(".editdata").click(function(event){
 //Username info Function with Javascript and ajax
 //Set timer variable
 var timer,
-	typingInterval = 3000; //3 Second
-		
-// $("input[name='username']").on("click", function(event){
+	typingInterval = 2000; //3 Second
+	
 $("body").on("keyup", "input[name='username']", function(event){
 	event.preventDefault();
-		clearTimeout(timer);
-		timer = setTimeout(DoneType, typingInterval);
+	clearTimeout(timer);
+	timer = setTimeout(doneTypingUser, typingInterval);
+});
+
+$("body").on("blur", "input[name='username']", function(event){
+	clearTimeout(timer);
+	doneTypingUser();
 });
 
 $("body").on("keydown", "input[name='username']", function(event){
 	clearTimeout(timer);
 });
 
-function DoneType()
-{
-	$.ajax({
-		url : "<?php echo base_url('user/check_available') ?>",
-		type : "POST",
-		data : "term=" + $("input[name='username']").val(),
-		success: function(msg){
-			var flag = 0,
-				msg1 = 1;
-			msg = msg.split('@@');
+$("body").on("keyup", "input[name='email']", function(event){
+	event.preventDefault();
+	clearTimeout(timer);
+	timer = setTimeout(doneTypingEmail, typingInterval);
+});
 
-			if(msg[flag] == 1)
-				$(".info-user").html(msg[msg1]);
-		}
-	});
+$("body").on("blur", "input[name='email']", function(event){
+	clearTimeout(timer);
+	doneTypingEmail();
+});
+
+$("body").on("keydown", "input[name='email']", function(event){
+	clearTimeout(timer);
+});
+
+$("body").on("keyup", "input[name='repassword']", function(event){
+	event.preventDefault();
+	clearTimeout(timer);
+	timer = setTimeout(doneTypingPass, typingInterval);
+});
+
+$("body").on("blur", "input[name='repassword']", function(event){
+	clearTimeout(timer);
+	doneTypingPass();
+});
+
+$("body").on("keydown", "input[name='repassword']", function(event){
+	clearTimeout(timer);
+});
+
+function doneTypingUser()
+{
+	if($("input[name='username']").val() == '')
+	{
+		var span = "<span class='glyphicon glyphicon-remove-sign' style='color:red;'></span>";
+		$(".info-user").html(span + " <?php echo lang('messageUserNull') ?>");
+		return false;
+	}
+
+	var checkparams = {
+			link:"<?php echo base_url('front/check_available') ?>",
+			type:"POST",
+			info:$(".info-user"),
+			data:"user@@" + $("input[name='username']").val()
+		};
+	autoCheck(checkparams);
+}
+
+function doneTypingEmail()
+{
+	if($("input[name='email']").val() == '')
+	{
+		var span = "<span class='glyphicon glyphicon-remove-sign' style='color:red;'></span>";
+		$(".info-email").html(span + " <?php echo lang('messageEmailNull') ?>");
+		return false;
+	}	
+
+	var checkparams = {
+			link:"<?php echo base_url('front/check_available') ?>",
+			type:"POST",
+			info:$(".info-email"),
+			data:"email@@" + $("input[name='email']").val()
+		};
+	autoCheck(checkparams);
+}
+
+function doneTypingPass()
+{
+	if($("input[name='repassword']").val() == '')
+	{
+		var span = "<span class='glyphicon glyphicon-remove-sign' style='color:red;'></span>";
+		$(".info-pass").html(span + " <?php echo lang('messagePasswNotMatch') ?>");
+		return false;
+	}	
+	
+	hashCode = function(s){
+	  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+	}
+
+	var checkparams = {
+			link:"<?php echo base_url('front/check_available') ?>",
+			type:"POST",
+			info:$(".info-pass"),
+			data:"pass@@" + $("input[name='password']").val() + "@@" + $("input[name='repassword']").val()
+		};
+	autoCheck(checkparams);
 }
 </script>
