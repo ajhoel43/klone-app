@@ -40,6 +40,12 @@ function genderInt( $gender ){
 	}
 }
 
+function tempHash($string, $option)
+{
+	$pass = password_hash($string, PASSWORD_BCRYPT, $option);
+	return $pass;
+}
+
 function return_flag( $bool )
 {
 	if( $bool )
@@ -112,6 +118,7 @@ function reverseDate($strDate)
 function year_list()
 {
 	$year = array();
+	$year[''] = lang('date_year');
 	$now = date('Y');
 	$minyear = 1985;
 	for($i=$minyear;$i<=$now;$i++)
@@ -124,6 +131,7 @@ function year_list()
 function month_list()
 {
 	$month = array(
+		'' => lang('date_month'),
 		1 => lang('januari'),
 		2 => lang('februari'),
 		3 => lang('maret'),
@@ -144,10 +152,10 @@ function month_list()
 function date_list()
 {
 	$date = array();
+	$date[''] = lang('date_date');
 	for($i=1;$i<=31;$i++){
 		$date[$i] = $i;
 	}
-
 	return $date;
 }
 
