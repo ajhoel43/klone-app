@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* 
+* This class need validate SESSION
 */
 class User extends CI_Controller {
 	
@@ -36,36 +36,8 @@ class User extends CI_Controller {
 		return array($string, $salt, $hash);
 	}
 
-	function _generate_birth_date($params)
+	function _edit_user_form($id) 
 	{
-		if(strlen($params['date']) == 1)
-			$params['date'] = "0".$params['date'];
-		if(strlen($params['month']) == 1)
-			$params['month'] = "0".$params['month'];
-		
-		$params['birth_date'] = $params['date']."-".$params['month']."-".$params['year'];
-		$params['birth_date'] = to_db_date($params['birth_date']);
-		unset($params['date']);
-		unset($params['month']);
-		unset($params['year']);
-
-		return $params;
-	}
-
-	function check_available()
-	{
-		$username = $this->input->post('term');
-		if($username == 'Pandu')
-		{
-			die(sprintf('%s@@%s@@', 1, "Username Available"));
-		}
-		else
-		{
-			die(sprintf('%s@@%s@@', 1, "Username is not Available"));
-		}
-	}
-
-	function _edit_user_form($id) {
 		$data['record'] = $this->model_user->get_user_data(array('id' => $id));
 		$data['usprev'] = $this->model_user->usprev_dropdown();
 		$birth = dashDateExplode($data['record']->birth_date);
@@ -83,7 +55,7 @@ class User extends CI_Controller {
 		
 		if( $save ) {
 			unset($_POST['submit']);
-			$_POST = $this->_generate_birth_date($this->input->post());
+			$_POST = $this->model_user->_generate_birth_date($this->input->post());
 
 			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
 
@@ -98,7 +70,7 @@ class User extends CI_Controller {
 	}
 
 	function list_user() {
-		$data['records'] = $this->model_user->get_user_info();
+		$data['records'] = $this->model_user->get_list_user();
 		$this->template1->create_view('user/list_data', $data);
 	}
 
@@ -128,5 +100,46 @@ class User extends CI_Controller {
     	$data['usprev'] = $this->model_user->usprev_dropdown();
     	$this->load->view('user/add_user1', $data);
     }
+
+    function create_user()
+	{
+		$submit = $this->input->post('submit');
+		if($submit)
+		{
+			$show = 0;
+			$hide = 1;
+			unset($_POST['submit']);
+			// Checking username availability
+			list($bresult, $msg) = $this->model_user->auto_checking(array('username' => $this->input->post('username')));
+			if($bresult)
+				die(sprintf('%s@@%s@@', $show, $msg));
+
+			//Checking password match
+			if($_POST['password'] !== $_POST['repassword'])
+				die(sprintf('%s@@%s@@', $show, lang('messagePasswNotMatch')));
+
+			unset($_POST['repassword']);
+			//Checking email valid format
+			$string = preg_match('/[@]/', $this->input->post('email'));
+			$string1 = preg_match('/[.]/', $this->input->post('email'));
+
+			if(!$string OR !$string1)
+				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
+
+			$_POST = $this->model_user->_generate_birth_date($this->input->post());
+			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
+
+			list($bresult, $id, $msg) = $this->model_user->add_user($this->input->post());
+
+			if(!$bresult)
+				die(sprintf('%s@@%s@@', $show, $msg));
+			else
+				die(sprintf('%s@@%s@@', $hide, $msg));
+		}
+
+		$upparams = array('level' => $this->session->userdata('level'));
+		$data['usprev'] = $this->model_user->usprev_dropdown($upparams);
+		$this->load->view('user/add_user', $data);
+	}
 }
 ?>
