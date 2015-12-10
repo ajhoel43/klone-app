@@ -1,4 +1,9 @@
 <?php 
+
+//*********Cc*********//
+$lang['conf_yes'] = 'Yes';
+$lang['conf_no'] = 'No';
+
 //*********Dd*********//
 $lang['date_date'] = '- Date -';
 $lang['date_month'] = '- Month -';
