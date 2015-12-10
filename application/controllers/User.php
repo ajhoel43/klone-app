@@ -10,9 +10,9 @@ class User extends CI_Controller {
 		$this->load->model('model_user');
 
 
-		$status = $this->session->userdata('user_previleges');
+		$status = $this->session->userdata('valid');
 
-		if ($status == null OR $status == '') 
+		if ($status !== 1) 
 		{
 			redirect('front/login');
 		}

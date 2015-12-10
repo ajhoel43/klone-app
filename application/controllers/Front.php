@@ -102,7 +102,7 @@ class Front extends CI_Controller
 			$vresult = $this->_validate_form();
 			if(!$vresult)
 				die(sprintf('%s@@%s@@', $show, validation_errors()));
-			
+
 			// Checking username availability
 			list($bresult, $msg) = $this->model_user->auto_checking(array('username' => $this->input->post('username')));
 			if($bresult)
@@ -155,6 +155,7 @@ class Front extends CI_Controller
 							unset($userdata['hash']);
 							unset($userdata['password']);
 							unset($userdata['salt']);
+							$userdata['valid'] = 1;
 							$this->session->set_userdata($userdata);
 							redirect('main');
 						}
@@ -172,10 +173,58 @@ class Front extends CI_Controller
 		$this->template1->create_view1('user/user_login', $data);
 	}
 
-
     function logout() 
     {
     	$this->session->sess_destroy();
     	redirect('main');
+    }
+
+    function forgot_password()
+    {
+    	$submit = $this->input->post('submit');
+    	$data = array();
+    	
+    	if($submit)
+    	{
+	   		unset($_POST['submit']);
+    		$this->form_validation->set_rules('username', 'Username','required');
+    		$this->form_validation->set_rules('email', 'Email', 'required');
+
+    		if($this->form_validation->run() === TRUE)
+    		{
+    			$bresult = $this->model_user->get_verification_info($this->input->post());
+    		
+    			if($bresult)
+    			{
+    				$destination = array(
+    					'email' => 'panduwiranata43@gmail.com' /*$bresult->email*/, 
+    					'name' => $bresult->first_name." ".$bresult->last_name
+    					);
+
+    				$mparams = array(
+    					'user' => $bresult->first_name,
+    					'link' => base_url('front/forgot_password')
+    					);
+
+    				$mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
+    				
+    				if($mresult)
+    				{
+	    				$_SESSION['error'] = 1;
+	    				$_SESSION['success'] = 0;
+	    				$_SESSION['msg'] = "Email has send to <a href='#'>".$bresult->email."</a><br>Check your inbox!! <span class='glyphicon glyphicon-envelope'></span>";
+    				}
+    				else
+    				{
+    					$_SESSION['error'] = 1;
+	    				$_SESSION['success'] = 0;
+	    				$_SESSION['msg'] = $msg;
+    				}
+    				$this->session->mark_as_temp(array('error', 'success', 'msg'), 30);
+    			}		    
+    		}
+    	}
+
+		$this->template1->create_view1('user/forgot_password', $data);
     }
 }

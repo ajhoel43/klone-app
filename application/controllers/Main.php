@@ -9,24 +9,24 @@ class Main extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		
+		$this->remap();
 
-		$status = $this->session->userdata('user_previleges');
+		$status = $this->session->userdata('valid');
 
-		if ($status == null || $status == '') {
+		if ($status !== 1) {
 			redirect('front/login');
 		}
 	}
 
+	private function remap()
+	{
+		// for pull data from other database
+		$this->session->set_userdata('prefix_', 'klone');
+	}
 	public function index()
 	{
-		/*$data['title'] = "E-Learning";
-		$this->load->view('templates/header', $data);
-		$this->load->view('templates/navbar');
-		$this->load->view('pages/content');
-		$this->load->view('templates/footer');
-		*/
 		$data['title'] = "K'Lone";
-		$data['user'] = $this->session->userdata();
 		$this->template1->create_view('pages/content', $data);
 	}
 
