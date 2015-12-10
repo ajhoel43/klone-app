@@ -7,7 +7,7 @@
 <div class="col-md-4 login-form" style="display:flex; justify-content:center; align-items:center;">
 	<?php echo form_open('front/login') ?>
 	<form name="login-form">
-	<h1>Admin Login</h1>
+	<h1>Login</h1>
 	<table class="table table-responsive table-striped">
 	<?php 
 		$error = $this->session->flashdata('error');
@@ -42,7 +42,7 @@
 		</tr>
 		<tr>
 			<td style="text-align:right" colspan="2">
-				<a href="<?php echo base_url('front/forgot') ?>" class="btn btn-link btn-md"><?php echo lang('label_forgot') ?></a>
+				<a href="<?php echo base_url('front/forgot_password') ?>" class="btn btn-link btn-md"><?php echo lang('label_forgot') ?></a>
 				<button type="submit" name="submit" value="1" class="btn btn-primary btn-md">
 					<span class="glyphicon glyphicon-log-in"></span>
 					<?php echo lang('label_login') ?>
