@@ -50,9 +50,9 @@ class Model_user extends CI_Model
 		return $params;
 	}
 
-	function usprev_dropdown($params)
+	function usprev_dropdown($params = array())
 	{
-		if($params['level'] > 1)
+		if(isset($params['level']) AND $params['level'] > 1)
 		{
 			echo "You Have no Permission";
 			die();
@@ -149,7 +149,8 @@ class Model_user extends CI_Model
 		return array($query, $message);
 	}
 
-	function get_user_data( $params = null ) {
+	function get_user_data( $params = null ) 
+	{
 		if(isset($params['id']))
 			$this->db->where('username', $params['id']);
 
@@ -160,12 +161,12 @@ class Model_user extends CI_Model
 		return $query;
 	}
 
-	function add_user( $params, $id = null ) {
+	function add_user( $params, $id = null ) 
+	{
 		$msg = '';
 		if($id) {
 			$this->db->where('username', $id);
 			
-			unset($params['username']);
 			$query = $this->db->update('M_user', $params);
 
 			if(!$query)
@@ -177,7 +178,24 @@ class Model_user extends CI_Model
 				$msg = lang('message_error_insert').' M_user';
 		}
 
-		return array($query, $id = $this->db->insert_id(), $msg);
+		return array($query, $msg);
+	}
+
+	function delete_user($params)
+	{
+		$msg = '';
+
+		if(isset($params['username']))
+			$this->db->where('username', $params['username']);
+		
+		$query = $this->db->delete('M_user');
+
+		if($query)
+			$msg = lang('message_success_delete');
+		else
+			$msg = lang('message_error_delete');
+
+		return array($query, $msg);
 	}
 }
 

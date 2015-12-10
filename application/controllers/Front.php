@@ -11,7 +11,24 @@ class Front extends CI_Controller
 		$this->load->model('model_user');
 	}
 
-	function check_available()
+	function _validate_form()
+	{
+		$this->form_validation->set_rules('username', lang('label_username'), 'required');
+		$this->form_validation->set_rules('first_name', lang('info_first_name'), 'required');
+		$this->form_validation->set_rules('password', lang('label_password'), 'required');
+		$this->form_validation->set_rules('repassword', 'Confirm Password', 'required');
+		$this->form_validation->set_rules('email', lang('label_email'), 'required');
+		$this->form_validation->set_rules(array('date', 'month', 'year'), lang('label_birth'), 'required');
+		$this->form_validation->set_rules('phone_num', lang('label_phone'), 'required');
+		$this->form_validation->set_rules('user_previleges', lang('label_user_prev'), 'required');
+
+		if($this->form_validation->run() === TRUE)
+			return true;
+		else
+			return false;
+	}
+
+	function check_available($id = null)
 	{
 		$params = $this->input->post('term');
 		$params = explode('@@', $params);
@@ -51,15 +68,24 @@ class Front extends CI_Controller
 		}
 
 		list($bresult, $msg) = $this->model_user->auto_checking($nparams);
-		$flag = return_flag($bresult);
-		
-		if(is_null($bresult))
+		// if username or email exists = fail
+		if($bresult)
 		{
-			die(sprintf('%s@@%s@@', $visible, $successsign." ".$msg));
+			if($id)
+			{
+				list($bresult1, $msg1) = $this->model_user->auto_checking(array('username' => $id));
+	
+				if(isset($nparams['username']) && $nparams['username'] === $bresult1->username)
+					die(sprintf('%s@@%s@@', $visible, ''));			
+				elseif(isset($nparams['email']) && $nparams['email'] === $bresult1->email)
+					die(sprintf('%s@@%s@@', $visible, ''));
+			}
+
+			die(sprintf('%s@@%s@@', $visible, $failsign." ".$msg));
 		}
 		else
 		{
-			die(sprintf('%s@@%s@@', $visible, $failsign." ".$msg));
+			die(sprintf('%s@@%s@@', $visible, $successsign." ".$msg));
 
 		}
 	}
@@ -72,6 +98,11 @@ class Front extends CI_Controller
 			$show = 0;
 			$hide = 1;
 			unset($_POST['submit']);
+
+			$vresult = $this->_validate_form();
+			if(!$vresult)
+				die(sprintf('%s@@%s@@', $show, validation_errors()));
+			
 			// Checking username availability
 			list($bresult, $msg) = $this->model_user->auto_checking(array('username' => $this->input->post('username')));
 			if($bresult)

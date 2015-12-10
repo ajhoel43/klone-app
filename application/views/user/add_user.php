@@ -79,7 +79,7 @@
 			</form>
 		</div>
 		<div class="modal-footer">
-			<button type="submit" name="add_user_btn" class="btn btn-primary" data-dissmiss="modal" ><?php echo lang('button_add')." ".lang('label_user') ?></button>
+			<button type="submit" name="add_user_btn" value="active" class="btn btn-primary" data-dissmiss="modal" ><?php echo lang('button_add')." ".lang('label_user') ?></button>
 			<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('button_close') ?></button>
 		</div>
 	</div>

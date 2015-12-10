@@ -11,8 +11,6 @@
 		<div class="page-header">
 			<h2><?php echo lang('admin_title') ?> <small>@<?php echo strtoupper(lang('label_user')) ?></small></h2>		
 		</div>
-		<a href="<?php echo base_url('user/add_user') ?>" class="btn btn-md btn-primary glyphicon-plus"> <?php echo lang('button_new')." 2" ?></a>
-		<!--<a href="#" class="btn btn-md btn-primary glyphicon-plus add-data" > <?php echo lang('button_new') ?></a> -->
 		<a href="#" class="btn btn-md btn-primary glyphicon-plus add-form" > <?php echo lang('button_new') ?></a>
 		<div class="table-responsive">
 			<table class="table table-bordered thead">
@@ -33,7 +31,7 @@
 						<td style="text-align:center;"><?php echo $no ?>.</td>
 						<td style="text-align:center;">
 							<a style="color:green;" href="<?php echo $record->username ?>" class="glyphicon glyphicon-pencil editdata"></a>
-							<a style="color:red;" href="<?php echo base_url('user/delete_user/'.$record->username) ?>" class="glyphicon glyphicon-remove deletedata"></a>
+							<a style="color:red;" href="<?php echo $record->username ?>" class="glyphicon glyphicon-remove deletedata"></a>
 						</td>
 						<td><?php echo $record->username ?></td>
 						<td><?php echo $record->first_name." ".$record->last_name ?></td>
@@ -46,30 +44,24 @@
 				<?php $no++; endforeach; ?>
 			</table>	
 		</div>
-		<!--<h3>Testing Hash and Randomize</h3>
-		Password Generate : <?php echo $random ?><br>
-		Salt Generate : <?php echo $salt ?><br>
-		Hash Generate : <?php echo $hash ?>
-		-->
 	</div>
 </div>
 <div class="modal fade form-modal" role="dialog">
 	<p>Loading ...</p>
 </div>
 
-<div class="modal fade add-modal"> <!-- MODAL -->
-	<div class="modal-dialog modal-lg"> <!-- DIALOG -->
+<div class="modal fade confirm-modal"> <!-- MODAL -->
+	<div class="modal-dialog modal-sm"> <!-- DIALOG -->
 		<div class="modal-content"> <!-- CONTENT -->
 			<div class="modal-header"> <!-- HEADER -->
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
-				<h4 class="modal-title"><?php echo "New User" ?></h4>
+				<h4 class="modal-title"><?php echo "Confirm Delete ".lang('label_user') ?></h4>
 			</div> <!-- END HEADER -->
-			<div class="modal-body add-body"> <!-- BODY -->
-				<p>HELLO MODAL</p>
-				<p><a href="" class="loop-modal">Second Modal</a></p>
+			<div class="modal-body confirm-body"> <!-- BODY -->
 			</div> <!-- END BODY -->
 			<div class="modal-footer"> <!-- FOOTER -->
-				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('button_close') ?></button>
+				<button type="button" name="delete_user" class="btn btn-primary" data-dismiss="modal"><?php echo lang('conf_yes') ?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('conf_no') ?></button>
 			</div> <!-- END FOOTER -->
 		</div> <!-- END CONTENT -->
 	</div> <!-- END DIALOG -->
@@ -96,11 +88,6 @@ $.ajaxSetup({cache:false, async: false});
 $(document).ready(function(){
 
 });
-$(".add-data").click(function(event){
-    event.preventDefault();
-    // $(".add-body").load('<?php echo base_url("user/add_user") ?>');
-	$(".add-modal").modal("show");
-});
 
 $(".add-form").click(function(event){
 	event.preventDefault();
@@ -108,10 +95,45 @@ $(".add-form").click(function(event){
 	$(".form-modal").modal("show");
 });
 
+$(".editdata").click(function(event){
+	event.preventDefault();
+	$(".form-modal").load("<?php echo base_url('user/edit_user') ?>/"+$(this).attr('href'));
+	$(".form-modal").modal("show");
+});
+
+$(".deletedata").click(function(event){
+	event.preventDefault();
+	var value = $(this).attr('href');
+	$(".confirm-body").html("Are you sure want to delete <b><i>'"+$(this).attr('href')+"'</i></b>");
+	$(".confirm-modal").modal('show');
+	$("button[name='delete_user']").click(function(event){
+		$.ajax({
+			url : "<?php echo base_url('user/delete_user') ?>/" + value,
+			type : "POST",
+			success : function(msg){
+				var flag = 0,
+					string = 1;
+
+				msg = msg.split('@@');
+
+				if(msg[flag] == 0)
+				{
+					$(".errorpan").html(msg[string]);
+					$(".errordialog").modal('show');
+				}
+				else
+				{
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
+
 $("body").on("click", "button[name='add_user_btn']", function(event){
 	event.preventDefault();
 	$.ajax({
-		url : "<?php echo base_url('front/create_user') ?>",
+		url : "<?php echo base_url('user/create_user') ?>",
 		type : "POST",
 		data : $("form[name='form_add_user']").serialize() + "&submit=1",
 		success : function(msg){
@@ -133,19 +155,29 @@ $("body").on("click", "button[name='add_user_btn']", function(event){
 	});
 });
 
-$("body").on("click", ".loop-modal", function(event){
+$("body").on("click", "button[name='update_user_btn']", function(event){
 	event.preventDefault();
-	$(".errordialog").modal("show");
-});
+	$.ajax({
+		url : "<?php echo base_url('user/edit_user') ?>/" + $(this).val(),
+		type : "POST",
+		data : $("form[name='form_edit_user']").serialize() + "&submit=1",
+		success : function(msg){
+			var flag = 0,
+				string = 1;
 
-$("body").on("click", "button[name='submit']", function(event){
-	window.location.reload();
-});
+			msg = msg.split('@@');
 
-$(".editdata").click(function(event){
-	event.preventDefault();
-	$(".form-modal").load("<?php echo base_url('user/edit_user') ?>/"+$(this).attr('href'));
-	$(".form-modal").modal("show");
+			if(msg[flag] == 0)
+			{
+				$(".errorpan").html(msg[string]);
+				$(".errordialog").modal('show');
+			}
+			else
+			{
+				window.location.reload();
+			}
+		}
+	});
 });
 
 //Username info Function with Javascript and ajax
@@ -206,13 +238,26 @@ function doneTypingUser()
 		$(".info-user").html(span + " <?php echo lang('messageUserNull') ?>");
 		return false;
 	}
-
-	var checkparams = {
-			link:"<?php echo base_url('front/check_available') ?>",
-			type:"POST",
-			info:$(".info-user"),
-			data:"user@@" + $("input[name='username']").val()
-		};
+	var btnupd = $("button[name='update_user_btn']");
+	var btnadd = $("button[name='add_user_btn']");
+	if(btnadd.val() == 'active')
+	{
+		var checkparams = {
+				link:"<?php echo base_url('front/check_available') ?>",
+				type:"POST",
+				info:$(".info-user"),
+				data:"user@@" + $("input[name='username']").val()
+			};
+	}
+	else
+	{
+		var checkparams = {
+				link:"<?php echo base_url('front/check_available') ?>/" + btnupd.val(),
+				type:"POST",
+				info:$(".info-user"),
+				data:"user@@" + $("input[name='username']").val()
+			};	
+	}
 	autoCheck(checkparams);
 }
 
@@ -224,13 +269,26 @@ function doneTypingEmail()
 		$(".info-email").html(span + " <?php echo lang('messageEmailNull') ?>");
 		return false;
 	}	
-
-	var checkparams = {
-			link:"<?php echo base_url('front/check_available') ?>",
-			type:"POST",
-			info:$(".info-email"),
-			data:"email@@" + $("input[name='email']").val()
-		};
+	var btnupd = $("button[name='update_user_btn']");
+	var btnadd = $("button[name='add_user_btn']");
+	if(btnadd.val() == 'active')
+	{
+		var checkparams = {
+				link:"<?php echo base_url('front/check_available') ?>",
+				type:"POST",
+				info:$(".info-email"),
+				data:"email@@" + $("input[name='email']").val()
+			};
+	}
+	else
+	{
+		var checkparams = {
+				link:"<?php echo base_url('front/check_available') ?>/" + btnupd.val(),
+				type:"POST",
+				info:$(".info-email"),
+				data:"email@@" + $("input[name='email']").val()
+			};
+	}
 	autoCheck(checkparams);
 }
 
