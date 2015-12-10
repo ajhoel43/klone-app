@@ -9,6 +9,7 @@ class Model_user extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database();
+		$this->prefix = $this->session->userdata('prefix_');
 	}
 
 	function _create_hash( $params = array(), $salt = null, $create = TRUE) {
@@ -187,7 +188,7 @@ class Model_user extends CI_Model
 
 		if(isset($params['username']))
 			$this->db->where('username', $params['username']);
-		
+
 		$query = $this->db->delete('M_user');
 
 		if($query)
@@ -196,6 +197,25 @@ class Model_user extends CI_Model
 			$msg = lang('message_error_delete');
 
 		return array($query, $msg);
+	}
+
+	function get_verification_info($params)
+	{
+		if(isset($params['username']) && !is_null($params['username']))
+			$this->db->where('username', $params['username']);
+
+		if(isset($params['email']) && !is_null($params['email']))
+			$this->db->where('email', $params['email']);
+
+		$this->db->select('
+			username, 
+			email, 
+			first_name, 
+			last_name
+			');
+
+		$query = $this->db->get('M_user')->row();
+		return $query;
 	}
 }
 
