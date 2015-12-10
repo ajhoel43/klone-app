@@ -9,6 +9,9 @@ $lang['date_date'] = '- Date -';
 $lang['date_month'] = '- Month -';
 $lang['date_year'] = '- Year -';
 
+//*********Ff*********//
+$lang['forgot_password'] = 'Forgot Password';
+
 //*********Ii*********//
 $lang['info_email'] = 'Example: user@example.com';
 $lang['info_first_name'] = 'First Name';
@@ -17,12 +20,14 @@ $lang['info_phone'] = 'Example: +6281234567890';
 $lang['info_user'] = 'Example: userexample, user_example, user.example';
 $lang['info_pass'] = 'Password';
 $lang['info_repass'] = 'Retype Password';
+
 //Judul
 $lang['admin_title'] = 'Data Manager';
 $lang['window_title'] = 'K-Lone Web';
 $lang['main_title'] = "K-Lone Web Admin";
 $lang['copyright'] = "Copyright &copy 2015";
 
+//*********Ll*********//
 //Label
 $lang['label_birth'] = 'Birth Date';
 $lang['label_email'] = 'Email';
@@ -48,8 +53,9 @@ $lang['button_add'] = 'Add';
 $lang['button_close'] = 'Close';
 $lang['button_delete'] = 'Delete';
 $lang['button_new'] = "New Input";
+$lang['button_ok'] = 'OK';
 $lang['button_update'] = 'Update';
-
+$lang['button_submit'] = 'Submit';
 //**********Mm***********//
 //Message
 $lang['messageEmailOk'] = 'Email is valid';
