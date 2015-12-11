@@ -3,12 +3,15 @@
 * This class need validate SESSION
 */
 class User extends CI_Controller {
-	
+	private $admin = 'ADMIN';
+	private $super = 'SUPER';
+	private $owner = 'OWNER';
+	private $ruser = 'RUSER';
+
 	function __construct() 
 	{
 		parent::__construct();
 		$this->load->model('model_user');
-
 
 		$status = $this->session->userdata('valid');
 
@@ -45,7 +48,9 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('email', lang('label_email'), 'required');
 		$this->form_validation->set_rules(array('date', 'month', 'year'), lang('label_birth'), 'required');
 		$this->form_validation->set_rules('phone_num', lang('label_phone'), 'required');
-		$this->form_validation->set_rules('user_previleges', lang('label_user_prev'), 'required');
+		
+		if($this->session->userdata('user_previleges') === $this->super)
+			$this->form_validation->set_rules('user_previleges', lang('label_user_prev'), 'required');
 
 		if($this->form_validation->run() === TRUE)
 			return true;
@@ -76,6 +81,14 @@ class User extends CI_Controller {
 			$show = 0;
 			$hide = 1;
 			unset($_POST['submit']);
+
+			// Check Permission
+			$level = $this->session->userdata('user_previleges');
+			if($level !== $this->super)
+			{
+				if($this->session->userdata('username') !== $id OR $level !== $this->admin)
+					die(sprintf('%s@@%s@@', $show, lang('messageNoPermission')));
+			}
 
 			// Checking if field is null
 			$vresult = $this->_validate_form();
@@ -112,7 +125,12 @@ class User extends CI_Controller {
 			if(!$bresult)
 				die(sprintf('%s@@%s@@', $show, $msg));
 			else
+			{
+				if($this->session->userdata('username') === $id)
+					die(sprintf('%s@@%s@@', 2, "<h4>Your account is updated successfully</h4><br><p>You will be logout automatically</p>"));
+
 				die(sprintf('%s@@%s@@', $hide, $msg));
+			}
 		}
 
 		$this->_edit_user_form($id);
@@ -132,6 +150,11 @@ class User extends CI_Controller {
 			$hide = 1;
 			unset($_POST['submit']);
 			
+			// Checking user status
+			$level = $this->session->userdata('user_previleges');
+			if($level !== $this->super && $level !== $this->admin)
+				die(sprintf('%s@@%s@@', $show, lang('messageNoPermission')));
+
 			// Checking if field is null
 			$vresult = $this->_validate_form();
 			if(!$vresult)
@@ -154,6 +177,9 @@ class User extends CI_Controller {
 			if(!$string OR !$string1)
 				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
 
+			if($level === $this->super)
+				$_POST['status'] = 1; // Set status to active
+
 			$_POST = $this->model_user->_generate_birth_date($this->input->post());
 			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
 
@@ -172,8 +198,80 @@ class User extends CI_Controller {
 
 	function delete_user($id)
 	{
+		$level = $this->session->userdata('user_previleges');
+		$status = $this->session->userdata('level');
+		$status = (int)$status;
+		$record = $this->model_user->get_user_info(array('username' => $id));
+		unset($record['password']);
+		unset($record['salt']);
+		unset($record['hash']);
+
+		if($level != $this->super && $level != $this->admin)
+			die(sprintf('%s@@%s@@', 0, lang('messageNoPermission')));
+
+		if($status < $record['level'])
+			die(sprintf('%s@@%s@@', 0, lang('message_error_delete')));
+		
+		if($this->session->userdata('username') === $id)
+			die(sprintf('%s@@%s@@', 0, "This user is currently login"));
+
 		list($bresult, $msg) = $this->model_user->delete_user(array('username' => $id));
 
+		die(sprintf('%s@@%s@@', return_flag($bresult), $msg));
+	}
+
+	function delete_dialog($id)
+	{
+		$data['record'] = $this->model_user->get_list_user(array('username' => $id));
+		$this->load->view('user/delete_dialog', $data);
+	}
+
+	function activate_user()
+	{
+		$id = $this->input->post('term');
+		unset($_POST['term']);
+
+		$level = $this->session->userdata('user_previleges');
+		
+		if($level !== $this->super)
+			die(sprintf('%s@@%s@@', 0, lang('messageNoPermission')));
+
+		$record = $this->model_user->get_user_info(array('username' => $id));
+		unset($record['password']);
+		unset($record['salt']);
+		unset($record['hash']);
+
+		if($record['status'] == 1)
+			die(sprintf('%s@@%s@@', 0, "This user is already activate :)"));
+
+		$_POST['status'] = 1;
+		list($bresult, $msg) = $this->model_user->add_user($this->input->post(), $id);
+		
+		die(sprintf('%s@@%s@@', return_flag($bresult), $msg));
+	}
+
+	function make_admin()
+	{
+		$id = $this->input->post('term');
+		unset($_POST['term']);
+		
+		$level = $this->session->userdata('user_previleges');
+		
+		if($level !== $this->super)
+			die(sprintf('%s@@%s@@', 0, lang('messageNoPermission')));
+
+		$record = $this->model_user->get_user_info(array('username' => $id));
+		unset($record['password']);
+		unset($record['salt']);
+		unset($record['hash']);
+
+		if($record['status'] != 1 OR $record['user_previleges'] === $this->admin)
+			die(sprintf('%s@@%s@@', 0, "This user is already Administator :)"));
+		
+		$_POST['user_previleges'] = $this->admin;
+		$_POST['status'] = 1;
+		list($bresult, $msg) = $this->model_user->add_user($this->input->post(), $id);
+		
 		die(sprintf('%s@@%s@@', return_flag($bresult), $msg));
 	}
 }

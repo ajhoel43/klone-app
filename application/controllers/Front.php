@@ -33,8 +33,8 @@ class Front extends CI_Controller
 		$params = $this->input->post('term');
 		$params = explode('@@', $params);
 		$visible = 1;
-		$successsign = '<span class="glyphicon glyphicon-ok-sign" style="color:green;"></span>';
-		$failsign = '<span class="glyphicon glyphicon-remove-sign" style="color:red;"></span>';
+		$successsign = '<span class="glyphicon glyphicon-ok-circle" style="color:green;"></span>';
+		$failsign = '<span class="glyphicon glyphicon-remove-circle" style="color:red;"></span>';
 
 		if($params[0] == 'email')
 		{
@@ -151,22 +151,27 @@ class Front extends CI_Controller
 					if(password_verify($_POST['password'], $userdata['password']))
 					{
 						if(hash_equals($hash, $userdata['hash'])){
-							//unset sensitive info
-							unset($userdata['hash']);
-							unset($userdata['password']);
-							unset($userdata['salt']);
-							$userdata['valid'] = 1;
-							$this->session->set_userdata($userdata);
-							redirect('main');
+							if($userdata['status'] == 1)
+							{
+								//unset sensitive info
+								unset($userdata['hash']);
+								unset($userdata['password']);
+								unset($userdata['salt']);
+								$userdata['valid'] = 1;
+								$this->session->set_userdata($userdata);
+								redirect('main');
+							}
+							else
+								$this->session->set_flashdata('error', lang('messageLoginFalse'));
 						}
+						else
+							$this->session->set_flashdata('error', lang('messageLoginFalse'));	
 					}
 					else 
-					{
 						$this->session->set_flashdata('error', lang('messageLoginFalse'));
-					}
-				} else {
+				} 
+				else
 					$this->session->set_flashdata('error', lang('messageLoginFalse'));
-				}
 			}
 		}
 
@@ -211,7 +216,7 @@ class Front extends CI_Controller
     				if($mresult)
     				{
 	    				$_SESSION['error'] = 1;
-	    				$_SESSION['success'] = 0;
+	    				$_SESSION['success'] = 1;
 	    				$_SESSION['msg'] = "Email has send to <a href='#'>".$bresult->email."</a><br>Check your inbox!! <span class='glyphicon glyphicon-envelope'></span>";
     				}
     				else

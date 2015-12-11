@@ -10,18 +10,18 @@ class Main extends CI_Controller
 	{
 		parent::__construct();
 		
-		$this->remap();
-
 		$status = $this->session->userdata('valid');
 
 		if ($status !== 1) {
 			redirect('front/login');
 		}
+
+		$this->remap();
 	}
 
 	private function remap()
 	{
-		// for pull data from other database
+		// for pull data from other database with klone prefix
 		$this->session->set_userdata('prefix_', 'klone');
 	}
 	public function index()
