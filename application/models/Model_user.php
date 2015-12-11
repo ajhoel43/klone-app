@@ -53,19 +53,21 @@ class Model_user extends CI_Model
 
 	function usprev_dropdown($params = array())
 	{
-		if(isset($params['level']) AND $params['level'] > 1)
-		{
-			echo "You Have no Permission";
-			die();
-		}
+		// if(isset($params['level']) AND $params['level'] < 3)
+		// {
+		// 	echo "You Have no Permission";
+		// 	die();
+		// }
+		$buffer = array();
+		$buffer[''] = "- ".lang('user_prev')." -";
 
-		if(isset($params['level']))
-			$this->db->where('level >=', $params['level']);
+		if(isset($params['level']) && $params['level'] != '4')
+			$this->db->where('level <', $params['level']);
+		elseif($params['level'] != '3' && $params['level'] != '4')
+			return $buffer;
 
 		$query = $this->db->get('M_user_previleges')->result();
 
-		$buffer = array();
-		$buffer[''] = "- ".lang('user_prev')." -";
 
 		foreach ($query as $q) {
 			$buffer[$q->kode_up] = $q->deskripsi;
@@ -96,14 +98,24 @@ class Model_user extends CI_Model
 
 	function get_list_user($params = array())
 	{
+		if(isset($params['username']))
+			$this->db->where('username', $params['username']);
+
 		$this->db->select('
 			u.*,
+			up.level,
 			up.deskripsi as user_type
 			');
 
 		$this->db->join('M_user_previleges up', 'up.kode_up = u.user_previleges', 'left');
-		$this->db->order_by('up.level asc','u.username asc');
+		$this->db->order_by('up.level desc','u.username asc');
 		$query = $this->db->get('M_user u')->result();
+
+		foreach ($query as &$index) {
+			unset($index->password);
+			unset($index->salt);
+			unset($index->hash);
+		}
 
 		return $query;
 	}
