@@ -1,5 +1,5 @@
 <?php 
-
+//*********Aa*********//
 //*********Cc*********//
 $lang['conf_yes'] = 'Yes';
 $lang['conf_no'] = 'No';
@@ -43,6 +43,7 @@ $lang['label_password'] = 'Password';
 $lang['label_phone'] = 'Phone';
 $lang['label_repassword'] = 'Retype Password';
 $lang['label_salt'] = 'Salt';
+$lang['label_sendingmail'] = 'Sending Mail...';
 $lang['label_status'] = 'Status';
 $lang['label_user'] = "User";
 $lang['label_user_prev'] = 'Type';
@@ -63,6 +64,7 @@ $lang['messageEmailNotOk'] = 'Email has been registered';
 $lang['messageEmailNotValid'] = 'Email is not valid';
 $lang['messageEmailNull'] = 'Email is required';
 $lang['messageLoginFalse'] = 'Wrong Username or Password';
+$lang['messageNoPermission'] = 'Oops! you have no Permission here';
 $lang['messagePasswMatch'] = 'Password is match';
 $lang['messagePasswNotMatch'] = 'Password is not match';
 $lang['messageUserOk'] = 'Username is available';
