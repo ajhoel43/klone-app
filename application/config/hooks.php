@@ -189,3 +189,30 @@ function dashDateExplode($string)
 
 	return array($date, $month, $year);
 }
+
+function is_super($int)
+{
+	$int = (int)$int;
+	if($int == 4)
+		return true;
+	else
+		return false;
+}
+
+function is_admin($int)
+{
+	$int = (int)$int;
+	if($int == 3)
+		return true;
+	else
+		return false;
+}
+
+function is_owner($int)
+{
+	$int = (int)$int;
+	if($int == 2)
+		return true;
+	else
+		return false;
+}
