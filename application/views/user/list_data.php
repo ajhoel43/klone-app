@@ -11,8 +11,8 @@
 		<div class="page-header">
 			<h2><?php echo lang('admin_title') ?> <small>@<?php echo strtoupper(lang('label_user')) ?></small></h2>		
 		</div>
-		<a href="#" class="btn btn-md btn-primary glyphicon-plus add-form" > <?php echo lang('button_new') ?></a>
-		<div class="table-responsive">
+		<a href="#" class="btn btn-md btn-primary add-form"><i class="fa fa-plus fa-lg"></i> <i class="fa fa-user fa-lg"></i></a>
+		<div>
 			<table class="table table-bordered thead">
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
@@ -27,11 +27,24 @@
 				</tr>
 				<?php $no = 1; ?>
 				<?php foreach ($records as $record) : ?>
-					<tr>
+					<tr id="<?php echo $record->username ?>">
 						<td style="text-align:center;"><?php echo $no ?>.</td>
 						<td style="text-align:center;">
-							<a style="color:green;" href="<?php echo $record->username ?>" class="glyphicon glyphicon-pencil editdata"></a>
-							<a style="color:red;" href="<?php echo $record->username ?>" class="glyphicon glyphicon-remove deletedata"></a>
+							<div class="btn-group">
+								<a class="btn btn-success btn-sm dropdown-toggle" href="#" data-toggle="dropdown">
+									<strong class="fa fa-pencil-square-o"></strong>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="<?php echo $record->username ?>" class="editdata"><i class="fa fa-pencil"></i> Edit</a></li>
+									<li><a href="<?php echo $record->username ?>" class="deletedata"><i class="fa fa-times"></i> Delete</a></li>
+									<li><a href="<?php echo $record->username ?>" class="activateuser"><i class="fa fa-check"></i> Activate</a></li>
+									<?php $level = $this->session->userdata('level'); $level = (int)$level; ?>
+									<?php if($level == 4 && $record->level != 4): ?>
+										<li class="divider"></li>
+										<li><a href="<?php echo $record->username ?>" class="giveaccess"><i class="fa fa-unlock"></i> Make as Admin</a></li>
+									<?php endif; ?>
+								</ul>
+							</div>
 						</td>
 						<td><?php echo $record->username ?></td>
 						<td><?php echo $record->first_name." ".$record->last_name ?></td>
@@ -51,7 +64,7 @@
 </div>
 
 <div class="modal fade confirm-modal"> <!-- MODAL -->
-	<div class="modal-dialog modal-sm"> <!-- DIALOG -->
+	<div class="modal-dialog modal-md"> <!-- DIALOG -->
 		<div class="modal-content"> <!-- CONTENT -->
 			<div class="modal-header"> <!-- HEADER -->
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
@@ -60,15 +73,15 @@
 			<div class="modal-body confirm-body"> <!-- BODY -->
 			</div> <!-- END BODY -->
 			<div class="modal-footer"> <!-- FOOTER -->
-				<button type="button" name="delete_user" class="btn btn-primary" data-dismiss="modal"><?php echo lang('conf_yes') ?></button>
 				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('conf_no') ?></button>
+				<button type="button" name="delete_user" class="btn btn-primary" data-dismiss="modal"><?php echo lang('conf_yes') ?></button>
 			</div> <!-- END FOOTER -->
 		</div> <!-- END CONTENT -->
 	</div> <!-- END DIALOG -->
 </div> <!-- END MODAL -->
 
 <div class="modal errordialog fade" >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -85,9 +98,8 @@
 </div>
 <script>
 $.ajaxSetup({cache:false, async: false});
-$(document).ready(function(){
-
-});
+var data = "<?php echo $this->session->userdata('username') ?>";
+$("#"+data).addClass('success');
 
 $(".add-form").click(function(event){
 	event.preventDefault();
@@ -104,12 +116,72 @@ $(".editdata").click(function(event){
 $(".deletedata").click(function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
-	$(".confirm-body").html("Are you sure want to delete <b><i>'"+$(this).attr('href')+"'</i></b>");
+	$(".confirm-body").load("<?php echo base_url('user/delete_dialog') ?>/"+$(this).attr('href'));
 	$(".confirm-modal").modal('show');
 	$("button[name='delete_user']").click(function(event){
 		$.ajax({
 			url : "<?php echo base_url('user/delete_user') ?>/" + value,
 			type : "POST",
+			success : function(msg){
+				var flag = 0,
+					string = 1;
+
+				msg = msg.split('@@');
+
+				if(msg[flag] == 0)
+				{
+					$(".errorpan").html(msg[string]);
+					$(".errordialog").modal('show');
+				}
+				else
+				{
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
+
+$(".activateuser").click(function(event){
+	event.preventDefault();
+	var value = $(this).attr('href');
+	$(".confirm-body").html("Are you sure want to activate this user?");
+	$(".confirm-modal").modal('show');
+	$("button[name='delete_user']").click(function(event){
+		$.ajax({
+			url : "<?php echo base_url('user/activate_user') ?>",
+			type : "POST",
+			data : "term=" + value,
+			success : function(msg){
+				var flag = 0,
+					string = 1;
+
+				msg = msg.split('@@');
+
+				if(msg[flag] == 0)
+				{
+					$(".errorpan").html(msg[string]);
+					$(".errordialog").modal('show');
+				}
+				else
+				{
+					window.location.reload();
+				}
+			}
+		});
+	});
+});
+
+$(".giveaccess").click(function(event){
+	event.preventDefault();
+	var value = $(this).attr('href');
+	$(".confirm-body").html("Are you sure want to give Admin access to this user?");
+	$(".confirm-modal").modal('show');
+	$("button[name='delete_user']").click(function(event){
+		$.ajax({
+			url : "<?php echo base_url('user/make_admin') ?>",
+			type : "POST",
+			data : "term=" + value,
 			success : function(msg){
 				var flag = 0,
 					string = 1;
@@ -171,6 +243,16 @@ $("body").on("click", "button[name='update_user_btn']", function(event){
 			{
 				$(".errorpan").html(msg[string]);
 				$(".errordialog").modal('show');
+			}
+			else if(msg[flag] == 2)
+			{
+				$(".form-modal").modal('hide');
+				$(".errordialog .modal-title").html("Success");
+				$(".errorpan").html(msg[string]);
+				$(".errordialog").modal('show');
+				$(".errordialog").on('hidden.bs.modal', function(event){
+					window.location = "<?php echo base_url('front/logout') ?>";
+				});
 			}
 			else
 			{
@@ -234,7 +316,7 @@ function doneTypingUser()
 {
 	if($("input[name='username']").val() == '')
 	{
-		var span = "<span class='glyphicon glyphicon-remove-sign' style='color:red;'></span>";
+		var span = "<span class='glyphicon glyphicon-remove-circle' style='color:red;'></span>";
 		$(".info-user").html(span + " <?php echo lang('messageUserNull') ?>");
 		return false;
 	}
@@ -265,7 +347,7 @@ function doneTypingEmail()
 {
 	if($("input[name='email']").val() == '')
 	{
-		var span = "<span class='glyphicon glyphicon-remove-sign' style='color:red;'></span>";
+		var span = "<span class='glyphicon glyphicon-remove-circle' style='color:red;'></span>";
 		$(".info-email").html(span + " <?php echo lang('messageEmailNull') ?>");
 		return false;
 	}	
@@ -296,7 +378,7 @@ function doneTypingPass()
 {
 	if($("input[name='repassword']").val() == '')
 	{
-		var span = "<span class='glyphicon glyphicon-remove-sign' style='color:red;'></span>";
+		var span = "<span class='glyphicon glyphicon-remove-circle' style='color:red;'></span>";
 		$(".info-pass").html(span + " <?php echo lang('messagePasswNotMatch') ?>");
 		return false;
 	}	

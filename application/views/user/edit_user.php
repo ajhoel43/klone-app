@@ -68,6 +68,7 @@
 						?>
 					</div>
 				</div>
+				<?php if($this->session->userdata('user_previleges') === 'SUPER'): ?>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_user_prev') ?></label>
 					<div class="col-sm-6">
@@ -76,11 +77,12 @@
 						 ?>
 					</div>
 				</div>
+				<?php endif; ?>
 			</form>
 		</div>
 		<div class="modal-footer">
-			<button type="submit" name="update_user_btn" class="btn btn-primary" data-dissmiss="modal" value="<?php echo $record->username ?>"><?php echo lang('button_update')." ".lang('label_user') ?></button>
 			<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('button_close') ?></button>
+			<button type="submit" name="update_user_btn" class="btn btn-primary" value="<?php echo $record->username ?>"><?php echo lang('button_update')." ".lang('label_user') ?></button>
 		</div>
 	</div>
 </div>

@@ -42,7 +42,7 @@
 	</div>
 </div>
 <div class="modal fade modal-report">
-	<div class="modal-dialog modal-sm">
+	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -50,20 +50,38 @@
 			</div>
 			<div class="modal-body">
 				<p>
-					<?php echo $temp['msg'] ?>
+					<?php if(isset($temp['msg']))echo $temp['msg']; ?>
 				</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary ok" data-dismiss="modal" ><?php echo lang('button_ok') ?></button>
 				<button type="button" class="btn btn-default" data-dismiss="modal" ><?php echo lang('button_close') ?></button>
+				<button type="button" class="btn btn-primary ok" data-dismiss="modal" ><?php echo lang('button_ok') ?></button>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="modal fade modal-progress" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2><?php echo lang('label_sendingmail') ?></h2>
+			</div>
+			<div class="modal-body">
+				<div class="progress progress-striped active">
+					<div class="progress-bar progress-success" style="width:100%;">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 $(document).ready(function(){
 	if($("input[name='report']").val() == 1)
 	{
+		$(".modal-progress").modal('hide');
 		$(".modal-report").modal('show');
 	}
 
@@ -79,5 +97,9 @@ $(document).ready(function(){
 		}
 	});
 
+});
+
+$("input[name='submit']").click(function(event){
+	$(".modal-progress").modal('show');
 });
 </script>
