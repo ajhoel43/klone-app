@@ -39,7 +39,7 @@
 									<li><a href="<?php echo $record->username ?>" class="deletedata"><i class="fa fa-times"></i> Delete</a></li>
 									<li><a href="<?php echo $record->username ?>" class="activateuser"><i class="fa fa-check"></i> Activate</a></li>
 									<?php $level = $this->session->userdata('level'); $level = (int)$level; ?>
-									<?php if($level == 4 && $record->level != 4): ?>
+									<?php if($level == 4 && $record->level < 3): ?>
 										<li class="divider"></li>
 										<li><a href="<?php echo $record->username ?>" class="giveaccess"><i class="fa fa-unlock"></i> Make as Admin</a></li>
 									<?php endif; ?>
@@ -145,6 +145,7 @@ $(".deletedata").click(function(event){
 $(".activateuser").click(function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
+	$(".confirm-modal .modal-title").html("Activate User");
 	$(".confirm-body").html("Are you sure want to activate this user?");
 	$(".confirm-modal").modal('show');
 	$("button[name='delete_user']").click(function(event){
@@ -175,6 +176,7 @@ $(".activateuser").click(function(event){
 $(".giveaccess").click(function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
+	$(".confirm-modal .modal-title").html("Add Administrator");
 	$(".confirm-body").html("Are you sure want to give Admin access to this user?");
 	$(".confirm-modal").modal('show');
 	$("button[name='delete_user']").click(function(event){

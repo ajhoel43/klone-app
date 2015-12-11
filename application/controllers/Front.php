@@ -202,7 +202,7 @@ class Front extends CI_Controller
     			if($bresult)
     			{
     				$destination = array(
-    					'email' => 'panduwiranata43@gmail.com' /*$bresult->email*/, 
+    					'email' => $bresult->email, 
     					'name' => $bresult->first_name." ".$bresult->last_name
     					);
 
