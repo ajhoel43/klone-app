@@ -110,10 +110,9 @@ class User extends CI_Controller {
 
 			unset($_POST['repassword']);
 			//Checking email valid format
-			$string = preg_match('/[@]/', $this->input->post('email'));
-			$string1 = preg_match('/[.]/', $this->input->post('email'));
+			$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w+|\w+.\w)\z/', $this->input->post('email'));
 
-			if(!$string OR !$string1)
+			if(!$string)
 				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
 
 			$_POST = $this->model_user->_generate_birth_date($this->input->post());
@@ -171,10 +170,9 @@ class User extends CI_Controller {
 
 			unset($_POST['repassword']);
 			//Checking email valid format
-			$string = preg_match('/[@]/', $this->input->post('email'));
-			$string1 = preg_match('/[.]/', $this->input->post('email'));
+			$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w+|\w+.\w)\z/', $_POST['email']);
 
-			if(!$string OR !$string1)
+			if(!$string)
 				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
 
 			if($level === $this->super)
