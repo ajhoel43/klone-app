@@ -218,11 +218,28 @@ function is_owner($int)
 }
 
 function _valid_email($subject)
-	{
-		$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w*[^ ]+\w)\z/', $subject);
+{
+	$subject = strtolower($subject);
+	$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w*[^ ]+\w)\z/', $subject);
 
-		if(!$string)
-			return false;
-		else
-			return true;
+	if(!$string)
+		return false;
+	else
+		return true;
+}
+
+function _generateCode() 
+	{
+		$length = 10;
+		$char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		$karakter = preg_replace("/[^A-Za-z0-9]/",'', $char);
+		//set string = null
+		$string = '';
+		for ($i = 0; $i < $length; $i++) 
+		{
+			$pos = rand(0, strlen($karakter)-1);
+			$string .= $karakter{$pos};
+		}
+		
+		return $string;
 	}
