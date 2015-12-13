@@ -47,7 +47,7 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('repassword', 'Confirm Password', 'required');
 		$this->form_validation->set_rules('email', lang('label_email'), 'required');
 		$this->form_validation->set_rules(array('date', 'month', 'year'), lang('label_birth'), 'required');
-		$this->form_validation->set_rules('phone_num', lang('label_phone'), 'required');
+		// $this->form_validation->set_rules('phone_num', lang('label_phone'), 'required');
 		
 		if($this->session->userdata('user_previleges') === $this->super)
 			$this->form_validation->set_rules('user_previleges', lang('label_user_prev'), 'required');
@@ -109,10 +109,9 @@ class User extends CI_Controller {
 				die(sprintf('%s@@%s@@', $show, lang('messagePasswNotMatch')));
 
 			unset($_POST['repassword']);
+			
 			//Checking email valid format
-			$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w+|\w+.\w)\z/', $this->input->post('email'));
-
-			if(!$string)
+			if(!_valid_email($_POST['email']))
 				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
 
 			$_POST = $this->model_user->_generate_birth_date($this->input->post());
@@ -169,10 +168,9 @@ class User extends CI_Controller {
 				die(sprintf('%s@@%s@@', $show, lang('messagePasswNotMatch')));
 
 			unset($_POST['repassword']);
+			
 			//Checking email valid format
-			$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w+|\w+.\w)\z/', $_POST['email']);
-
-			if(!$string)
+			if(!_valid_email($_POST['email']))
 				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
 
 			if($level === $this->super)
