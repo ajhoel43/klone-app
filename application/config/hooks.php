@@ -216,3 +216,13 @@ function is_owner($int)
 	else
 		return false;
 }
+
+function _valid_email($subject)
+	{
+		$string = preg_match('/(^[A-Za-z]{1}\w*([._%~-]\w+)?)@\w+[._%~-]?\w+[.](\w*[^ ]+\w)\z/', $subject);
+
+		if(!$string)
+			return false;
+		else
+			return true;
+	}
