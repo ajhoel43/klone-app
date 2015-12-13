@@ -142,7 +142,7 @@ class Front extends CI_Controller
 				if ( $userdata ) {
 					list($hash, $salt, $pass) = $this->model_user->_create_hash($this->input->post(), $userdata['salt'], FALSE);
 					
-					if(password_verify($_POST['password'], $userdata['password']))
+					if(password_verify($_POST['password'], $userdata['password']) && hash_equals($pass, $userdata['password']))
 					{
 						if(hash_equals($hash, $userdata['hash'])){
 							if($userdata['status'] == 1)
@@ -178,6 +178,20 @@ class Front extends CI_Controller
     	redirect('main');
     }
 
+    function _verlink($dbparams = array(), $newparams = array())
+    {
+    	$salt = join('', array($dbparams['email'], $dbparams['phone_num'], $dbparams['birth_date']));
+		$hashOption = array('cost' => 10, 'salt' => $salt);
+
+		$newstring = join('', array($newparams['hash'], $newparams['salt'], $newparams['password']));
+		$tempverlink = tempHash($newstring, $hashOption);
+		$clean = explode('$', $tempverlink);
+		
+		$verlink = preg_replace('/[^A-Za-z0-9]/', '4', $clean[3]);
+
+		return $verlink;
+    }
+
     function forgot_password()
     {
     	$submit = $this->input->post('submit');
@@ -186,44 +200,88 @@ class Front extends CI_Controller
     	if($submit)
     	{
 	   		unset($_POST['submit']);
-    		$this->form_validation->set_rules('username', 'Username','required');
+	   		unset($_POST['username']);
+    		// $this->form_validation->set_rules('username', 'Username','required');
     		$this->form_validation->set_rules('email', 'Email', 'required');
 
     		if($this->form_validation->run() === TRUE)
     		{
     			$bresult = $this->model_user->get_verification_info($this->input->post());
-    		
+    			
     			if($bresult)
     			{
-    				$destination = array(
-    					'email' => $bresult->email, 
-    					'name' => $bresult->first_name." ".$bresult->last_name
-    					);
+    				// Generate Code for Verification
+	    			$newcode = _generateCode();
 
-    				$mparams = array(
-    					'user' => $bresult->first_name,
-    					'link' => base_url('front/forgot_password')
-    					);
+	    			$fu['username'] = $bresult->username;
+	    			$fu['password'] = $newcode;
 
-    				$mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
+	    			list($fu['hash'], $fu['salt'], $fu['password']) = $this->model_user->_create_hash($fu);
+	    			
+	    			$this->model_user->add_user($fu, $bresult->username);
+
+	    			$castdb = (array)$bresult;
+	    			$verlink = $this->_verlink($castdb, $fu);
+	    			
+	    			echo "<a href='".base_url('front/verify/'.$bresult->username.'/'.$verlink)."'>Verification Link</a>";
+	    			die();
+    				// $destination = array(
+    				// 	'email' => $bresult->email, 
+    				// 	'name' => $bresult->first_name." ".$bresult->last_name
+    				// 	);
+
+    				// $mparams = array(
+    				// 	'user' => $bresult->first_name,
+    				// 	'link' => base_url('front/verify')
+    				// 	);
+
+    				// $mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
     				
-    				if($mresult)
-    				{
-	    				$_SESSION['error'] = 1;
-	    				$_SESSION['success'] = 1;
-	    				$_SESSION['msg'] = "Email has send to <a href='#'>".$bresult->email."</a><br>Check your inbox!! <span class='glyphicon glyphicon-envelope'></span>";
-    				}
-    				else
-    				{
-    					$_SESSION['error'] = 1;
-	    				$_SESSION['success'] = 0;
-	    				$_SESSION['msg'] = $msg;
-    				}
-    				$this->session->mark_as_temp(array('error', 'success', 'msg'), 30);
+    				// if($mresult)
+    				// {
+    				// 	// to set Temporary Error Report for email sending
+	    			// 	$_SESSION['error'] = 1;
+	    			// 	$_SESSION['success'] = 1;
+	    			// 	$_SESSION['msg'] = "Email has send to <a href='#'>".$bresult->email."</a><br>Check your inbox!! <span class='glyphicon glyphicon-envelope'></span>";
+    				// }
+    				// else
+    				// {
+    				// 	$_SESSION['error'] = 1;
+	    			// 	$_SESSION['success'] = 0;
+	    			// 	$_SESSION['msg'] = $msg;
+    				// }
+    				// $this->session->mark_as_temp(array('error', 'success', 'msg'), 30);
     			}		    
     		}
     	}
 
 		$this->template1->create_view1('user/forgot_password', $data);
+    }
+
+    function verify($key, $code)
+    {
+    	$record = $this->model_user->get_verification_info(array('username' => $key));
+    	$castdb = (array)$record;
+    	$fu = array('hash' => $record->hash, 'salt' => $record->salt, 'password' => $record->password);
+    	$verlink = $this->_verlink($castdb, $fu);
+    	$data = array();
+
+    	if(hash_equals($code, $verlink))
+    	{
+	    	$data['id'] = $record->username;
+	    	$data['name'] = $record->first_name;
+	    	$this->template1->create_view1('user/verify_newpass', $data);
+    	}
+    	else
+    	{
+    		$this->template1->create_view1('user/verify_fail', $data);
+    	}
+    	
+    }
+
+    function verify_conf()
+    {
+    	if($this->input->post('id') != '')
+    		die(sprintf('%s@@%s@@', 1, "TES GAGAL"));
     }
 }
