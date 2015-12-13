@@ -219,16 +219,9 @@ class Model_user extends CI_Model
 		if(isset($params['email']) && !is_null($params['email']))
 			$this->db->where('email', $params['email']);
 
-		$this->db->select('
-			username, 
-			email, 
-			first_name, 
-			last_name
-			');
+		$this->db->select('*');
 
 		$query = $this->db->get('M_user')->row();
 		return $query;
 	}
 }
-
-?>
