@@ -50,7 +50,7 @@
 							</div>
 						</td>
 						<td><?php echo $record->username ?></td>
-						<td><?php echo $record->first_name." ".$record->last_name ?></td>
+						<td><?php echo join(' ', array($record->first_name, $record->last_name)); ?></td>
 						<td><?php echo $record->email ?></td>
 						<td><?php echo $record->phone_num ?></td>
 						<td><?php echo datePrint($record->birth_date) ?></td>
@@ -387,10 +387,6 @@ function doneTypingPass()
 		$(".info-pass").html(span + " <?php echo lang('messagePasswNotMatch') ?>");
 		return false;
 	}	
-	
-	hashCode = function(s){
-	  return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
-	}
 
 	var checkparams = {
 			link:"<?php echo base_url('front/check_available') ?>",
