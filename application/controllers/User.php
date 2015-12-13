@@ -21,24 +21,6 @@ class User extends CI_Controller {
 		}
 	}
 
-	function _process_randomstr( $length, $params ) 
-	{
-		//menghilangkan space dan hanya mengambil karakter A-Z,a-z,0-9
-		$karakter = preg_replace("/[^A-Za-z0-9]/",'', $params['username'].$params['id']);
-		//set string = null
-		$string = '';
-		for ($i = 0; $i < $length; $i++) 
-		{
-			$pos = rand(0, strlen($karakter)-1);
-			$string .= $karakter{$pos};
-		}
-		
-		$salt = $this->model_user->_create_salt($string);
-		$hash = $this->model_user->_create_hash($salt, $string);
-
-		return array($string, $salt, $hash);
-	}
-
 	function _validate_form()
 	{
 		$this->form_validation->set_rules('username', lang('label_username'), 'required');
@@ -134,7 +116,8 @@ class User extends CI_Controller {
 		$this->_edit_user_form($id);
 	}
 
-	function list_user() {
+	function list_user() 
+	{
 		$data['records'] = $this->model_user->get_list_user();
 		$this->template1->create_view('user/list_data', $data);
 	}
@@ -173,8 +156,8 @@ class User extends CI_Controller {
 			if(!_valid_email($_POST['email']))
 				die(sprintf('%s@@%s@@', $show, lang('messageEmailNotValid')));
 
-			if($level === $this->super)
-				$_POST['status'] = 1; // Set status to active
+			// if($level === $this->super)
+			// 	$_POST['status'] = 1; // Set status to active
 
 			$_POST = $this->model_user->_generate_birth_date($this->input->post());
 			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
@@ -271,4 +254,3 @@ class User extends CI_Controller {
 		die(sprintf('%s@@%s@@', return_flag($bresult), $msg));
 	}
 }
-?>
