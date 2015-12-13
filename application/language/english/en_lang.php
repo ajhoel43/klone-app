@@ -38,6 +38,7 @@ $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
 $lang['label_master'] = 'Master Data';
 $lang['label_name'] = 'Name';
+$lang['label_newpass'] = 'Input New Password';
 $lang['label_no'] = 'No.';
 $lang['label_password'] = 'Password';
 $lang['label_phone'] = 'Phone';
@@ -48,6 +49,7 @@ $lang['label_status'] = 'Status';
 $lang['label_user'] = "User";
 $lang['label_user_prev'] = 'Type';
 $lang['label_username'] = 'Username';
+$lang['label_verification'] = 'Verification';
 
 //Label button
 $lang['button_add'] = 'Add';
@@ -57,6 +59,8 @@ $lang['button_new'] = "New Input";
 $lang['button_ok'] = 'OK';
 $lang['button_update'] = 'Update';
 $lang['button_submit'] = 'Submit';
+$lang['button_process'] = 'Processing';
+
 //**********Mm***********//
 //Message
 $lang['messageEmailOk'] = 'Email is valid';
