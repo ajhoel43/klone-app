@@ -5,15 +5,9 @@
 		</div>
 		<div class="col-lg-8">
 			<?php echo form_open('front/forgot_password', 'class="form-horizontal"')?>
-				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo lang('label_username') ?></label>
-					<div class="col-sm-6">
-						<input class="form-control" type="text" name="username" value="<?php echo set_value('username') ?>">
-					</div>
-					<div class="col-lg-4">
-						<?php echo form_error('username', '<p class="help-block">','</p>'); ?>
-					</div>
-				</div>
+				<p class="col-sm-offset-1">
+					Please insert your email and we will help you to reset your password :)
+				</p>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('label_email') ?></label>
 					<div class="col-sm-6">
@@ -27,7 +21,7 @@
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">
 						<input type="submit" class="btn btn-primary" name="submit" value="<?php echo lang('button_submit') ?>">
-						<a href="<?php echo base_url('front/login') ?>" class="btn btn-primary"><?php echo lang('label_login') ?></a>
+						<a href="<?php echo base_url('front/login') ?>" class="btn btn-primary"><span class="fa fa-chevron-left"></span> Back to <?php echo lang('label_login') ?></a>
 					</div>
 				</div>
 			</form>

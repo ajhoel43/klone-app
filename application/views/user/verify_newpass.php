@@ -1,15 +1,15 @@
 <div class="col-lg-12">
 	<div class="row">
-		<div class="page-header">
-			<h2><?php echo lang('forgot_password') ?></h2>
-		</div>
+		<div class="col-lg-2"></div>
 		<div class="col-lg-8">
-			Hello and welcome back <?php echo $name ?>, you have forgotten your password.<br>
-			Input a new password and remember it :)
-		</div>
-		<div class="col-lg-12">&nbsp;</div>
-		<div class="col-lg-8">
-			<?php //echo form_open('', 'class="form-horizontal"')?>
+			<div class="page-header">
+				<h2><?php echo lang('forgot_password') ?></h2>
+			</div>
+			<div class="col-md-12">
+				Hello and welcome back <?php echo $name ?>, you have forgotten your password.<br>
+				Input a new password and remember it :)
+			</div>
+			<div class="col-md-12">&nbsp;</div>
 			<form class="form-horizontal" name="password-reset">
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><?php echo "New ".lang('label_password') ?></label>
@@ -32,6 +32,7 @@
 				</div>
 			</form>
 		</div>
+		<div class="col-lg-2"></div>
 	</div>
 </div>
 <div class="modal fade modal-report">
@@ -77,11 +78,11 @@ var timer,
 
 $("button[name='submit']").click(function(event){
 	event.preventDefault();
-	$(this).html("<?php echo lang('button_process') ?> <i class='fa fa-spinner fa-spin'></i>").attr('disabled', 'disabled');
+	$(this).html("<?php echo lang('button_process') ?> <i class='fa fa-refresh fa-spin'></i>").attr('disabled', 'disabled');
 	$.ajax({
 		url : "<?php echo base_url('front/verify_conf') ?>",
 		type : "POST",
-		data : $("form[name='password-reset']").serialize() + "&id=<?php echo $id ?>",
+		data : $("form[name='password-reset']").serialize() + "&username=<?php echo $id ?>&submit=1",
 		success : function(msg){
 			var flag = 0,
 				str = 1;
@@ -92,7 +93,7 @@ $("button[name='submit']").click(function(event){
 				$(".report-msg").html(msg[str]);
 				$(".modal-report").modal('show');
 				$(".modal-report").on("hidden.bs.modal", function(){
-					$("button[name='submit']").html("Submit");
+					$("button[name='submit']").html("Submit").removeAttr('disabled');
 				});
 			}
 			else
@@ -102,7 +103,7 @@ $("button[name='submit']").click(function(event){
 				$(".modal-progress").modal('show');
 				clearTimeout(timer2);
 				timer2 = setTimeout(function(){
-					window.location = "<?php echo base_url('') ?>";
+					window.location = "<?php echo base_url('front/login') ?>";
 				}, timeout2);
 			}
 		}

@@ -1,5 +1,5 @@
-<h4>Apakah anda yakin ingin menghapus akun ini?</h4>
-<p>Detail Akun:</p>
+<h4><?php echo lang('delete_q') ?></h4>
+<p><?php echo lang('account_detail') ?>:</p>
 <table class="table table-default">
 <?php foreach($record as $record): ?>
 	<tr>
