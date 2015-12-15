@@ -1,5 +1,9 @@
 <?php 
+//*********Question***********//
+$lang['delete_q'] = 'Are you sure want to delete this account?';
+
 //*********Aa*********//
+$lang['account_detail'] = 'Account Detail';
 //*********Cc*********//
 $lang['conf_yes'] = 'Yes';
 $lang['conf_no'] = 'No';
