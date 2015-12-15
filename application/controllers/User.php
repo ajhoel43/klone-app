@@ -147,7 +147,11 @@ class User extends CI_Controller {
 				die(sprintf('%s@@%s@@', $show, $msg));
 
 			//Checking password match
-			if($_POST['password'] !== $_POST['repassword'])
+			$option = array('cost' => 10, 'salt' => password_hash(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM), PASSWORD_BCRYPT));
+			$pass1 = tempHash($this->input->post('password'), $option);
+			$pass2 = tempHash($this->input->post('repassword'), $option);
+
+			if(!hash_equals($pass1, $pass2))
 				die(sprintf('%s@@%s@@', $show, lang('messagePasswNotMatch')));
 
 			unset($_POST['repassword']);

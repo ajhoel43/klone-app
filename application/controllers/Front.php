@@ -11,6 +11,11 @@ class Front extends CI_Controller
 		$this->load->model('model_user');
 	}
 
+	function index()
+	{
+		redirect('front/login');
+	}
+
 	function _validate_form()
 	{
 		$this->form_validation->set_rules('username', lang('label_username'), 'required');
@@ -57,7 +62,7 @@ class Front extends CI_Controller
 			$pass1 = tempHash($params[1], $option);
 			$pass2 = tempHash($params[2], $option);
 
-			if($params[1] === $params[2])
+			if(hash_equals($pass1, $pass2))
 				die(sprintf('%s@@%s@@', $visible, $successsign." ".lang('messagePasswMatch')));
 			else
 				die(sprintf('%s@@%s@@', $visible, $failsign." ".lang('messagePasswNotMatch')));
@@ -105,7 +110,11 @@ class Front extends CI_Controller
 				die(sprintf('%s@@%s@@', $show, $msg));
 
 			//Checking password match
-			if($_POST['password'] !== $_POST['repassword'])
+			$option = array('cost' => 10, 'salt' => password_hash(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM), PASSWORD_BCRYPT));
+			$pass1 = tempHash($this->input->post('password'), $option);
+			$pass2 = tempHash($this->input->post('repassword'), $option);
+
+			if(!hash_equals($pass1, $pass2))
 				die(sprintf('%s@@%s@@', $show, lang('messagePasswNotMatch')));
 
 			unset($_POST['repassword']);
@@ -117,7 +126,7 @@ class Front extends CI_Controller
 			$_POST = $this->model_user->_generate_birth_date($this->input->post());
 			list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
 
-			list($bresult, $id, $msg) = $this->model_user->add_user($this->input->post());
+			list($bresult, $msg) = $this->model_user->add_user($this->input->post());
 
 			if(!$bresult)
 				die(sprintf('%s@@%s@@', $show, $msg));
@@ -222,35 +231,37 @@ class Front extends CI_Controller
 
 	    			$castdb = (array)$bresult;
 	    			$verlink = $this->_verlink($castdb, $fu);
-	    			
-	    			echo "<a href='".base_url('front/verify/'.$bresult->username.'/'.$verlink)."'>Verification Link</a>";
-	    			die();
-    				// $destination = array(
-    				// 	'email' => $bresult->email, 
-    				// 	'name' => $bresult->first_name." ".$bresult->last_name
-    				// 	);
+	    		
+    				$destination = array(
+    					'email' => $bresult->email, 
+    					'name' => $bresult->first_name." ".$bresult->last_name
+    					);
 
-    				// $mparams = array(
-    				// 	'user' => $bresult->first_name,
-    				// 	'link' => base_url('front/verify')
-    				// 	);
+    				$mparams = array(
+    					'user' => $bresult->first_name,
+    					'link' => base_url('front/verify/'.$verlink.'/'.$bresult->username)
+    					);
 
-    				// $mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
+    				$mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
     				
-    				// if($mresult)
-    				// {
-    				// 	// to set Temporary Error Report for email sending
-	    			// 	$_SESSION['error'] = 1;
-	    			// 	$_SESSION['success'] = 1;
-	    			// 	$_SESSION['msg'] = "Email has send to <a href='#'>".$bresult->email."</a><br>Check your inbox!! <span class='glyphicon glyphicon-envelope'></span>";
-    				// }
-    				// else
-    				// {
-    				// 	$_SESSION['error'] = 1;
-	    			// 	$_SESSION['success'] = 0;
-	    			// 	$_SESSION['msg'] = $msg;
-    				// }
-    				// $this->session->mark_as_temp(array('error', 'success', 'msg'), 30);
+    				if($mresult)
+    				{
+    					$data['report'] = $bresult->email;
+    					$msg = '<h4>Verification email has send to <a href="#" class="disabled">'.$bresult->email.'</a></h4>
+								<p>Check your inbox!! <span class="glyphicon glyphicon-envelope"></span></p>';
+
+    					// to set Temporary Error Report for email sending
+	    				$_SESSION['error'] = 1;
+	    				$_SESSION['success'] = 1;
+	    				$_SESSION['msg'] = $msg;
+    				}
+    				else
+    				{
+    					$_SESSION['error'] = 1;
+	    				$_SESSION['success'] = 0;
+	    				$_SESSION['msg'] = $msg;
+    				}
+    				$this->session->mark_as_temp(array('error', 'success', 'msg'), 30);
     			}		    
     		}
     	}
@@ -258,13 +269,16 @@ class Front extends CI_Controller
 		$this->template1->create_view1('user/forgot_password', $data);
     }
 
-    function verify($key, $code)
+    function verify($code, $key)
     {
+    	$data = array();
     	$record = $this->model_user->get_verification_info(array('username' => $key));
     	$castdb = (array)$record;
     	$fu = array('hash' => $record->hash, 'salt' => $record->salt, 'password' => $record->password);
     	$verlink = $this->_verlink($castdb, $fu);
-    	$data = array();
+    	
+    	// $_SESSION['verlink'] = $verlink;
+    	// $this->session->mark_as_temp(array('verlink'), 30);
 
     	if(hash_equals($code, $verlink))
     	{
@@ -274,14 +288,44 @@ class Front extends CI_Controller
     	}
     	else
     	{
-    		$this->template1->create_view1('user/verify_fail', $data);
+    		$this->template1->create_view1('pages/fail_page', $data);
     	}
-    	
     }
 
     function verify_conf()
     {
-    	if($this->input->post('id') != '')
-    		die(sprintf('%s@@%s@@', 1, "TES GAGAL"));
+    	$submit = $this->input->post('submit');
+		$id = $this->input->post('username');
+
+    	if($submit)
+    	{
+    		unset($_POST['submit']);
+    		$show = 0;
+    		$hide = 1;
+    		
+    		$this->form_validation->set_rules('password', lang('label_password'), 'required');
+    		$this->form_validation->set_rules('repassword', lang('label_repassword'), 'required');
+
+    		if($this->form_validation->run() === FALSE)
+    			die(sprintf('%s@@%s@@', $show, validation_errors()));
+
+			$option = array('cost' => 10, 'salt' => password_hash(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM), PASSWORD_BCRYPT));
+			$pass1 = tempHash($this->input->post('password'), $option);
+			$pass2 = tempHash($this->input->post('repassword'), $option);
+
+			if(!hash_equals($pass1, $pass2))
+				die(sprintf('%s@@%s@@', $show, lang('messagePasswNotMatch')));
+
+			unset($_POST['repassword']);
+
+    		list($_POST['hash'], $_POST['salt'], $_POST['password']) = $this->model_user->_create_hash($this->input->post());
+    		$_POST['status'] = 1;
+    		list($bresult, $msg) = $this->model_user->add_user($this->input->post(), $id);
+    		
+    		if($bresult)
+				die(sprintf('%s@@%s@@', $hide, $msg));
+    		else
+				die(sprintf('%s@@%s@@', $show, $msg));
+    	}
     }
 }
