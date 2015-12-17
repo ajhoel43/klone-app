@@ -91,7 +91,7 @@ class Front extends CI_Controller
 		}
 	}
 
-	function create_user()
+	function register_account()
 	{
 		$submit = $this->input->post('submit');
 		if($submit)
