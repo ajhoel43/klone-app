@@ -1,14 +1,61 @@
 <style type="text/css">
     .login-form {
-    	margin: 4em auto;
+    	margin: auto;
+    	display: flex;
+    	justify-content:center;
+    	align-items:center;
+    	/*background-color: white;*/
+    	background: rgb(255, 255, 255); /* Fall-back for browsers that don't
+                                    support rgba */
+	    background: rgba(255, 255, 255, .5);
+    	border-radius: 5px;
     }
+
+	img.bg {
+	  /* Set rules to fill background */
+	  min-height: 100%;
+	  min-width: 1024px;
+		
+	  /* Set up proportionate scaling */
+	  width: 100%;
+	  height: auto;
+		
+	  /* Set up positioning */
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	}
+
+	@media screen and (max-width: 1024px) { /* Specific to this particular image */
+	  img.bg {
+	    left: 50%;
+	    margin-left: -512px;   /* 50% */
+	  }
+	}
+
+	.logo{
+		width:400px;
+		height: auto;
+		margin-bottom: 2em;
+	}
+
+	.logos {
+		display: flex;
+		justify-content:center;
+		align-items: center;
+	}
 </style>
+<img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>" class="bg">
+<div class="col-lg-12 logos">
+	<img src="<?php echo base_url('assets/img/logo/klonefont.png') ?>" class="logo">
+	<!-- <div class="background-image"><img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>"></div> -->
+</div>
 <div class="col-md-4"></div>
-<div class="col-md-4 login-form" style="display:flex; justify-content:center; align-items:center;">
+<div class="col-md-4 login-form">
 	<?php echo form_open('front/login') ?>
 	<form name="login-form">
-	<h1>Login</h1>
-	<table class="table table-responsive table-striped">
+	<h1></h1>
+	<table class="table table-striped">
 	<?php 
 		$error = $this->session->flashdata('error');
 		if($error):
