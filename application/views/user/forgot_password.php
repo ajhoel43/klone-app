@@ -1,4 +1,35 @@
-<div class="col-lg-12">
+<style type="text/css">
+	.pages {
+		padding: 0em 2em 2em 2em;
+		background: rgb(255, 255, 255); 
+    	/* Fall-back for browsers that don't support rgba */
+	    background: rgba(255, 255, 255, .6);
+    	border-radius: 5px;
+	}
+	img.background {
+	  /* Set rules to fill background */
+	  min-height: 100%;
+	  min-width: 1024px;
+		
+	  /* Set up proportionate scaling */
+	  width: 100%;
+	  height: auto;
+		
+	  /* Set up positioning */
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	}
+
+	@media screen and (max-width: 1024px) { /* Specific to this particular image */
+	  img.background {
+	    left: 50%;
+	    margin-left: -512px;   /* 50% */
+	  }
+	}
+</style>
+<img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>" class="background">
+<div class="col-lg-12 pages">
 	<div class="row">
 		<div class="page-header">
 			<h2><?php echo lang('forgot_password') ?></h2>
@@ -14,14 +45,14 @@
 						<input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>">
 					</div>
 					<div class="col-lg-4">
-						<?php echo form_error('email', '<p class="help-block">','</p>'); ?>
+						<?php echo form_error('email', '<p class="help-block" style="color:red">','</p>'); ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">
-						<input type="submit" class="btn btn-primary" name="submit" value="<?php echo lang('button_submit') ?>">
 						<a href="<?php echo base_url('front/login') ?>" class="btn btn-primary"><span class="fa fa-chevron-left"></span> Back to <?php echo lang('label_login') ?></a>
+						<input type="submit" class="btn btn-primary" name="submit" value="<?php echo lang('button_submit') ?>">
 					</div>
 				</div>
 			</form>
@@ -48,7 +79,6 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal" ><?php echo lang('button_close') ?></button>
 				<button type="button" class="btn btn-primary ok" data-dismiss="modal" ><?php echo lang('button_ok') ?></button>
 			</div>
 		</div>

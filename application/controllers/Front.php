@@ -242,12 +242,11 @@ class Front extends CI_Controller
     					'link' => base_url('front/verify/'.$verlink.'/'.$bresult->username)
     					);
 
-    				$mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
-    				
+    				// $mresult = $this->my_phpmailer->smtp_googlemail($destination, $mparams);
+    				$mresult = 1;
     				if($mresult)
     				{
-    					$data['report'] = $bresult->email;
-    					$msg = '<h4>Verification email has send to <a href="#" class="disabled">'.$bresult->email.'</a></h4>
+    					$msg = '<h4>Email has send to <a href="#">'.$bresult->email.'</a></h4>
 								<p>Check your inbox!! <span class="glyphicon glyphicon-envelope"></span></p>';
 
     					// to set Temporary Error Report for email sending
@@ -257,6 +256,9 @@ class Front extends CI_Controller
     				}
     				else
     				{
+    					$msg = '<h4>Email is failed to send</h4>
+		    					<p>Please try again later :)</p>';
+
     					$_SESSION['error'] = 1;
 	    				$_SESSION['success'] = 0;
 	    				$_SESSION['msg'] = $msg;

@@ -31,7 +31,7 @@
 						<td style="text-align:center;"><?php echo $no ?>.</td>
 						<td style="text-align:center;">
 							<div class="btn-group">
-								<a class="btn btn-success btn-sm dropdown-toggle" href="#" data-toggle="dropdown">
+								<a class="btn btn-danger btn-sm dropdown-toggle" href="#" data-toggle="dropdown">
 									<strong class="fa fa-pencil-square-o"></strong>
 								</a>
 								<ul class="dropdown-menu">

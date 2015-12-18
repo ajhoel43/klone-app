@@ -5,13 +5,13 @@
     	justify-content:center;
     	align-items:center;
     	/*background-color: white;*/
-    	background: rgb(255, 255, 255); /* Fall-back for browsers that don't
-                                    support rgba */
-	    background: rgba(255, 255, 255, .5);
+    	background: rgb(255, 255, 255); 
+    	/* Fall-back for browsers that don't support rgba */
+	    background: rgba(255, 255, 255, .6);
     	border-radius: 5px;
     }
 
-	img.bg {
+	img.background {
 	  /* Set rules to fill background */
 	  min-height: 100%;
 	  min-width: 1024px;
@@ -27,7 +27,7 @@
 	}
 
 	@media screen and (max-width: 1024px) { /* Specific to this particular image */
-	  img.bg {
+	  img.background {
 	    left: 50%;
 	    margin-left: -512px;   /* 50% */
 	  }
@@ -45,17 +45,16 @@
 		align-items: center;
 	}
 </style>
-<img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>" class="bg">
+<img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>" class="background">
 <div class="col-lg-12 logos">
 	<img src="<?php echo base_url('assets/img/logo/klonefont.png') ?>" class="logo">
 	<!-- <div class="background-image"><img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>"></div> -->
 </div>
 <div class="col-md-4"></div>
 <div class="col-md-4 login-form">
-	<?php echo form_open('front/login') ?>
-	<form name="login-form">
-	<h1></h1>
-	<table class="table table-striped">
+	<?php echo form_open('front/login', 'name="login-form"') ?>
+	<h2><?php echo lang('label_login') ?></h2>
+	<table class="table">
 	<?php 
 		$error = $this->session->flashdata('error');
 		if($error):
