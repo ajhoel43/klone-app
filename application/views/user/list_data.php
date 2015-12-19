@@ -11,8 +11,34 @@
 		<div class="page-header">
 			<h2><?php echo lang('admin_title') ?> <small>@<?php echo strtoupper(lang('label_user')) ?></small></h2>		
 		</div>
-		<a href="#" class="btn btn-md btn-primary add-form"><i class="fa fa-plus fa-lg"></i> <i class="fa fa-user fa-lg"></i></a>
-		<div>
+		<div class="col-md-12">
+			<h3>Search Form</h3>
+			<form class="form-horizontal" role="form" name="search">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><?php echo lang('label_username') ?></label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="username" value="<?php echo set_value('username') ?>">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><?php echo lang('label_user_prev') ?></label>
+					<div class="col-sm-4">
+						<?php echo form_dropdown('user_previleges', $usprev, null, 'class="form-control"') ?>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-1 col-sm-6">
+						<button class="btn btn-primary" name="search"><?php echo lang('button_submit') ?></button>
+					</div>
+				</div>
+			</form>
+		</div>
+<!-- 		<div style="text-align:right;">
+			<?php if(isset($links))echo $links?>
+		</div>
+ -->
+ 		<a href="#" class="btn btn-md btn-primary add-form"><i class="fa fa-plus fa-lg"></i> <i class="fa fa-user fa-lg"></i></a>
+		<div class="data-user-result">
 			<table class="table table-bordered thead">
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
@@ -59,6 +85,9 @@
 					</tr>
 				<?php $no++; endforeach; ?>
 			</table>	
+			<div style="text-align:right;">
+				<?php if(isset($links))echo $links?>
+			</div>
 		</div>
 	</div>
 </div>
@@ -104,19 +133,31 @@ $.ajaxSetup({cache:false, async: false});
 var data = "<?php echo $this->session->userdata('username') ?>";
 $("#"+data).addClass('success');
 
+$("button[name='search']").click(function(event){
+	event.preventDefault();
+	$.ajax({
+		url : "<?php echo base_url('user/searchuser') ?>",
+		type : "POST",
+		data : $("form[name='search']").serialize(),
+		success : function(data) {
+			$(".data-user-result").html(data);
+		}
+	});
+});
+
 $(".add-form").click(function(event){
 	event.preventDefault();
 	$(".form-modal").load("<?php echo base_url('user/create_user') ?>");
 	$(".form-modal").modal("show");
 });
 
-$(".editdata").click(function(event){
+$("body").on("click", ".editdata",function(event){
 	event.preventDefault();
 	$(".form-modal").load("<?php echo base_url('user/edit_user') ?>/"+$(this).attr('href'));
 	$(".form-modal").modal("show");
 });
 
-$(".deletedata").click(function(event){
+$("body").on("click", ".deletedata",function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
 	$(".confirm-body").load("<?php echo base_url('user/delete_dialog') ?>/"+$(this).attr('href'));
