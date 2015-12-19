@@ -290,7 +290,9 @@ class Front extends CI_Controller
     	}
     	else
     	{
-    		$this->template1->create_view1('pages/fail_page', $data);
+    		$data['heading'] = "Verification Code";
+    		$data['message'] = "Your verification code has been expired";
+    		$this->load->view('pages/fail_page', $data);
     	}
     }
 
