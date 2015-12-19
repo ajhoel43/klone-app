@@ -186,7 +186,7 @@ $("body").on("click", ".deletedata",function(event){
 	});
 });
 
-$(".activateuser").click(function(event){
+$("body").on("click", ".activateuser",function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
 	$(".confirm-modal .modal-title").html("Activate User");
@@ -217,7 +217,7 @@ $(".activateuser").click(function(event){
 	});
 });
 
-$(".giveaccess").click(function(event){
+$("body").on("click",".giveaccess",function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
 	$(".confirm-modal .modal-title").html("Add Administrator");
