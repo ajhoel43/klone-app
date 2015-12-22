@@ -66,6 +66,9 @@ class Model_user extends CI_Model
 		elseif(isset($params['level']) && $params['level'] != '3' && $params['level'] != '4')
 			return $buffer;
 
+		if(isset($params['user_previleges']))
+			$this->db->where('kode_up', $params['user_previleges']);
+
 		$query = $this->db->get('M_user_previleges')->result();
 
 
@@ -170,15 +173,29 @@ class Model_user extends CI_Model
 		return array($query, $message);
 	}
 
-	function get_user_data( $params = null ) 
+	function search_user( $params = null ) 
 	{
-		if(isset($params['id']))
-			$this->db->where('username', $params['id']);
+		if(isset($params['username']) && $params['username'] != '')
+			$this->db->like('u.username', $params['username']);
 
-		$this->db->select('*');
+		if(isset($params['user_previleges']) && $params['user_previleges'] != '')
+			$this->db->where('u.user_previleges', $params['user_previleges']);
+
+		$this->db->select('
+			u.*,
+			up.level,
+			up.deskripsi as user_type
+			');
 		
-		$query = $this->db->get('M_user')->row();
-		
+		$this->db->join('M_user_previleges up', 'up.kode_up = u.user_previleges','left');
+		$this->db->order_by('up.level desc','u.username asc');
+		$query = $this->db->get('M_user u')->result();
+		foreach ($query as &$index) {
+			unset($index->password);
+			unset($index->hash);
+			unset($index->salt);
+		}
+
 		return $query;
 	}
 
@@ -226,8 +243,6 @@ class Model_user extends CI_Model
 
 		if(isset($params['email']) && !is_null($params['email']))
 			$this->db->where('email', $params['email']);
-
-		$this->db->select('*');
 
 		$query = $this->db->get('M_user')->row();
 		return $query;
