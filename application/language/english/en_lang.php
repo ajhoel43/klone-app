@@ -1,6 +1,7 @@
 <?php 
 //*********Question***********//
 $lang['delete_q'] = 'Are you sure want to delete this account?';
+$lang['delete_q1'] = 'Are you sure want to delete this data?';
 
 //*********Aa*********//
 $lang['account_detail'] = 'Account Detail';
@@ -10,9 +11,10 @@ $lang['account_detail'] = 'Account Detail';
 $lang['button_add'] = 'Add';
 $lang['button_close'] = 'Close';
 $lang['button_delete'] = 'Delete';
-$lang['button_new'] = "New Input";
+$lang['button_new'] = "New";
 $lang['button_ok'] = 'OK';
 $lang['button_update'] = 'Update';
+$lang['button_search'] = 'Search';
 $lang['button_submit'] = 'Submit';
 $lang['button_process'] = 'Processing';
 
@@ -24,6 +26,9 @@ $lang['conf_no'] = 'No';
 $lang['date_date'] = '- Date -';
 $lang['date_month'] = '- Month -';
 $lang['date_year'] = '- Year -';
+
+//*********Ee*********//
+$lang['error_header'] = 'ERROR :';
 
 //*********Ff*********//
 $lang['forgot_password'] = 'Forgot Password';
@@ -45,12 +50,16 @@ $lang['copyright'] = "Copyright &copy 2015";
 
 //*********Ll*********//
 //Label
+$lang['label_action'] = 'Action';
 $lang['label_admin'] = 'Admin';
 $lang['label_birth'] = 'Birth Date';
+$lang['label_desc'] = 'Deskripsi';
 $lang['label_email'] = 'Email';
 $lang['label_forgot'] = 'Forgot Password?';
 $lang['label_hash'] = 'Hash';
 $lang['label_id'] = 'ID';
+$lang['label_jb'] = 'Jenis Bengkel';
+$lang['label_jb_kode'] = 'Kode JB';
 $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
 $lang['label_master'] = 'Master Data';
@@ -62,6 +71,7 @@ $lang['label_password'] = 'Password';
 $lang['label_phone'] = 'Phone';
 $lang['label_repassword'] = 'Retype Password';
 $lang['label_ruser'] = 'Regular User';
+$lang['label_search'] = 'Search Form';
 $lang['label_salt'] = 'Salt';
 $lang['label_sendingmail'] = 'Sending Mail...';
 $lang['label_status'] = 'Status';
@@ -78,8 +88,9 @@ $lang['messageEmailOk'] = 'Email is valid';
 $lang['messageEmailNotOk'] = 'Email has been registered';
 $lang['messageEmailNotValid'] = 'Email is not valid';
 $lang['messageEmailNull'] = 'Email is required';
+$lang['message_field_null'] = 'Field value is Null';
 $lang['messageLoginFalse'] = 'Wrong Username or Password';
-$lang['messageNoPermission'] = 'Oops! you have no Permission here';
+$lang['messageNoPermission'] = 'Oops! you have no Permission';
 $lang['messagePasswMatch'] = 'Password is match';
 $lang['messagePasswNotMatch'] = 'Password is not match';
 $lang['messageUserOk'] = 'Username is available';
