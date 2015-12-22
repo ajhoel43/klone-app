@@ -42,7 +42,7 @@ class User extends CI_Controller {
 
 	function _edit_user_form($id) 
 	{
-		$data['record'] = $this->model_user->get_user_data(array('id' => $id));
+		$data['record'] = $this->model_user->get_verification_info(array('username' => $id));
 		$upparams = array('level' => $this->session->userdata('level'));
 		$data['usprev'] = $this->model_user->usprev_dropdown($upparams);
 		$birth = dashDateExplode($data['record']->birth_date);
@@ -120,46 +120,38 @@ class User extends CI_Controller {
 	{
 		$this->load->library('pagination');
 
-		$getuser = $this->model_user->get_list_user();
+		$usprev = $this->session->userdata('user_previleges');
+		$params = array();
+		if($usprev !== $this->super)
+			$params['user_previleges'] = $usprev;
+
+		$getuser = $this->model_user->get_list_user($params);
+
+		$config = load_pagination_config();
 
 		$config['base_url'] = base_url('user/list_users');
 		$config['total_rows'] = count($getuser);
 		$config['per_page'] = 20;
 		// $choice = $config['total_rows'] / $config['per_page'];
 		// $config['num_links'] = round($choice);
-
-		// Pagination View Configuration
-		$config['full_tag_open'] = '<ul class="pagination">';
-		$config['full_tag_close'] = '</ul>';
-		$config['first_link'] = '<span class="glyphicon glyphicon-chevron-left"></span><span class="glyphicon glyphicon-chevron-left"></span> First';
-		$config['last_link'] = 'Last <span class="glyphicon glyphicon-chevron-right"></span><span class="glyphicon glyphicon-chevron-right"></span>';
-		$config['prev_link'] = '<span class="glyphicon glyphicon-chevron-left"></span> Prev';
-		$config['next_link'] = 'Next <span class="glyphicon glyphicon-chevron-right"></span>';
-		$config['first_tag_open'] = '<li>';
-		$config['first_tag_close'] = '</li>';
-		$config['last_tag_open'] = '<li>';
-		$config['last_tag_close'] = '</li>';
-		$config['prev_tag_open'] = '<li>';
-		$config['prev_tag_close'] = '</li>';
-		$config['next_tag_open'] = '<li>';
-		$config['next_tag_close'] = '</li>';
-		$config['cur_tag_open'] = '<li class="active"><a>';
-		$config['cur_tag_close'] = '</a></li>';
-		$config['num_tag_open'] = '<li>';
-		$config['num_tag_close'] = '</li>';
-
+		
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		
-		$params = array(
-			'limit' => $config['per_page'],
-			'start' => $page,
-			);
+		/*
+		Code above is equal to
+		if($this->uri->segment(3))
+			$page = $this->uri->segment(3);
+		else
+			$page = 0;
+		*/
+
+		$params['limit'] = $config['per_page'];
+		$params['start'] = $page;
 
 		$data['records'] = $this->model_user->get_list_user($params);
 		$data['links'] = $this->pagination->create_links();
-		$data['usprev'] = $this->model_user->usprev_dropdown();
+		$data['usprev'] = $this->model_user->usprev_dropdown($params);
 
 		$this->template1->create_view('user/list_data', $data);
 	}
@@ -177,14 +169,20 @@ class User extends CI_Controller {
 
 	function searchuser()
 	{
+		$usprev = $this->session->userdata('user_previleges');
+		if($usprev !== $this->super)
+			$_POST['user_previleges'] = $usprev;
+
 		$data = array();
-		$data['records'] = $this->model_user->get_list_user($this->input->post());
+		$data['records'] = $this->model_user->search_user($this->input->post());
 		$count = count($data['records']);
 
 		if($count > 0)
 			die($this->load->view('user/list_data_ajax', $data, TRUE));
-		else
+		else{
 			echo "<center><div class='alert alert-danger'>No Records Found</div></center>";
+			die();
+		}
 	}
 
     function create_user()
