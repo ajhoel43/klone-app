@@ -113,7 +113,7 @@ $.ajaxSetup({cache:false, async: false});
 $("button[name='search']").click(function(event){
 	event.preventDefault();
 	$.ajax({
-		url : "<?php echo base_url('user/searchuser') ?>",
+		url : "<?php echo base_url('jenis_bkl/search_jb') ?>",
 		type : "POST",
 		data : $("form[name='search']").serialize(),
 		success : function(data) {

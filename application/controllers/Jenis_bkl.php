@@ -118,4 +118,11 @@ class Jenis_bkl extends CI_Controller {
 		else
 			die(sprintf('%s@@%s@@', $this->success, delete_flag($bresult)));
 	}
+
+	function search_jb()
+	{
+		$params = array('nama_jb' => $this->input->post('nama_jb'));
+		$data['records'] = $this->m_jb->get_list_jb($params);
+		$this->load->view('jb/list_data_ajax', $data);
+	}
 }
