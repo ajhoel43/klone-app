@@ -4,6 +4,18 @@ $lang['delete_q'] = 'Are you sure want to delete this account?';
 
 //*********Aa*********//
 $lang['account_detail'] = 'Account Detail';
+
+//*********Bb*********//
+//Label button
+$lang['button_add'] = 'Add';
+$lang['button_close'] = 'Close';
+$lang['button_delete'] = 'Delete';
+$lang['button_new'] = "New Input";
+$lang['button_ok'] = 'OK';
+$lang['button_update'] = 'Update';
+$lang['button_submit'] = 'Submit';
+$lang['button_process'] = 'Processing';
+
 //*********Cc*********//
 $lang['conf_yes'] = 'Yes';
 $lang['conf_no'] = 'No';
@@ -33,6 +45,7 @@ $lang['copyright'] = "Copyright &copy 2015";
 
 //*********Ll*********//
 //Label
+$lang['label_admin'] = 'Admin';
 $lang['label_birth'] = 'Birth Date';
 $lang['label_email'] = 'Email';
 $lang['label_forgot'] = 'Forgot Password?';
@@ -44,26 +57,20 @@ $lang['label_master'] = 'Master Data';
 $lang['label_name'] = 'Name';
 $lang['label_newpass'] = 'Input New Password';
 $lang['label_no'] = 'No.';
+$lang['label_owner'] = 'Owner';
 $lang['label_password'] = 'Password';
 $lang['label_phone'] = 'Phone';
 $lang['label_repassword'] = 'Retype Password';
+$lang['label_ruser'] = 'Regular User';
 $lang['label_salt'] = 'Salt';
 $lang['label_sendingmail'] = 'Sending Mail...';
 $lang['label_status'] = 'Status';
+$lang['label_super'] = 'Super';
 $lang['label_user'] = "User";
-$lang['label_user_prev'] = 'Type';
+$lang['label_user_prev'] = 'User Type';
 $lang['label_username'] = 'Username';
 $lang['label_verification'] = 'Verification';
 
-//Label button
-$lang['button_add'] = 'Add';
-$lang['button_close'] = 'Close';
-$lang['button_delete'] = 'Delete';
-$lang['button_new'] = "New Input";
-$lang['button_ok'] = 'OK';
-$lang['button_update'] = 'Update';
-$lang['button_submit'] = 'Submit';
-$lang['button_process'] = 'Processing';
 
 //**********Mm***********//
 //Message

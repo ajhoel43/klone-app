@@ -63,7 +63,7 @@ class Model_user extends CI_Model
 
 		if(isset($params['level']) && $params['level'] != '4')
 			$this->db->where('level <', $params['level']);
-		elseif($params['level'] != '3' && $params['level'] != '4')
+		elseif(isset($params['level']) && $params['level'] != '3' && $params['level'] != '4')
 			return $buffer;
 
 		$query = $this->db->get('M_user_previleges')->result();
@@ -98,8 +98,16 @@ class Model_user extends CI_Model
 
 	function get_list_user($params = array())
 	{
-		if(isset($params['username']))
-			$this->db->where('username', $params['username']);
+		if(isset($params['username']) && $params['username'] != '')
+			$this->db->where('u.username', $params['username']);
+
+		if(isset($params['user_previleges']) && $params['user_previleges'] != '')
+			$this->db->where('u.user_previleges', $params['user_previleges']);
+
+		if(isset($params['limit']) && isset($params['start']))
+			$this->db->limit($params['limit'], $params['start']);
+		elseif(isset($params['limit']))
+			$this->db->limit($params['limit']);
 
 		$this->db->select('
 			u.*,
