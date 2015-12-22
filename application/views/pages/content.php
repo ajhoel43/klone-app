@@ -1,4 +1,9 @@
 <div class="col-md-12">
+	<?php 
+		$error = $this->session->flashdata('error');
+		if(isset($error))
+			echo '<div class="alert alert-danger">'.$error.'</div>';
+	?>
 	<div class="jumbotron">
 		<h2>
 			<?php echo lang('main_title') ?>

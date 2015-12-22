@@ -12,7 +12,7 @@
 			<h2><?php echo lang('admin_title') ?> <small>@<?php echo strtoupper(lang('label_user')) ?></small></h2>		
 		</div>
 		<div class="col-md-12">
-			<h3>Search Form</h3>
+			<h3><?php echo lang('label_search') ?></h3>
 			<form class="form-horizontal" role="form" name="search">
 				<div class="form-group">
 					<label class="col-sm-1 control-label"><?php echo lang('label_username') ?></label>
@@ -23,12 +23,12 @@
 				<div class="form-group">
 					<label class="col-sm-1 control-label"><?php echo lang('label_user_prev') ?></label>
 					<div class="col-sm-4">
-						<?php echo form_dropdown('user_previleges', $usprev, null, 'class="form-control"') ?>
+						<?php echo form_dropdown('user_previleges', $usprev, $this->session->userdata('user_previleges'), 'class="form-control"') ?>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-1 col-sm-6">
-						<button class="btn btn-primary" name="search"><?php echo lang('button_submit') ?></button>
+						<button class="btn btn-primary" name="search"><?php echo lang('button_search') ?> <i class="fa fa-search"></i></button>
 					</div>
 				</div>
 			</form>
@@ -37,12 +37,12 @@
 			<?php if(isset($links))echo $links?>
 		</div>
  -->
- 		<a href="#" class="btn btn-md btn-primary add-form"><i class="fa fa-plus fa-lg"></i> <i class="fa fa-user fa-lg"></i></a>
+ 		<a href="#" class="btn btn-md btn-primary add-form"><?php echo lang('button_add') ?> <i class="fa fa-plus"></i></a>
 		<div class="data-user-result">
 			<table class="table table-bordered thead">
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
-					<th style="width:5%; ">Action</th>
+					<th style="width:5%; "><?php echo lang('label_action') ?></th>
 					<th width="12%"><?php echo lang('label_username') ?></th>
 					<th><?php echo lang('label_name') ?></th>
 					<th><?php echo lang('label_email') ?></th>

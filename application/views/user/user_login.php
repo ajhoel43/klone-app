@@ -29,8 +29,10 @@
 	@media screen and (max-width: 1920px) and (min-width: 1024px){
 		.background {
 			background: url('<?php echo base_url("assets/img/background/bg1hd.jpg") ?>') no-repeat fixed 50%;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
 			background-size: cover;
-
 			/*background: url('<?php echo base_url("assets/img/background/bg1hd.jpg") ?>') fixed 50% / cover;*/
 		}
 	}
@@ -38,8 +40,10 @@
 	@media screen and (max-width: 1024px) { /* Specific to this particular image */
 		.background {
 			background: url('<?php echo base_url("assets/img/background/bg1.jpg") ?>') no-repeat fixed 50%;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
 			background-size: cover;
-
 			/*background: url('<?php echo base_url("assets/img/background/bg1.jpg") ?>') fixed 50% / cover;*/
 		}
 	}
