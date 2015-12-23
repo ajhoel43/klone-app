@@ -74,14 +74,14 @@ class Jenis_bkl extends CI_Controller {
 
 			$vresult = $this->_validate_form();
 			if(!$vresult)
-				die(sprintf('%s@@%s@@', $this->error, validation_errors()));
+				die(report_flag($this->error, validation_errors()));
 
 			list($bresult, $msg) = $this->m_jb->add_jb($this->input->post());
 
 			if(!$bresult)
-				die(sprintf('%s@@%s@@', $this->error, $msg));
+				die(report_flag($this->error, $msg));
 			else
-				die(sprintf('%s@@%s@@', $this->success, $msg));
+				die(report_flag($this->success, $msg));
 		}
 
 		// $data = array();
@@ -97,14 +97,14 @@ class Jenis_bkl extends CI_Controller {
 			unset($_POST['submit']);
 
 			if(!$this->_validate_form())
-				die(sprintf('%s@@%s@@', $this->error, validation_errors()));
+				die(report_flag($this->error, validation_errors()));
 
 			list($bresult, $msg) = $this->m_jb->add_jb($this->input->post(), $id);
 
 			if(!$bresult)
-				die(sprintf('%s@@%s@@', $this->error, $msg));
+				die(report_flag($this->error, $msg));
 			else
-				die(sprintf('%s@@%s@@', $this->success, $msg));
+				die(report_flag($this->success, $msg));
 		}
 
 		$data = array();
@@ -117,9 +117,9 @@ class Jenis_bkl extends CI_Controller {
 		$bresult = $this->m_jb->del_jb($id);
 
 		if(!$bresult)
-			die(sprintf('%s@@%s@@', $this->error, delete_flag($bresult)));
+			die(report_flag($this->error, delete_flag($bresult)));
 		else
-			die(sprintf('%s@@%s@@', $this->success, delete_flag($bresult)));
+			die(report_flag($this->success, delete_flag($bresult)));
 	}
 
 	function search_jb()

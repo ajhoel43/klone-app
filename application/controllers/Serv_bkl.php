@@ -33,8 +33,6 @@ class Serv_bkl extends CI_Controller {
 		$this->form_validation->set_rules('nama_layanan', lang('label_servb_name'), 'required');
 		$this->form_validation->set_rules('kode_jb[]', lang('label_jb'), 'required');
 
-		$this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
-
 		if($this->form_validation->run() === TRUE)
 			return true;
 		else
@@ -78,29 +76,47 @@ class Serv_bkl extends CI_Controller {
 
 			$vresult = $this->_validate_form();
 			if(!$vresult)
-				die(sprintf('%s@@%s@@', $this->error, validation_errors()));
+				die(report_flag($this->error, validation_errors()));
 
 			$this->db->trans_begin();
 			$kode_jb = $this->input->post('kode_jb');
 
-			foreach ($kode_jb as $index) {
+			foreach ($kode_jb as $value => $index) {
+				//*************** Checking for redundancy data **************//
+				$params = array(
+					'nama_layanan' => $this->input->post('nama_layanan'),
+					'kode_jb' => $index,
+					);
+				$rec = $this->m_servbkl->get_oneServbkl($params);
+
+				if(count($rec) > 0)
+				{
+					$indexnum = (int)$value+1;
+					die(report_flag($this->error, lang('messageRedundancyData')." on checkbox number: ".$indexnum." => ".$index));
+				}
+				//**********************************************************//
+
+				// Generate ID format*
 				$max = $this->m_servbkl->get_maxID(array('id' => $index));
 				$maxID = (int)substr($max->ID, 5);
 				$_POST['kode_jb'] = $index;
 				$_POST['ID_layanan'] = join('', array($_POST['kode_jb'], $maxID+1));
-				
+				if($_POST['deskripsi'] == '')
+					$_POST['deskripsi'] = $_POST['nama_layanan'];
+				// ******************
+
 				list($bresult, $msg) = $this->m_servbkl->add_servbkl($this->input->post());
 			}
 
 			if(!$bresult)
 			{
 				$this->db->trans_rollback();
-				die(sprintf('%s@@%s@@', $this->error, $msg));
+				die(report_flag($this->error, $msg));
 			}
 			else
 			{
 				$this->db->trans_commit();
-				die(sprintf('%s@@%s@@', $this->success, $msg));
+				die(report_flag($this->success, $msg));
 			}
 		}
 
@@ -118,14 +134,25 @@ class Serv_bkl extends CI_Controller {
 
 			$vresult = $this->_validate_form();
 			if(!$vresult)
-				die(sprintf('%s@@%s@@', $this->error, validation_errors()));
+				die(report_flag($this->error, validation_errors()));
+
+			//************ Checking for redundancy ************//
+			$params = array(
+				'nama_layanan' => $this->input->post('nama_layanan'),
+				'kode_jb' => $this->input->post('kode_jb'),
+				);
+			$rec = $this->m_servbkl->get_oneServbkl($params);
+
+			if(count($rec) > 0 AND $rec->ID_layanan != $_POST['ID_layanan'])
+				die(report_flag($this->error, lang('messageRedundancyData')));
+			//*************************************************//
 
 			list($bresult, $msg) = $this->m_servbkl->add_servbkl($this->input->post(), $id);
 
 			if(!$bresult)
-				die(sprintf('%s@@%s@@', $this->error, $msg));
+				die(report_flag($this->error, $msg));
 			else
-				die(sprintf('%s@@%s@@', $this->success, $msg));
+				die(report_flag($this->success, $msg));
 		}
 
 		$data = array();
@@ -139,9 +166,9 @@ class Serv_bkl extends CI_Controller {
 		$bresult = $this->m_servbkl->del_servbkl($id);
 
 		if(!$bresult)
-			die(sprintf('%s@@%s@@', $this->error, delete_flag($bresult)));
+			die(report_flag($this->error, delete_flag($bresult)));
 		else
-			die(sprintf('%s@@%s@@', $this->success, delete_flag($bresult)));
+			die(report_flag($this->success, delete_flag($bresult)));
 	}
 
 	function search_data()
