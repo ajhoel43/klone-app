@@ -17,7 +17,7 @@ class M_servbkl extends CI_Model
 
 		if(isset($params['kode_jb']) && $params['kode_jb'] != '')
 			$this->db->where('ly.kode_jb', $params['kode_jb']);
-		
+
 		if (isset($params['limit']) && isset($params['start']))
 			$this->db->limit($params['limit'], $params['start']);
 		else
@@ -40,6 +40,12 @@ class M_servbkl extends CI_Model
 	{
 		if(isset($params['id']))
 			$this->db->where('ly.ID_layanan', $params['id']);
+
+		if(isset($params['nama_layanan']) && isset($params['kode_jb']))
+		{
+			$this->db->where('ly.nama_layanan', $params['nama_layanan']);
+			$this->db->where('ly.kode_jb', $params['kode_jb']);
+		}
 		
 		$this->db->select('
 			ly.*,
