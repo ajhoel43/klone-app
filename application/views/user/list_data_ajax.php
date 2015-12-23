@@ -23,8 +23,8 @@
 						<strong class="fa fa-pencil-square-o"></strong>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php echo $record->username ?>" class="editdata"><i class="fa fa-pencil"></i> Edit</a></li>
-						<li><a href="<?php echo $record->username ?>" class="deletedata"><i class="fa fa-times"></i> Delete</a></li>
+						<li><a href="<?php echo $record->username ?>" class="editdata"><i class="fa fa-pencil" style="color:green;"></i> Edit</a></li>
+						<li><a href="<?php echo $record->username ?>" class="deletedata"><i class="fa fa-times" style="color:red;"></i> Delete</a></li>
 						<?php $level = $this->session->userdata('level'); $level = (int)$level; ?>
 						<?php if($level == 4 && $record->status != 1): ?>
 						<li><a href="<?php echo $record->username ?>" class="activateuser"><i class="fa fa-check"></i> Activate</a></li>
