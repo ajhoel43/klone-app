@@ -78,6 +78,18 @@ function delete_flag( $bool )
 		return lang('message_error_delete');
 }
 
+function report_flag($code, $msg)
+{
+	if($code === 0)
+		$msg = '<div class="text-danger">'.$msg.'</div>';
+	else if($code === 1)
+		$msg = '<div>'.$msg.'</div>';
+	else
+		$msg = '<div class="text-warning">'.$msg.'</div>';
+
+	return sprintf('%s@@%s@@', $code, $msg);
+}
+
 function to_db_date($string)
 {
 	if($string)
@@ -266,4 +278,15 @@ function load_pagination_config()
 	$config['num_tag_close'] = '</li>';
 
 	return $config;
+}
+
+function type_kend_dropdown()
+{
+	$buffer = array();
+	$buffer[''] = '- Select Type -';
+	$buffer['motor'] = 'Motor';
+	$buffer['mobil'] = 'Mobil';
+	$buffer['truck'] = 'Truk';
+
+	return $buffer;
 }
