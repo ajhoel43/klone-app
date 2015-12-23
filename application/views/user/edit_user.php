@@ -82,7 +82,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('button_close') ?></button>
-			<button type="submit" name="update_user_btn" class="btn btn-primary" value="<?php echo $record->username ?>"><?php echo lang('button_update')." ".lang('label_user') ?></button>
+			<button type="submit" name="update_user_btn" class="btn btn-primary" value="<?php echo $record->username ?>"><?php echo lang('button_update') ?></button>
 		</div>
 	</div>
 </div>
