@@ -13,11 +13,11 @@
 		</div>
 		<div class="col-md-12">
 			<h3><?php echo lang('label_search') ?></h3>
-			<form class="form-horizontal" role="form" name="search">
+			<form class="form-horizontal" name="search">
 				<div class="form-group">
 					<label class="col-sm-1 control-label"><?php echo lang('label_username') ?></label>
 					<div class="col-sm-4">
-						<input type="text" class="form-control" name="username" value="<?php echo set_value('username') ?>">
+						<input type="text" class="form-control" name="find_username" value="<?php echo set_value('username') ?>">
 					</div>
 				</div>
 				<div class="form-group">
@@ -67,7 +67,6 @@
 									<?php if($level == 4 && $record->status != 1): ?>
 									<li><a href="<?php echo $record->username ?>" class="activateuser"><i class="fa fa-check"></i> Activate</a></li>
 									<?php endif; ?>
-									<?php $level = $this->session->userdata('level'); $level = (int)$level; ?>
 									<?php if($level == 4 && $record->level < 3): ?>
 									<li class="divider"></li>
 									<li><a href="<?php echo $record->username ?>" class="giveaccess"><i class="fa fa-unlock"></i> Make as Admin</a></li>

@@ -173,6 +173,8 @@ class User extends CI_Controller {
 		if($usprev !== $this->super)
 			$_POST['user_previleges'] = $usprev;
 
+		$_POST['username'] = $_POST['find_username'];
+		unset($_POST['find_username']);
 		$data = array();
 		$data['records'] = $this->model_user->search_user($this->input->post());
 		$count = count($data['records']);
