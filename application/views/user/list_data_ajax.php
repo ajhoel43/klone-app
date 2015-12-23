@@ -1,6 +1,4 @@
-<div class="col-md-12 text-success" style="text-align:right;">
-	<?php echo lang('label_found_rec').count($records) ?>
-</div>
+<p class="text-success" style="text-align:right"><?php echo lang('label_found_rec').count($records) ?></p>
 <table class="table table-bordered thead">
 	<tr class="active">
 		<th style="width:3%;"><?php echo lang('label_no') ?></th>
