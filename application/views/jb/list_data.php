@@ -26,7 +26,7 @@
 					<tr>
 						<td></td>
 						<td style="padding-top:1em;">
-							<button class="btn btn-primary" name="search"><?php echo lang('button_search') ?> <i class="fa fa-search"></i></button>
+							<button class="btn btn-success" name="search"><?php echo lang('button_search') ?> <i class="fa fa-search"></i></button>
 						</td>
 					</tr>
 				</table>
@@ -36,7 +36,7 @@
 				</div>
 			</form>
 		</div>
- 		<a href="#" class="btn btn-md btn-primary add-form"><?php echo lang('button_add') ?> <i class="fa fa-plus"></i></a>
+ 		<a href="#" class="btn btn-md btn-primary add-form"><?php echo lang('button_add') ?> <i class="fa fa-plus"></i></a>		
 		<div class="data-user-result">
 			<table class="table table-bordered thead">
 				<tr class="active">

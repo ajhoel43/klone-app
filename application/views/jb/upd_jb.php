@@ -2,7 +2,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
-			<h4 class="modal-title"><?php echo "New ".lang('label_jb') ?></h4>
+			<h4 class="modal-title"><?php echo "Edit ".lang('label_jb') ?></h4>
 		</div>
 		<div class="modal-body">
 			<?php echo validation_errors(); ?>
@@ -30,7 +30,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('button_close') ?></button>
-			<button type="submit" name="update_data_btn" value="<?php echo $record->kode_jb ?>" class="btn btn-primary" ><?php echo lang('button_add') ?></button>
+			<button type="submit" name="update_data_btn" value="<?php echo $record->kode_jb ?>" class="btn btn-primary" ><?php echo lang('button_update') ?></button>
 		</div>
 	</div>
 </div>
