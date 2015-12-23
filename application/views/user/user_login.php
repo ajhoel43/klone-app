@@ -63,7 +63,6 @@
 <div class="background"></div>
 <div class="col-lg-12 logos">
 	<center><a href="<?php echo base_url('main') ?>"><img src="<?php echo base_url('assets/img/logo/klonefont.png') ?>" class="logo"></a></center>
-	<!-- <div class="background-image"><img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>"></div> -->
 </div>
 <div class="col-md-4"></div>
 <div class="col-md-4 login-form">

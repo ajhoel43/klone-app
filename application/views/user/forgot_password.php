@@ -6,10 +6,10 @@
 	    background: rgba(255, 255, 255, .6);
     	border-radius: 5px;
 	}
-	img.background {
+	.background {
 	  /* Set rules to fill background */
 	  min-height: 100%;
-	  min-width: 1024px;
+	  min-width: 100%;
 		
 	  /* Set up proportionate scaling */
 	  width: 100%;
@@ -21,14 +21,44 @@
 	  left: 0;
 	}
 
+	@media screen and (max-width: 1920px) and (min-width: 1024px){
+		.background {
+			background: url('<?php echo base_url("assets/img/background/bg2hd.jpg") ?>') no-repeat fixed 50%;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			/*background: url('<?php echo base_url("assets/img/background/bg1hd.jpg") ?>') fixed 50% / cover;*/
+		}
+	}
+
 	@media screen and (max-width: 1024px) { /* Specific to this particular image */
-	  img.background {
-	    left: 50%;
-	    margin-left: -512px;   /* 50% */
-	  }
+		.background {
+			background: url('<?php echo base_url("assets/img/background/bg2.jpg") ?>') no-repeat fixed 50%;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			/*background: url('<?php echo base_url("assets/img/background/bg1.jpg") ?>') fixed 50% / cover;*/
+		}
+	}
+	
+	.logo{
+		width:60%;
+		height: auto;
+		margin-bottom: 2em;
+	}
+
+	.logos {
+		display: flex;
+		justify-content:center;
+		align-items: center;
 	}
 </style>
-<img src="<?php echo base_url('assets/img/background/bg1.jpg') ?>" class="background">
+<div class="background"></div>
+<div class="col-lg-12 logos">
+	<center><a href="<?php echo base_url('main') ?>"><img src="<?php echo base_url('assets/img/logo/klonefont.png') ?>" class="logo"></a></center>
+</div>
 <div class="col-lg-12 pages">
 	<div class="row">
 		<div class="page-header">
