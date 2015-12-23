@@ -27,6 +27,9 @@
 					<li>
 						<a href="<?php echo base_url('serv_bkl/index') ?>"><i class="fa fa-users"></i> <?php echo lang('label_servb') ?></a>
 					</li>
+					<li>
+						<a href="<?php echo base_url('jeken/index') ?>"><i class="fa fa-users"></i> <?php echo lang('label_jeken') ?></a>
+					</li>
 				</ul>
 			</li>
 			<li class="dropdown nav-margin">

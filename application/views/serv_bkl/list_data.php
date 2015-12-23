@@ -53,8 +53,8 @@
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
 					<th style="width:5%; "><?php echo lang('label_action') ?></th>
-					<th width="12%"><?php echo lang('label_jb') ?></th>
-					<th width="12%"><?php echo lang('label_servb') ?></th>
+					<th width="10%"><?php echo lang('label_jb') ?></th>
+					<th width="20%"><?php echo lang('label_servb') ?></th>
 					<th><?php echo lang('label_desc') ?></th>
 				</tr>
 				<?php $no = 1; ?>
@@ -93,7 +93,7 @@
 		<div class="modal-content"> <!-- CONTENT -->
 			<div class="modal-header"> <!-- HEADER -->
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
-				<h4 class="modal-title"><?php echo "Confirm Delete ".lang('label_jb') ?></h4>
+				<h4 class="modal-title"><?php echo "Confirm Delete ".lang('label_servb') ?></h4>
 			</div> <!-- END HEADER -->
 			<div class="modal-body confirm-body"> <!-- BODY -->
 			</div> <!-- END BODY -->
