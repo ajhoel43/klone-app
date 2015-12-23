@@ -29,7 +29,7 @@ class Jenis_bkl extends CI_Controller {
 
 	function _validate_form()
 	{
-		$this->form_validation->set_rules('kode_jb', lang('label_jb_kode'), 'required');
+		$this->form_validation->set_rules('kode_jb', lang('label_jb_kode'), 'required|min_length[5]|max_length[5]');
 		$this->form_validation->set_rules('nama_jb', lang('label_jb'), 'required');
 
 		if($this->form_validation->run() === TRUE)
@@ -44,7 +44,7 @@ class Jenis_bkl extends CI_Controller {
 		
 		$config = load_pagination_config();
 
-		$config['base_url'] = base_url('user/list_users');
+		$config['base_url'] = base_url('jenis_bkl/index');
 		$config['total_rows'] = count($this->m_jb->get_list_jb());
 		$config['per_page'] = 20;
 		// $choice = $config['total_rows'] / $config['per_page'];
@@ -96,6 +96,9 @@ class Jenis_bkl extends CI_Controller {
 		{
 			unset($_POST['submit']);
 
+			if(!$this->_validate_form())
+				die(sprintf('%s@@%s@@', $this->error, validation_errors()));
+
 			list($bresult, $msg) = $this->m_jb->add_jb($this->input->post(), $id);
 
 			if(!$bresult)
@@ -123,6 +126,13 @@ class Jenis_bkl extends CI_Controller {
 	{
 		$params = array('nama_jb' => $this->input->post('nama_jb'));
 		$data['records'] = $this->m_jb->get_list_jb($params);
-		$this->load->view('jb/list_data_ajax', $data);
+		$count = count($data['records']);
+
+		if($count > 0)
+			die($this->load->view('jb/list_data_ajax', $data, TRUE));
+		else{
+			echo "<center><div class='alert alert-danger'>No Records Found</div></center>";
+			die();
+		}
 	}
 }
