@@ -8,20 +8,29 @@
 			<?php echo validation_errors(); ?>
 			<form class="form-horizontal" name="form_add">
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo "Type" ?>*</label>
-					<div class="col-sm-6">
+					<label class="col-sm-3 control-label"><?php echo "Type" ?>*</label>
+					<div class="col-sm-5">
 						<?php echo form_dropdown('kode_jeken', $jeken_dd, null, 'class="form-control"') ?>
 					</div>
 					<div class="col-sm-4"><p class="help-block info-id"></p></div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo lang('label_jeken') ?>*</label>
-					<div class="col-sm-6">
-						<input type="text" class="form-control" name="nama_jeken" value="<?php echo set_value('nama_jeken') ?>" placeholder="SUV, Sedan, MPV etc.">
+					<label class="col-sm-3 control-label"><?php echo lang('label_jeken') ?>*</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="nama_jeken" value="<?php echo set_value('nama_jeken') ?>" placeholder="<?php echo lang('example') ?> SUV, MPV, Sedan etc.">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo lang('label_desc') ?></label>
+					<label class="col-sm-3 control-label"><?php echo lang('label_cc') ?></label>
+					<div class="col-sm-2">
+						<input type="number" class="form-control" name="cc_min" value="<?php echo set_value('nama_jeken') ?>" placeholder="From CC*">
+					</div>
+					<div class="col-sm-2">
+						<input type="number" class="form-control" name="cc_max" value="<?php echo set_value('nama_jeken') ?>" placeholder="To CC">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><?php echo lang('label_desc') ?></label>
 					<div class="col-sm-9">
 						<textarea class="form-control" name="deskripsi" placeholder="About <?php echo lang('label_jeken') ?>" rows="4"><?php echo set_value('deskripsi') ?></textarea>
 					</div>

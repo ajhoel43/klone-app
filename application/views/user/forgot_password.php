@@ -59,7 +59,8 @@
 <div class="col-lg-12 logos">
 	<center><a href="<?php echo base_url('main') ?>"><img src="<?php echo base_url('assets/img/logo/klonefont.png') ?>" class="logo"></a></center>
 </div>
-<div class="col-lg-12 pages">
+<div class="col-lg-2"></div>
+<div class="col-lg-8 pages">
 	<div class="row">
 		<div class="page-header">
 			<h2><?php echo lang('forgot_password') ?></h2>
@@ -96,6 +97,7 @@
 		</div>
 	</div>
 </div>
+<div class="col-lg-2"></div>
 <div class="modal fade modal-report">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
