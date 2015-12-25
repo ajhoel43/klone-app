@@ -31,6 +31,7 @@ class Jeken extends CI_Controller {
 	{
 		$this->form_validation->set_rules('kode_jeken', "Type", 'required');
 		$this->form_validation->set_rules('nama_jeken', lang('label_jeken'), 'required');
+		$this->form_validation->set_rules('cc_min', lang('label_cc'), 'required');
 
 		if($this->form_validation->run() === TRUE)
 			return true;
@@ -77,6 +78,17 @@ class Jeken extends CI_Controller {
 			if(!$vresult)
 				die(report_flag($this->error, validation_errors()));
 
+			if(isset($_POST['cc_max']) && $_POST['cc_max'] != '')
+			{
+				if(!_is_number($_POST['cc_max']) && _is_number($_POST['cc_min']))
+					die(report_flag($this->error, "You must input a number in CC field"));
+			}
+			else
+			{
+				if(!_is_number($_POST['cc_min']))
+					die(report_flag($this->error, "You must input a number in CC field"));
+			}
+
 			// *************** Checking for redundancy ************* //
 			$params = array(
 				'nama_jeken' => $_POST['nama_jeken'],
@@ -90,10 +102,9 @@ class Jeken extends CI_Controller {
 			// Generate ID format*
 			$max = $this->m_jeken->get_maxID(array('id' => $_POST['kode_jeken']));
 			$maxID = (int)substr($max->ID, 5);
-			$_POST['kode_jeken'] = join('', array($_POST['kode_jeken'], $maxID+1));
+			$_POST['kode_jeken'] = join('', array($_POST['kode_jeken'], sprintf('%05s',$maxID+1)));
 			unset($_POST['type_kend']);
 			// *******************
-
 			list($bresult, $msg) = $this->m_jeken->add_jeken($this->input->post());
 
 			if(!$bresult)

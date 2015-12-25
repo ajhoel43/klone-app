@@ -100,11 +100,11 @@ class Serv_bkl extends CI_Controller {
 				$max = $this->m_servbkl->get_maxID(array('id' => $index));
 				$maxID = (int)substr($max->ID, 5);
 				$_POST['kode_jb'] = $index;
-				$_POST['ID_layanan'] = join('', array($_POST['kode_jb'], $maxID+1));
+				$_POST['ID_layanan'] = join('', array($_POST['kode_jb'], sprintf('%05s',$maxID+1)));
 				if($_POST['deskripsi'] == '')
 					$_POST['deskripsi'] = $_POST['nama_layanan'];
 				// ******************
-
+				
 				list($bresult, $msg) = $this->m_servbkl->add_servbkl($this->input->post());
 			}
 
