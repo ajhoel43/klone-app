@@ -110,6 +110,23 @@ function datePrint($string)
 	return $string;
 }
 
+function get_time_stamp($date = null)
+{
+	if($date)
+		$string = date('Y-m-d H:i:s', strtotime($date));
+	else
+		$string = date('Y-m-d H:i:s');
+
+	return $string;
+}
+
+function post_time_stamp($date)
+{
+	$string = date('d-M-Y H:i:s', strtotime($date));
+
+	return $string;
+}
+
 function reverseDate($strDate)
 {
     if ( $strDate )
@@ -238,6 +255,16 @@ function _valid_email($subject)
 		return false;
 	else
 		return true;
+}
+
+function _is_number($value)
+{
+	$filter = preg_match('/[0-9]+\z/', $value);
+
+	if($filter)
+		return true;
+	else
+		return false;
 }
 
 function _generateCode() 
