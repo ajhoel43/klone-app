@@ -135,4 +135,10 @@ class Jenis_bkl extends CI_Controller {
 			die();
 		}
 	}
+
+	function info_jb()
+	{
+		$data['recordsjb'] = $this->m_jb->get_list_jb();
+		echo $this->load->view('jb/info_jb', $data, TRUE);
+	}
 }
