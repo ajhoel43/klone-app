@@ -18,12 +18,15 @@
 					<div class="col-sm-6">
 						<?php echo form_dropdown('jenis_bengkel', $jb_dd, null, 'class="form-control"') ?>
 					</div>
-					<div><button class="btn btn-link info"><?php echo lang('info') ?></button></div>
+					<div><button class="btn btn-info info"><i class="fa fa-info"></i></button></div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo lang('address') ?>*</label>
 					<div class="col-sm-9">
 						<textarea class="form-control" name="alamat" placeholder="<?php echo lang('address')." ".lang('label_bengkel') ?>" rows="2"><?php echo set_value('alamat') ?></textarea>
+					</div>
+					<div class="col-sm-offset-2 col-sm-9">
+						<button class="btn btn-link get-location"><i class="fa fa-map-marker"></i> Pick location</button>
 					</div>
 				</div>
 				<div class="form-group">

@@ -22,15 +22,15 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="<?php echo $record->username ?>" class="editdata"><i class="fa fa-pencil" style="color:green;"></i> Edit</a></li>
-						<li><a href="<?php echo $record->username ?>" class="deletedata"><i class="fa fa-times" style="color:red;"></i> Delete</a></li>
+						<li><a href="<?php echo $record->username ?>" class="deletedata"><i class="fa fa-trash-o" style="color:red;"></i> Delete</a></li>
 						<?php $level = $this->session->userdata('level'); $level = (int)$level; ?>
 						<?php if($level == 4 && $record->status != 1): ?>
-						<li><a href="<?php echo $record->username ?>" class="activateuser"><i class="fa fa-check"></i> Activate</a></li>
+						<li><a href="<?php echo $record->username ?>" class="activateuser"><i class="fa fa-rocket" style="color:darkblue;"></i> Activate</a></li>
 						<?php endif; ?>
 						<?php $level = $this->session->userdata('level'); $level = (int)$level; ?>
 						<?php if($level == 4 && $record->level < 3): ?>
 						<li class="divider"></li>
-						<li><a href="<?php echo $record->username ?>" class="giveaccess"><i class="fa fa-unlock"></i> Make as Admin</a></li>
+						<li><a href="<?php echo $record->username ?>" class="giveaccess"><i class="fa fa-unlock" style="color:orange;"></i> Make as Admin</a></li>
 						<?php endif; ?>
 					</ul>
 				</div>
@@ -40,7 +40,11 @@
 			<td><?php echo $record->email ?></td>
 			<td><?php echo $record->phone_num ?></td>
 			<td><?php echo datePrint($record->birth_date) ?></td>
-			<td><?php echo userStatus($record->status) ?></td>
+			<?php if($record->status == 1): ?>
+				<td style="color:green"><strong><?php echo userStatus($record->status) ?></strong></td>
+			<?php else: ?>
+				<td style="color:red"><strong><?php echo userStatus($record->status) ?></strong></td>
+			<?php endif; ?>
 			<td><?php echo $record->user_type ?></td>
 		</tr>
 	<?php $no++; endforeach; ?>

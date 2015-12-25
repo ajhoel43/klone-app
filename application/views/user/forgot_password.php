@@ -82,7 +82,7 @@
 				<div class="form-group">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">
-						<a href="<?php echo base_url('front/login') ?>" class="btn btn-primary"><span class="fa fa-chevron-left"></span> Back to <?php echo lang('label_login') ?></a>
+						<a href="<?php echo base_url('front/login') ?>" class="btn btn-success"><span class="fa fa-chevron-left"></span> Back</a>
 						<input type="submit" class="btn btn-primary" name="submit" value="<?php echo lang('button_submit') ?>">
 					</div>
 				</div>

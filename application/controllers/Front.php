@@ -247,7 +247,7 @@ class Front extends CI_Controller
     				if($mresult)
     				{
     					$msg = '<h4>Email has send to <a href="#">'.$bresult->email.'</a></h4>
-								<p>Check your inbox!! <span class="glyphicon glyphicon-envelope"></span></p>';
+								<p>Check your inbox!! <span class="fa fa-envelope"></span></p>';
 
     					// to set Temporary Error Report for email sending
 	    				$_SESSION['error'] = 1;
@@ -257,7 +257,7 @@ class Front extends CI_Controller
     				else
     				{
     					$msg = '<h4>Email is failed to send</h4>
-		    					<p>Please try again later :)</p>';
+		    					<p>Please try again later <i class="fa fa-frown-o"></i></p>';
 
     					$_SESSION['error'] = 1;
 	    				$_SESSION['success'] = 0;
