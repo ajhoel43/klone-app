@@ -5,6 +5,8 @@ $lang['delete_q1'] = 'Are you sure want to delete this data?';
 
 //*********Aa*********//
 $lang['account_detail'] = 'Account Detail';
+$lang['address'] = 'Alamat';
+$lang['apprv_by'] = 'Approve By';
 
 //*********Bb*********//
 //Label button
@@ -29,11 +31,16 @@ $lang['date_year'] = '- Year -';
 
 //*********Ee*********//
 $lang['error_header'] = 'ERROR :';
+$lang['example'] = 'e.g.';
 
 //*********Ff*********//
 $lang['forgot_password'] = 'Forgot Password';
 
+//*********Hh*********//
+$lang['help'] = 'Help';
+
 //*********Ii*********//
+$lang['info'] = 'Info';
 $lang['info_email'] = 'Example: user@example.com';
 $lang['info_first_name'] = 'First Name';
 $lang['info_last_name'] = 'Last Name';
@@ -48,11 +55,18 @@ $lang['window_title'] = 'K-Lone Web';
 $lang['main_title'] = "K-Lone Web Admin";
 $lang['copyright'] = "Copyright &copy 2015";
 
+//*********Kk*********//
+$lang['koordinat'] = 'Koordinat';
+
 //*********Ll*********//
 //Label
 $lang['label_action'] = 'Action';
 $lang['label_admin'] = 'Admin';
+$lang['label_bengkel'] = 'Bengkel';
+$lang['label_bengkel_name'] = 'Nama Bengkel';
 $lang['label_birth'] = 'Birth Date';
+$lang['label_cc'] = 'Kapasitas Mesin';
+$lang['label_cc_up'] = 'keatas';
 $lang['label_desc'] = 'Deskripsi';
 $lang['label_email'] = 'Email';
 $lang['label_forgot'] = 'Forgot Password?';
@@ -67,6 +81,7 @@ $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
 $lang['label_master'] = 'Master Data';
 $lang['label_name'] = 'Name';
+$lang['label_notes'] = 'Catatan';
 $lang['label_newpass'] = 'Input New Password';
 $lang['label_no'] = 'No.';
 $lang['label_owner'] = 'Owner';
@@ -126,6 +141,8 @@ $lang['november'] = "November";
 $lang['desember'] = "Desember";
 
 //Title
+//**********Rr**********//
+$lang['register_by'] = 'Register By';
 
 //**********Uu**********//
 $lang['user_prev'] = 'User Previleges';
