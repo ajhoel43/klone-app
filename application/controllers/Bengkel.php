@@ -164,4 +164,14 @@ class Bengkel extends CI_Controller {
 		$data['record'] = $this->m_bengkel->get_onebengkel($params);
 		die(var_dump($id, $data));
 	}
+
+	function get_location()
+	{
+		echo $this->load->view('bengkel/get_location', null, TRUE);
+	}
+
+	function tesmap()
+	{
+		$this->load->view('bengkel/tesmap');
+	}
 }

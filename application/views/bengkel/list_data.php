@@ -8,6 +8,11 @@
 	.searchform tr td{
 		padding-bottom: 1em;
 	}
+
+	#map {
+		height: 30%;
+		width: 10%;
+	}
 </style>
 <div class="col-md-12">
 	<div class="row">
@@ -75,7 +80,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li><a href="<?php echo $record->ID_bengkel ?>" class="editdata"><i class="fa fa-pencil" style="color:green;"></i> Edit</a></li>
-									<li><a href="<?php echo $record->ID_bengkel ?>" class="deletedata"><i class="fa fa-times" style="color:red;"></i> Delete</a></li>
+									<li><a href="<?php echo $record->ID_bengkel ?>" class="deletedata"><i class="fa fa-trash-o" style="color:red;"></i> Delete</a></li>
 								</ul>
 							</div>
 						</td>
@@ -98,6 +103,8 @@
 		</div>
 	</div>
 </div>
+<button onclick="initMap()">Tes Button</button>
+<div id="map" style="width:100%;height:100%">Map</div>
 <div class="modal fade form-modal" role="dialog">
 	<p>Loading ...</p>
 </div>
@@ -258,4 +265,49 @@ $("body").on("click", ".view-map", function(event){
 	$(".modal-info").load("<?php echo base_url('bengkel/info_bkl_dtl') ?>/"+ $(this).attr('href'));
 	$(".modal-info").modal('show');
 });
+
+$("body").on("click", ".get-location", function(event){
+	event.preventDefault();
+	$(".modal-info").load("<?php echo base_url('bengkel/get_location') ?>");
+	$(".modal-info").modal('show');
+});
+
+function initMap() {
+	var map = new google.maps.Map(document.getElementById('mapCanvas'), {
+	center: {lat: -34.397, lng: 150.644},
+	zoom: 15
+	});
+	var infoWindow = new google.maps.InfoWindow({map: map});
+
+	// Try HTML5 geolocation.
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var pos = {
+			    lat: position.coords.latitude,
+			    lng: position.coords.longitude
+			};
+
+			infoWindow.setPosition(pos);
+			infoWindow.setContent('Location found.');
+			map.setCenter(pos);
+		}, function() {
+			handleLocationError(true, infoWindow, map.getCenter());
+		});
+		} else {
+		// Browser doesn't support Geolocation
+		handleLocationError(false, infoWindow, map.getCenter());
+	}
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(browserHasGeolocation ?
+				'Error: The Geolocation service failed.' :
+				'Error: Your browser doesn\'t support geolocation.');
+}
+
+$(".modal-info").on("shown.bs.modal", function(){
+	initMap();
+});
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?" async defer></script>
