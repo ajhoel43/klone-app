@@ -167,7 +167,7 @@ class Bengkel extends CI_Controller {
 
 	function get_location()
 	{
-		echo $this->load->view('bengkel/get_location', null, TRUE);
+		$this->load->view('bengkel/get_location');
 	}
 
 	function tesmap()
