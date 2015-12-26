@@ -13,6 +13,13 @@
   /*-o-object-fit: contain;
   object-fit: contain;*/
 }
+.dropdown-menu {right:0;min-width:230px;}
+.dropdown-submenu{position:relative;}
+.dropdown-submenu>.dropdown-menu{top:0;right:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+.dropdown-submenu:hover>.dropdown-menu{display:block;}
+.dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+.dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+.dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
 </style>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/navbar.css') ?>">
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -42,6 +49,20 @@
 					</li>
 					<li>
 						<a href="<?php echo base_url('bengkel/index') ?>"><i class="fa fa-wrench"></i> <?php echo lang('label_bengkel') ?></a>
+					</li>
+					<li class="menu-item dropdown dropdown-submenu">
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-globe"></i> <?php echo lang('label_wil') ?></a>
+						<ul class="dropdown-menu">
+				            <li class="menu-item ">
+				            	<a href="<?php echo base_url('wil/index') ?>"><i class="fa fa-globe"></i> <?php echo lang('label_wil') ?></a>
+			            	</li>
+				            <li class="menu-item ">
+					            <a href="<?php echo base_url('wil/index_kota') ?>"><i class="fa fa-building"></i> <?php echo lang('label_kota') ?></a>
+				            </li>
+				            <li class="menu-item ">
+					            <a href="<?php echo base_url('wil/index_kec') ?>"><i class="fa fa-home"></i> <?php echo lang('label_kec') ?></a>
+				            </li>
+						</ul>
 					</li>
 				</ul>
 			</li>
