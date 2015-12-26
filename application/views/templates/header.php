@@ -35,8 +35,9 @@
 
         <style type="text/css">
         .body {
-            margin : 4em 1em 2em 1em;
-        	margin-top: 4em;
+            margin : 0em 1em 2em 1em;
+        	/*margin-top: 70px;*/
+            padding-top: 70px;
             /*border: 3px;
             border-style: solid;*/
         }

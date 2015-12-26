@@ -39,7 +39,7 @@
  -->
  		<a href="#" class="btn btn-md btn-primary add-form"><?php echo lang('button_add') ?> <i class="fa fa-plus"></i></a>
 		<div class="data-user-result">
-			<table class="table table-bordered thead">
+			<table class="table table-bordered table-condensed table-condensed thead">
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
 					<th style="width:5%; "><?php echo lang('label_action') ?></th>

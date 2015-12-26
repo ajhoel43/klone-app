@@ -77,6 +77,10 @@ $lang['label_jb'] = 'Jenis Bengkel';
 $lang['label_jb_kode'] = 'Kode JB';
 $lang['label_jeken'] = 'Jenis Kendaraan';
 $lang['label_jeken_code'] = 'Kode Jeken';
+$lang['label_kec'] = 'Kecamatan';
+$lang['label_kec_kode'] = 'Kode Kecamatan';
+$lang['label_kota'] = 'Kota';
+$lang['label_kota_kode'] = 'Kode Kota';
 $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
 $lang['label_master'] = 'Data Manager';
@@ -101,6 +105,8 @@ $lang['label_user'] = "User";
 $lang['label_user_prev'] = 'User Type';
 $lang['label_username'] = 'Username';
 $lang['label_verification'] = 'Verification';
+$lang['label_wil'] = 'Wilayah';
+$lang['label_wil_kode'] = 'Kode Wilayah';
 
 
 //**********Mm***********//

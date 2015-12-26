@@ -27,4 +27,3 @@ class Template1
 		$this->CI->load->view('templates/footer', $data);
 	}
 }
-?>
