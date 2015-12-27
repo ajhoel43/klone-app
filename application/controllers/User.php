@@ -26,7 +26,7 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('username', lang('label_username'), 'required');
 		$this->form_validation->set_rules('first_name', lang('info_first_name'), 'required');
 		$this->form_validation->set_rules('password', lang('label_password'), 'required');
-		$this->form_validation->set_rules('repassword', 'Confirm Password', 'required');
+		$this->form_validation->set_rules('repassword', 'Confirm Password', 'required|matches[password]');
 		$this->form_validation->set_rules('email', lang('label_email'), 'required');
 		$this->form_validation->set_rules(array('date', 'month', 'year'), lang('label_birth'), 'required');
 		// $this->form_validation->set_rules('phone_num', lang('label_phone'), 'required');
