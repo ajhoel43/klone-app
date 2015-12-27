@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg">
+<div class="modal-dialog modal-md">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
@@ -8,15 +8,14 @@
 			<?php echo validation_errors(); ?>
 			<form class="form-horizontal" name="form_edit">
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo lang('label_wil_kode') ?>*</label>
-					<div class="col-sm-6">
+					<label class="col-sm-3 control-label"><?php echo lang('label_wil_kode') ?>*</label>
+					<div class="col-sm-7">
 						<input type="text" class="form-control" name="kode_wil" value="<?php echo $record->kode_wil ?>">
 					</div>
-					<div class="col-sm-4"><p class="help-block info-id"></p></div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo lang('label_wil') ?>*</label>
-					<div class="col-sm-6">
+					<label class="col-sm-3 control-label"><?php echo lang('label_wil') ?>*</label>
+					<div class="col-sm-7">
 						<input type="text" class="form-control" name="nama_wil" value="<?php echo $record->nama_wil ?>">
 					</div>
 				</div>

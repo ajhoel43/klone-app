@@ -42,7 +42,8 @@
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
 					<th style="width:5%; "><?php echo lang('label_action') ?></th>
-					<th width="12%"><?php echo lang('label_wil') ?></th>
+					<th width="10%"><?php echo lang('label_wil_kode') ?></th>
+					<th width="80%"><?php echo lang('label_wil') ?></th>
 				</tr>
 				<?php $no = 1; ?>
 				<?php foreach ($records as $record) : ?>
@@ -59,10 +60,11 @@
 								</ul>
 							</div>
 						</td>
+						<td align="center"><?php echo $record->kode_wil ?></td>
 						<td><?php echo $record->nama_wil ?></td>
 					</tr>
 				<?php $no++; endforeach; ?>
-			</table>	
+			</table>
 			<div style="text-align:right;">
 				<?php if(isset($links))echo $links?>
 			</div>
