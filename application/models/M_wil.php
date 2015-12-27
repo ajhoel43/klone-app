@@ -10,6 +10,7 @@ class M_wil extends CI_Model
 		$this->prefix = $this->session->userdata('prefix_');
 	}
 
+	// ********************** Func. WILAYAH ************************** //
 	function wil_dropdown()
 	{
 		$buffer = array();
@@ -23,7 +24,7 @@ class M_wil extends CI_Model
 
 		return $buffer;
 	}
-
+	
 	function wil_checkbox()
 	{
 		$buffer = array();
@@ -47,6 +48,7 @@ class M_wil extends CI_Model
 		else
 			$this->db->limit(20);
 
+		$this->db->order_by('kode_wil asc');
 		$query = $this->db->get('M_wilayah')->result();
 
 		return $query;
@@ -98,4 +100,104 @@ class M_wil extends CI_Model
 
 		return $query;
 	}
+	// ********************** END WILAYAH ************************** //
+
+	// ********************** Func. KOTA ************************** //
+	function kota_dropdown()
+	{
+		$buffer = array();
+		$buffer[''] = '- '.lang('label_kota').' -';
+
+		$this->db->join('M_wilayah mw', 'mk.kode_wil = mw.kode_wil', 'left');
+		$query = $this->db->get('M_kota mk')->result();
+
+		foreach ($query as $q) {
+			$buffer[$q->kode_kota] = $q->nama_wil." >> ".$q->nama_kota;
+		}
+
+		return $buffer;
+	}
+
+	function get_list_kota($params = array())
+	{
+		if(isset($params['nama_kota']) && $params['nama_kota'] != '')
+			$this->db->like('mk.nama_kota', $params['nama_kota']);
+
+		if(isset($params['nama_wil']) && $params['nama_wil'] != '')
+			$this->db->like('mw.nama_wil', $params['nama_wil']);
+
+		if (isset($params['limit']) && isset($params['start']))
+			$this->db->limit($params['limit'], $params['start']);
+		else
+			$this->db->limit(20);
+
+		$this->db->join('M_wilayah mw', 'mw.kode_wil = mk.kode_wil', 'left');
+
+		$this->db->order_by('mk.ID_kota asc');
+		$query = $this->db->get('M_kota mk')->result();
+
+		return $query;
+	}
+
+	function get_one_kota($params = array())
+	{
+		if(isset($params['id']))
+			$this->db->where('ID_kota', $params['id']);
+		
+		$this->db->join('M_wilayah mw', 'mw.kode_wil = mk.kode_wil', 'left');
+		$query = $this->db->get('M_kota mk')->row();
+
+		return $query;
+	}
+
+	function get_max_kota($params = array())
+	{
+		// $this->db->select('');
+		$this->db->where('kode_wil', $params['kode_wil']);
+		$this->db->select_max('kode_kota', 'ID');
+
+		$query = $this->db->get('M_kota')->row();
+
+		return $query;
+	}
+
+	function add_kota($params, $id = null)
+	{
+		// Manual check for same id record
+		$rec = $this->get_one_kota(array('id' => $params['ID_kota']));
+		$query = 0;
+		$msg = lang('label_kota_kode')." for <b>".$rec->nama_wil."</b>".lang('message_data_exist')." ";
+		$msg .= "<div style='text-align:right;'>=> <b>$rec->kode_kota</b>".lang('message_IsUse')."<b>".$rec->nama_kota."</b></div>";
+
+		if($id)
+		{
+			$rec1 = $this->get_one_kota(array('id' => $id));
+			if($rec1->ID_kota == $params['ID_kota'] OR is_null($rec))
+			{
+				$this->db->where('ID_kota', $id);
+				$query = $this->db->update('M_kota', $params);
+				$msg = update_flag($query);
+			}
+		}
+		else
+		{
+			if(is_null($rec))
+			{
+				$query = $this->db->insert('M_kota', $params);
+				$msg = insert_flag($query);
+			}
+		}
+
+		return array($query, $msg);
+	}
+
+	function del_kota($id)
+	{
+		$this->db->where('ID_kota', $id);
+		$query = $this->db->delete('M_kota');
+
+		return $query;
+	}
+	// ********************** END KOTA ************************** //
+
 }
