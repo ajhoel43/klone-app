@@ -79,7 +79,7 @@ $lang['label_jeken'] = 'Jenis Kendaraan';
 $lang['label_jeken_code'] = 'Kode Jeken';
 $lang['label_kec'] = 'Kecamatan';
 $lang['label_kec_kode'] = 'Kode Kecamatan';
-$lang['label_kota'] = 'Kota';
+$lang['label_kota'] = 'Kabupaten/Kota';
 $lang['label_kota_kode'] = 'Kode Kota';
 $lang['label_login'] = 'Log In';
 $lang['label_logout'] = 'Log Out';
@@ -131,6 +131,8 @@ $lang['message_error_delete'] = 'Data can not be deleted';
 $lang['message_success_insert'] = 'Data has been inserted';
 $lang['message_success_update'] = 'Data has been updated';
 $lang['message_success_delete'] = 'Data has been deleted';
+$lang['message_data_exist'] = ' is already exist';
+$lang['message_IsUse'] = ' has been used by ';
 
 //Month
 $lang['januari'] = "Januari";
