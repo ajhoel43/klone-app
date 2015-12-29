@@ -170,7 +170,7 @@ $("body").on("click", ".editdata",function(event){
 $("body").on("click", ".deletedata",function(event){
 	event.preventDefault();
 	var value = $(this).attr('href');
-	$(".confirm-body").html('<?php echo lang("delete_q1") ?> <br><strong>Kode wil => ' + value + '</strong>');
+	$(".confirm-body").html('<?php echo lang("delete_q1") ?> <br><strong><?php echo lang("label_kota_kode") ?> => ' + value + '</strong>');
 	$(".confirm-modal").modal('show');
 	$("button[name='conf_yes']").click(function(event){
 		$.ajax({
