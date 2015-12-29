@@ -2,7 +2,8 @@
 <table class="table table-bordered table-condensed thead">
 	<tr class="active">
 		<th style="width:3%;"><?php echo lang('label_no') ?></th>
-		<th style="width:20%; "><?php echo lang('label_action') ?></th>
+		<th style="width:5%; "><?php echo lang('label_action') ?></th>
+		<th width="10%"><?php echo lang('label_wil_kode') ?></th>
 		<th width="80%"><?php echo lang('label_wil') ?></th>
 	</tr>
 	<?php $no = 1; ?>
@@ -20,6 +21,7 @@
 					</ul>
 				</div>
 			</td>
+			<td align="center"><?php echo $record->kode_wil ?></td>
 			<td><?php echo $record->nama_wil ?></td>
 		</tr>
 	<?php $no++; endforeach; ?>
