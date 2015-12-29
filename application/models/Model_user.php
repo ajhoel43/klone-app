@@ -201,6 +201,7 @@ class Model_user extends CI_Model
 
 	function add_user( $params, $id = null ) 
 	{
+		$params['username'] = strtolower($params['username']);
 		$msg = '';
 		if($id) {
 			$this->db->where('username', $id);
