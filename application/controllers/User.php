@@ -127,23 +127,21 @@ class User extends CI_Controller {
 
 		$getuser = $this->model_user->get_list_user($params);
 
-		$config = load_pagination_config();
+		$pagparams = array(
+			'base_url' => base_url('user/list_users'),
+			'total_rows' => $getuser
+			);
 
-		$config['base_url'] = base_url('user/list_users');
-		$config['total_rows'] = count($getuser);
-		$config['per_page'] = 20;
-		// $choice = $config['total_rows'] / $config['per_page'];
-		// $config['num_links'] = round($choice);
-		
+		$config = load_pagination_config($pagparams);
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 		/*
-		Code above is equal to
-		if($this->uri->segment(3))
-			$page = $this->uri->segment(3);
-		else
-			$page = 0;
+		**Code above is equal to
+		**if($this->uri->segment(3))
+		**	$page = $this->uri->segment(3);
+		**else
+		**	$page = 0;
 		*/
 
 		$params['limit'] = $config['per_page'];

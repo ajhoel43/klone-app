@@ -42,14 +42,13 @@ class Jenis_bkl extends CI_Controller {
 	{
 		$this->load->library('pagination');
 		
-		$config = load_pagination_config();
+		// Load the pagination config
+		$pagparams = array(
+			'base_url' => base_url('jenis_bkl/index'),
+			'total_rows' => $this->m_jb->get_list_jb()
+			);
 
-		$config['base_url'] = base_url('jenis_bkl/index');
-		$config['total_rows'] = count($this->m_jb->get_list_jb());
-		$config['per_page'] = 20;
-		// $choice = $config['total_rows'] / $config['per_page'];
-		// $config['num_links'] = round($choice);
-		
+		$config = load_pagination_config($pagparams);
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;

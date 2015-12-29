@@ -283,7 +283,7 @@ function _generateCode()
 	return $string;
 }
 
-function load_pagination_config()
+function load_pagination_config($params = array())
 {
 	$config['full_tag_open'] = '<ul class="pagination">';
 	$config['full_tag_close'] = '</ul>';
@@ -303,6 +303,22 @@ function load_pagination_config()
 	$config['cur_tag_close'] = '</a></li>';
 	$config['num_tag_open'] = '<li>';
 	$config['num_tag_close'] = '</li>';
+
+	if(isset($params['per_page']))
+		$config['per_page'] = $params['per_page'];
+	else
+		$config['per_page'] = 10;
+
+	if(isset($params['num_links']))
+		$config['num_links'] = $params['num_links'];
+	else
+		$config['num_links'] = 5;
+
+	if(isset($params['base_url']))
+		$config['base_url'] = $params['base_url'];
+
+	if(isset($params['total_rows']))
+		$config['total_rows'] = count($params['total_rows']);
 
 	return $config;
 }

@@ -43,14 +43,12 @@ class Jeken extends CI_Controller {
 	{
 		$this->load->library('pagination');
 		
-		$config = load_pagination_config();
+		$pagparams = array(
+			'base_url' => base_url('jeken/index'),
+			'total_rows' => $this->m_jeken->get_list_jeken()
+			);
 
-		$config['base_url'] = base_url('jeken/index');
-		$config['total_rows'] = count($this->m_jeken->get_list_jeken());
-		$config['per_page'] = 20;
-		// $choice = $config['total_rows'] / $config['per_page'];
-		// $config['num_links'] = round($choice);
-		
+		$config = load_pagination_config($pagparams);		
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;

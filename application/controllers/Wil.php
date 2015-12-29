@@ -43,13 +43,12 @@ class Wil extends CI_Controller {
 	{
 		$this->load->library('pagination');
 		
-		$config = load_pagination_config();
+		$pagparams = array(
+			'base_url' => base_url('wil/index'),
+			'total_rows' => $this->m_wil->get_list_wil()
+			);
 
-		$config['base_url'] = base_url('wil/index');
-		$config['total_rows'] = count($this->m_wil->get_list_wil());
-		$config['per_page'] = 20;
-		$config['num_links'] = 5;
-
+		$config = load_pagination_config($pagparams);
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -168,13 +167,12 @@ class Wil extends CI_Controller {
 	{
 		$this->load->library('pagination');
 		
-		$config = load_pagination_config();
+		$pagparams = array(
+			'base_url' => base_url('wil/index_kota'),
+			'total_rows' => $this->m_wil->get_list_kota()
+			);
 
-		$config['base_url'] = base_url('wil/index_kota');
-		$config['total_rows'] = count($this->m_wil->get_list_kota());
-		$config['per_page'] = 20;
-		$config['num_links'] = 5;
-
+		$config = load_pagination_config($pagparams);
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -309,13 +307,12 @@ class Wil extends CI_Controller {
 	{
 		$this->load->library('pagination');
 		
-		$config = load_pagination_config();
+		$pagparams = array(
+			'base_url' => base_url('wil/index_kec'),
+			'total_rows' => $this->m_wil->get_list_kec()
+			);
 
-		$config['base_url'] = base_url('wil/index_kec');
-		$config['total_rows'] = count($this->m_wil->get_list_kec());
-		$config['per_page'] = 10;
-		$config['num_links'] = 5;
-		
+		$config = load_pagination_config($pagparams);		
 		$this->pagination->initialize($config);
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
