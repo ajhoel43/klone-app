@@ -20,8 +20,6 @@ class M_servbkl extends CI_Model
 
 		if (isset($params['limit']) && isset($params['start']))
 			$this->db->limit($params['limit'], $params['start']);
-		else
-			$this->db->limit(20);
 
 		$this->db->select('
 			ly.*,
