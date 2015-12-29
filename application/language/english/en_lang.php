@@ -48,6 +48,7 @@ $lang['info_phone'] = 'Example: +6281234567890';
 $lang['info_user'] = 'Example: userexample, user_example, user.example';
 $lang['info_pass'] = 'Password';
 $lang['info_repass'] = 'Retype Password';
+$lang['info_s_by'] = 'Search by';
 
 //Judul
 $lang['admin_title'] = 'Data Manager';
@@ -79,6 +80,7 @@ $lang['label_jeken'] = 'Jenis Kendaraan';
 $lang['label_jeken_code'] = 'Kode Jeken';
 $lang['label_kec'] = 'Kecamatan';
 $lang['label_kec_kode'] = 'Kode Kecamatan';
+$lang['label_kode'] = 'Code';
 $lang['label_kota'] = 'Kabupaten/Kota';
 $lang['label_kota_kode'] = 'Kode Kota';
 $lang['label_login'] = 'Log In';
