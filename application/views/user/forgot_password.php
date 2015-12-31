@@ -65,7 +65,7 @@
 		<div class="page-header">
 			<h2><?php echo lang('forgot_password') ?></h2>
 		</div>
-		<div class="col-lg-8">
+		<div class="col-lg-12">
 			<?php echo form_open('front/forgot_password', 'class="form-horizontal"')?>
 				<p class="col-sm-offset-1">
 					Please insert your email and we will help you to reset your password :)
@@ -75,7 +75,7 @@
 					<div class="col-sm-6">
 						<input class="form-control" type="text" name="email" value="<?php echo set_value('email') ?>">
 					</div>
-					<div class="col-lg-4">
+					<div class="col-sm-4">
 						<?php echo form_error('email', '<p class="help-block" style="color:red">','</p>'); ?>
 					</div>
 				</div>

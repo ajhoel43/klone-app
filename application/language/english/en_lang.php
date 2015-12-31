@@ -103,6 +103,7 @@ $lang['label_servb_code'] = 'ID Layanan';
 $lang['label_servb_name'] = 'Nama Layanan';
 $lang['label_status'] = 'Status';
 $lang['label_super'] = 'Super';
+$lang['label_kend_type'] = 'Tipe Kendaraan';
 $lang['label_user'] = "User";
 $lang['label_user_prev'] = 'User Type';
 $lang['label_username'] = 'Username';

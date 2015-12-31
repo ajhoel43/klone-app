@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<td width="120px">
-							<label class="control-label"><?php echo "Type" ?></label>
+							<label class="control-label"><?php echo lang('label_kend_type') ?></label>
 						</td>
 						<td width="400px">
 							<?php echo form_dropdown('type_kend', $type_kend, null, 'class="form-control"') ?>
@@ -53,6 +53,7 @@
 				<tr class="active">
 					<th style="width:3%;"><?php echo lang('label_no') ?></th>
 					<th style="width:5%; "><?php echo lang('label_action') ?></th>
+					<th width="10%"><?php echo lang('label_kend_type') ?></th>
 					<th width="12%"><?php echo lang('label_jeken') ?></th>
 					<th width="10%"><?php echo lang('label_cc') ?></th>
 					<th><?php echo lang('label_desc') ?></th>
@@ -72,6 +73,7 @@
 								</ul>
 							</div>
 						</td>
+						<td><strong><?php echo ucfirst(substr($record->kode_jeken, 0, 5)) ?></strong></td>
 						<td><?php echo $record->nama_jeken ?></td>
 						<td style="text-align:center;">
 							<?php 
