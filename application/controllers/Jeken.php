@@ -127,7 +127,7 @@ class Jeken extends CI_Controller {
 				die(report_flag($this->error, validation_errors()));
 
 			// ***************** Checking for redundancy ****************** //
-			$rec = $this->m_jeken->get_oneJeken(array('nama_jeken' => $_POST['nama_jeken']));
+			$rec = $this->m_jeken->get_oneJeken(array('nama_jeken' => $_POST['nama_jeken'], 'type_kend' => $_POST['kode_jeken']));
 			if(count($rec) > 0 AND $rec->kode_jeken != $_POST['kode_jeken'])
 				die(report_flag($this->error, lang('messageRedundancyData')));
 			// ************************************************************ //
