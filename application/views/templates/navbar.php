@@ -33,34 +33,34 @@
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">
-				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-gears"></span> <?php echo lang('label_master') ?><strong class="caret"></strong></a>
+				 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-gears fa-fw fa-lg"></span> <?php echo lang('label_master') ?><strong class="caret"></strong></a>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="<?php echo base_url('user/list_users') ?>"><i class="fa fa-user"></i> <?php echo lang('label_user') ?></a>
+						<a href="<?php echo base_url('user/list_users') ?>"><i class="fa fa-user fa-fw"></i> <?php echo lang('label_user') ?></a>
 					</li>
 					<li>
-						<a href="<?php echo base_url('jenis_bkl/index') ?>"><i class="fa fa-flag"></i> <?php echo lang('label_jb') ?></a>
+						<a href="<?php echo base_url('jenis_bkl/index') ?>"><i class="fa fa-flag fa-fw"></i> <?php echo lang('label_jb') ?></a>
 					</li>
 					<li>
-						<a href="<?php echo base_url('serv_bkl/index') ?>"><i class="fa fa-truck"></i> <?php echo lang('label_servb') ?></a>
+						<a href="<?php echo base_url('serv_bkl/index') ?>"><i class="fa fa-truck fa-fw"></i> <?php echo lang('label_servb') ?></a>
 					</li>
 					<li>
-						<a href="<?php echo base_url('jeken/index') ?>"><i class="fa fa-automobile"></i> <?php echo lang('label_jeken') ?></a>
+						<a href="<?php echo base_url('jeken/index') ?>"><i class="fa fa-automobile fa-fw"></i> <?php echo lang('label_jeken') ?></a>
 					</li>
 					<li>
-						<a href="<?php echo base_url('bengkel/index') ?>"><i class="fa fa-wrench"></i> <?php echo lang('label_bengkel') ?></a>
+						<a href="<?php echo base_url('bengkel/index') ?>"><i class="fa fa-wrench fa-fw"></i> <?php echo lang('label_bengkel') ?></a>
 					</li>
 					<li class="menu-item dropdown dropdown-submenu">
-						<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-globe"></i> <?php echo lang('label_wil') ?></a>
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-globe fa-fw"></i> <?php echo lang('label_wil') ?></a>
 						<ul class="dropdown-menu">
 				            <li class="menu-item ">
-				            	<a href="<?php echo base_url('wil/index') ?>"><i class="fa fa-globe"></i> <?php echo lang('label_wil') ?></a>
+				            	<a href="<?php echo base_url('wil/index') ?>"><i class="fa fa-globe fa-fw"></i> <?php echo lang('label_wil') ?></a>
 			            	</li>
 				            <li class="menu-item ">
-					            <a href="<?php echo base_url('wil/index_kota') ?>"><i class="fa fa-building"></i> <?php echo lang('label_kota') ?></a>
+					            <a href="<?php echo base_url('wil/index_kota') ?>"><i class="fa fa-building fa-fw"></i> <?php echo lang('label_kota') ?></a>
 				            </li>
 				            <li class="menu-item ">
-					            <a href="<?php echo base_url('wil/index_kec') ?>"><i class="fa fa-home"></i> <?php echo lang('label_kec') ?></a>
+					            <a href="<?php echo base_url('wil/index_kec') ?>"><i class="fa fa-home fa-fw"></i> <?php echo lang('label_kec') ?></a>
 				            </li>
 						</ul>
 					</li>
