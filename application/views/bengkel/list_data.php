@@ -272,12 +272,49 @@ $("body").on("click", ".get-location", function(event){
 	$(".modal-info").modal('show');
 });
 
+var geocoder;
+
+function geocodePosition(pos) {
+	geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    latLng: pos
+  }, function(responses) {
+    if (responses && responses.length > 0) {
+      updateMarkerAddress(responses[0].formatted_address);
+    } else {
+      updateMarkerAddress('Cannot determine address at this location.');
+    }
+  });
+}
+
+function updateMarkerStatus(str){
+	document.getElementById('markerstatus').innerHTML = str;
+}
+
+function updateMarkerPosition(latLng){
+	document.getElementById('infomap').innerHTML = [
+	latLng.lat(),
+	latLng.lng()
+	].join(', ');
+}
+
+function updateMarkerAddress(str){
+	document.getElementById('addressmap').innerHTML = str;
+}
+
 function initMap() {
+	var cust_loc = new google.maps.LatLng(-34.397, 150.644);
 	var map = new google.maps.Map(document.getElementById('mapCanvas'), {
-	center: {lat: -34.397, lng: 150.644},
-	zoom: 15
+		center: {lat: -34.397, lng: 150.644},
+		zoom: 15
 	});
 	var infoWindow = new google.maps.InfoWindow({map: map});
+	var marker = new google.maps.Marker({
+			position: cust_loc,
+			title: 'POINT A',
+			map: map,
+			draggable: true
+		});
 
 	// Try HTML5 geolocation.
 	if (navigator.geolocation) {
@@ -287,8 +324,10 @@ function initMap() {
 			    lng: position.coords.longitude
 			};
 
-			infoWindow.setPosition(pos);
-			infoWindow.setContent('Location found.');
+			marker.setPosition(pos);
+
+			// infoWindow.setPosition(pos);
+			// infoWindow.setContent('Location found.');
 			map.setCenter(pos);
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
@@ -297,6 +336,20 @@ function initMap() {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
 	}
+
+	google.maps.event.addListener(marker, 'dragstart', function() {
+		updateMarkerAddress('Dragging...');
+	});
+
+	google.maps.event.addListener(marker, 'drag', function() {
+		updateMarkerStatus('Dragging...');
+		updateMarkerPosition(marker.getPosition());
+	});
+
+	google.maps.event.addListener(marker, 'dragend', function() {
+		updateMarkerStatus('Drag ended');
+		geocodePosition(marker.getPosition());
+	});
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
