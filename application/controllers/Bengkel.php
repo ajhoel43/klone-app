@@ -165,6 +165,7 @@ class Bengkel extends CI_Controller {
 
 	function get_location()
 	{
+		// $this->load->view('bengkel/pick_location_test');
 		$this->load->view('bengkel/get_location');
 	}
 

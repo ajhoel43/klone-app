@@ -6,6 +6,9 @@
 		</div>
 		<div class="modal-body">
 			<div id="mapCanvas" style="height:500px;width:auto;"></div>
+			<div id="markerstatus">Marker</div>
+			<div id="infomap">Info</div>
+			<div id="addressmap">Address</div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" name="conf_no" class="btn btn-default" data-dismiss="modal"><?php echo lang('conf_no') ?></button>
