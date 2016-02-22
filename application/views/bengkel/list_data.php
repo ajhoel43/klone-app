@@ -276,15 +276,15 @@ var geocoder;
 
 function geocodePosition(pos) {
 	geocoder = new google.maps.Geocoder();
-  geocoder.geocode({
-    latLng: pos
-  }, function(responses) {
-    if (responses && responses.length > 0) {
-      updateMarkerAddress(responses[0].formatted_address);
-    } else {
-      updateMarkerAddress('Cannot determine address at this location.');
-    }
-  });
+	geocoder.geocode({
+		latLng: pos
+	}, function(responses) {
+		if (responses && responses.length > 0) {
+			updateMarkerAddress(responses[0].formatted_address);
+		} else {
+			updateMarkerAddress('Cannot determine address at this location.');
+		}
+	});
 }
 
 function updateMarkerStatus(str){
@@ -325,6 +325,8 @@ function initMap() {
 			};
 
 			marker.setPosition(pos);
+			geocodePosition(marker.getPosition());
+			updateMarkerPosition(marker.getPosition());
 
 			// infoWindow.setPosition(pos);
 			// infoWindow.setContent('Location found.');
@@ -332,7 +334,7 @@ function initMap() {
 		}, function() {
 			handleLocationError(true, infoWindow, map.getCenter());
 		});
-		} else {
+	} else {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
 	}
